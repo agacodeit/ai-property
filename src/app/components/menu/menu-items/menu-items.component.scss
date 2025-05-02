@@ -1,0 +1,91 @@
+@use '../../../../styles/abstracts/' as *;
+
+nav.menu-items {
+    padding: 0;
+}
+
+/* Lista do menu */
+nav.menu-items ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        img {
+            margin-right: 8px;
+        }
+    }
+}
+
+/* Estilo dos itens do menu */
+.menu-item {
+    position: relative;
+    padding: $padding-xs $padding-md;
+    cursor: pointer;
+    transition: 300ms;
+    margin-bottom: 16px;
+    min-height: 40px;
+
+    &.active-menu {
+        border-radius: $border-radius-sm;
+        background-color: var(--primary-1);
+
+    }
+
+    .submenu {
+        li {
+            padding: 12px 16px;
+        }
+    }
+
+    &:hover {
+        background-color: var(--bg-hv-1);
+        border-radius: $border-radius-sm;
+
+
+
+        .submenu {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 8px;
+            min-width: 200px;
+            display: block;
+            border-radius: 12px;
+            background-color: var(--bg-2);
+
+            li {
+                transition: 300ms;
+                cursor: pointer;
+                border-bottom: 1px solid var(--bord-1);
+
+                &:last-of-type {
+                    border: none;
+                }
+
+                p {
+                    color: var(--txt-1);
+                }
+            }
+
+            li:hover {
+                background-color: var(--bg-hv-1);
+                border-radius: $border-radius-sm;
+
+            }
+        }
+
+    }
+}
+
+/* Estilo do texto dos itens */
+.menu-item p {
+    margin: 0;
+    font-size: $font-sm;
+    color: var(--txt-1);
+}

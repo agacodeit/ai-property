@@ -1,0 +1,25 @@
+<section class="chat-container" aria-label="Chat entre usuário e assistente virtual">
+  <header class="chat-header" aria-hidden="true">
+    <h1 class="visually-hidden">Assistente Virtual</h1>
+  </header>
+
+  <main class="messages" role="log" aria-live="polite">
+    <article *ngFor="let message of messages"
+      [ngClass]="{'user-message': message.role === 'user', 'bot-message': message.role === 'bot'}">
+      <div class="avatar">
+        <i class="fas fa-user" *ngIf="message.role === 'user'"></i>
+        <i class="fas fa-home" *ngIf="message.role === 'bot'"></i>
+      </div>
+      <p class="message-bubble">
+        {{ message.text }}
+      </p>
+    </article>
+  </main>
+
+  <footer class="input-container">
+    <label for="chat-input" class="visually-hidden">Digite sua mensagem</label>
+    <input id="chat-input" type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()"
+      placeholder="Digite sua mensagem..." autocomplete="off" aria-label="Campo de entrada de mensagem" />
+    <button type="button" (click)="sendMessage()" aria-label="Enviar mensagem">Enviar</button>
+  </footer>
+</section>
