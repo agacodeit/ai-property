@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { MenuComponent } from '../../components/menu/menu.component';
 import { MenuService } from '../../services/menu.service';
 import { ThemeService } from '../../services/theme.service';
-import { MenuComponent } from '../../components/menu/menu.component';
-import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-authenticated-user',
@@ -14,8 +13,7 @@ import { HeaderComponent } from '../../components/header/header.component';
     CommonModule,
     RouterOutlet,
     FormsModule,
-    MenuComponent,
-    HeaderComponent
+    MenuComponent
   ],
   templateUrl: './authenticated-user.component.html',
   styleUrl: './authenticated-user.component.scss'

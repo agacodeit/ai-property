@@ -1,8 +1,5 @@
+<app-header></app-header>
 <section class="chat-container" aria-label="Chat entre usuário e assistente virtual">
-  <header class="chat-header" aria-hidden="true">
-    <h1 class="visually-hidden">Assistente Virtual</h1>
-  </header>
-
   <main class="messages" role="log" aria-live="polite">
     <article *ngFor="let message of messages"
       [ngClass]="{'user-message': message.role === 'user', 'bot-message': message.role === 'bot'}">
@@ -10,9 +7,20 @@
         <i class="fas fa-user" *ngIf="message.role === 'user'"></i>
         <i class="fas fa-home" *ngIf="message.role === 'bot'"></i>
       </div>
-      <p class="message-bubble">
-        {{ message.text }}
-      </p>
+      <div>
+        <p class="message-bubble">
+          {{ message.text }}
+        </p>
+        <div class="message-content">
+          <h3>Resultados:</h3>
+          <p class="price">$245.32</p>
+
+          <p>
+            <i class="fas fa-map-marker-alt"></i>
+            location
+          </p>
+        </div>
+      </div>
     </article>
   </main>
 
