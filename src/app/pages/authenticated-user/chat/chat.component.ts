@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Message } from '../../../shared/models/chat/message';
 import { HeaderComponent } from '../../../components/header/header.component';
@@ -14,33 +14,13 @@ import { HeaderComponent } from '../../../components/header/header.component';
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
-export class ChatComponent {
+export class ChatComponent implements AfterViewChecked {
+  @ViewChild('messagesContainer') messagesContainer!: ElementRef;
 
   newMessage: string = '';
 
   messages: Array<Message> = [
     {
-      role: 'user',
-      text: 'Olá, preciso de um apartamento em Lisboa'
-    },
-    {
-      role: 'bot',
-      text: 'Boa tarde! Poderia me passar mais detalhes do que precisa?'
-    }, {
-      role: 'user',
-      text: 'Olá, preciso de um apartamento em Lisboa'
-    },
-    {
-      role: 'bot',
-      text: 'Boa tarde! Poderia me passar mais detalhes do que precisa?'
-    }, {
-      role: 'user',
-      text: 'Olá, preciso de um apartamento em Lisboa'
-    },
-    {
-      role: 'bot',
-      text: 'Boa tarde! Poderia me passar mais detalhes do que precisa?'
-    }, {
       role: 'user',
       text: 'Olá, preciso de um apartamento em Lisboa'
     },
@@ -68,7 +48,28 @@ export class ChatComponent {
     }
   ];
 
-  sendMessage() {
+  ngAfterViewChecked(): void {
+    this.scrollToBottom();
+  }
 
+  scrollToBottom(): void {
+    const container = this.messagesContainer.nativeElement;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }
+
+  sendMessage() {
+    if (!this.newMessage.trim()) return;
+
+    const newMessage = new Message();
+    newMessage.text = this.newMessage;
+    newMessage.role = 'user';
+    this.messages.push(newMessage);
+    this.newMessage = '';
+    const newBotMessage = new Message();
+    newBotMessage.text = 'Desculpe, não consegui entender o que você quis dizer.';
+    newBotMessage.role = 'bot';
+    this.messages.push(newBotMessage);
   }
 }

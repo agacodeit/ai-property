@@ -1,7 +1,7 @@
 <main>
   <app-header></app-header>
   <section class="chat-container" aria-label="Chat entre usuário e assistente virtual">
-    <div class="messages" role="log" aria-live="polite">
+    <div #messagesContainer class="messages" role="log" aria-live="polite">
       <article *ngFor="let message of messages"
         [ngClass]="{'user-message': message.role === 'user', 'bot-message': message.role === 'bot'}">
         <div class="avatar">

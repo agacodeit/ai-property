@@ -31,7 +31,7 @@
     gap: 12px;
     padding-bottom: 12px;
     max-height: calc(100vh - 150px);
-
+    scroll-behavior: smooth; /* rolagem suave */
     article {
         padding: $padding-xs;
         align-items: flex-start;
