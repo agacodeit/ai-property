@@ -4,9 +4,9 @@
     background-color: var(--bg-2);
     padding: $padding-sm;
     width: 100%;
-    max-width: 250px;
+    max-width: 350px;
     resize: horizontal;
-    min-width: 120px;
+    min-width: 220px;
     height: 100vh;
     overflow: auto;
     /* necessário para resize funcionar */
@@ -14,11 +14,14 @@
 
     header {
         margin-bottom: 24px;
-        padding-bottom: 24px;
         border-bottom: 1px solid var(--bord-1);
 
         h2 {
             color: var(--txt-1);
+        }
+
+        button {
+            margin: 24px 0;
         }
     }
 }

@@ -6,5 +6,11 @@ export interface Message {
 
 export interface Content {
     images: Array<string>;
-    
+    title: string;
+    price: number;
+    currency: string;
+    location: string;
+    beds: string;
+    description: string;
+    varieties: Array<string>;
 }
