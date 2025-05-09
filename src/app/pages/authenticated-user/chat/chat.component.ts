@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../../components/header/header.component';
 import { Message } from '../../../shared/models/chat/message';
@@ -14,7 +14,7 @@ import { Message } from '../../../shared/models/chat/message';
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
-export class ChatComponent implements AfterViewChecked {
+export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
   @ViewChild('canvas', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
