@@ -3,6 +3,7 @@ import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, ViewChild }
 import { FormsModule } from '@angular/forms';
 import { Message } from '../../../shared/models/chat/message';
 import { HeaderComponent } from '../../../components/header/header.component';
+import { AudioService } from '../../../services/audio.service';
 
 @Component({
   selector: 'app-chat',
@@ -63,7 +64,8 @@ export class ChatComponent implements AfterViewChecked {
     }
   ];
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef,
+    private audioService: AudioService) {
 
   }
 
