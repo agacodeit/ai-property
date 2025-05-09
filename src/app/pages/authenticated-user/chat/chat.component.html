@@ -50,8 +50,8 @@
         placeholder="Digite sua mensagem..." autocomplete="off" aria-label="Campo de entrada de mensagem" />
 
       <!-- Botão de gravação -->
-      <i class="fas fa-record-vinyl" [class.recording]="isRecording" (click)="toggleRecording()"
-        aria-label="Gravar áudio"></i>
+      <i class="fas fa-record-vinyl" [class.recording]="isRecording" [class.audio-ready]="audioUrl"
+        (click)="toggleRecording()" aria-label="Gravar áudio"></i>
 
       <!-- Tempo de gravação -->
       <span *ngIf="isRecording">{{ recordingTime }}</span>
@@ -61,7 +61,7 @@
         <canvas #canvas></canvas>
       </div>
 
-      <button type="button" (click)="sendMessage()" aria-label="Enviar mensagem">
+      <button type="button" (click)="toggleSendMessage()" aria-label="Enviar mensagem">
         Enviar
       </button>
     </footer>

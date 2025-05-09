@@ -21,7 +21,7 @@ export class ChatComponent implements AfterViewChecked {
   newMessage = '';
   isRecording = false;
   recordingTime = '00:00';
-  audioUrl: string | null = null;
+  audioUrl: string | undefined = undefined;
 
   private mediaRecorder: MediaRecorder | null = null;
   private recordedChunks: Blob[] = [];
@@ -117,7 +117,7 @@ export class ChatComponent implements AfterViewChecked {
       this.source.connect(this.analyser);
       this.analyser.fftSize = 2048;
       this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
-      this.cdr.detectChanges(); // força o canvas a ser renderizado antes do uso
+      this.cdr.detectChanges();
 
       this.drawVisualizer();
     } catch (err) {
@@ -125,7 +125,7 @@ export class ChatComponent implements AfterViewChecked {
     }
   }
 
-  private stopRecording() {
+  private async stopRecording() {
     this.isRecording = false;
     if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
       this.mediaRecorder.stop();
@@ -133,9 +133,12 @@ export class ChatComponent implements AfterViewChecked {
     clearInterval(this.intervalId);
     this.recordingTime = '00:00';
 
+    setTimeout(() => {
+      this.cdr.detectChanges();
+    }, 1);
     // Parar animação e fechar contexto
     if (this.audioContext) {
-      this.audioContext.close();
+      await this.audioContext.close();
     }
     cancelAnimationFrame(this.animationId);
   }
@@ -185,10 +188,32 @@ export class ChatComponent implements AfterViewChecked {
     }
   }
 
-  sendMessage() {
+  async toggleSendMessage() {
+    if (this.isRecording) {
+      await this.stopRecording();
+    }
+    if (this.audioUrl) {
+      this.sendMessage(true);
+    }
     if (!this.newMessage.trim()) return;
 
-    const newMessage = new Message();
+    this.sendMessage();
+  }
+
+  async sendMessage(audio?: boolean) {
+    const newMessage = new Message
+    if (audio) {
+      const audioElement = new Audio(this.audioUrl);
+
+      await new Promise<void>((resolve) => {
+        audioElement.addEventListener('canplaythrough', () => resolve(), { once: true });
+      });
+
+      audioElement.play();
+      this.audioUrl = undefined;
+      return;
+    }
+
     newMessage.text = this.newMessage;
     newMessage.role = 'user';
     this.messages.push(newMessage);

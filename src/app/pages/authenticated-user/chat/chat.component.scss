@@ -156,6 +156,11 @@
     animation: pulse 1s infinite;
 }
 
+.fas.fa-record-vinyl.audio-ready {
+    color: rgb(109, 215, 47);
+    animation: pulse 2s;
+}
+
 @keyframes pulse {
     0% {
         transform: scale(1);
