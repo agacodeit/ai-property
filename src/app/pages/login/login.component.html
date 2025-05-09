@@ -1,2 +1,35 @@
-<p>login works!</p>
-<button (click)="theme()">theme</button>
+<main>
+    <h1>AI Property</h1>
+
+    <div class="login-container">
+        <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <h2>Bem-vindo de volta!</h2>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" formControlName="email" required autocomplete="username" />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" formControlName="password" required
+                    autocomplete="current-password" />
+            </div>
+
+            <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
+        </form>
+
+        <div class="or">
+            <span></span>
+            <p>OR</p>
+            <span></span>
+        </div>
+
+        <div class="alternative-login">
+            <div class="alt" *ngFor="let alt of alternativeLogins">
+                <img [src]="alt.icon" alt="" width="24px" height="24px">
+                <p>{{alt.alt}}</p>
+            </div>
+        </div>
+    </div>
+</main>

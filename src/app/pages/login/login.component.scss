@@ -1,0 +1,60 @@
+main {
+    padding: 24px;
+
+    h1 {
+        margin-bottom: 48px;
+    }
+
+    .form {
+        width: 100%;
+
+        h2 {
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+
+    .or {
+        margin-top: 24px;
+        display: flex;
+        align-items: center;
+
+        span {
+            width: 100%;
+            border-bottom: 1px solid var(--bord-1);
+            height: 2px;
+        }
+
+        p{
+            margin: 0 24px;
+        }
+    }
+
+    .alternative-login {
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .alt {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--bord-1);
+            border-radius: 6px;
+            padding: 16px;
+            gap: 8px;
+
+            img {
+                margin-right: 8px;
+            }
+        }
+    }
+}

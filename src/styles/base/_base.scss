@@ -2,13 +2,8 @@
 
 body {
     margin: 0;
-    background-color: var(--background);
+    background-color: var(--bg-1);
     transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-.card {
-    background-color: var(--card-background);
-    border-radius: $border-radius-xb;
 }
 
 button {
