@@ -68,6 +68,18 @@ export class ChatComponent implements AfterViewChecked {
 
   }
 
+  ngOnInit(): void {
+    const mediaDevices = (navigator as any).mediaDevices;
+
+    if (mediaDevices?.getUserMedia) {
+      mediaDevices.getUserMedia({ audio: true })
+        .then(() => { })
+        .catch((err: any) => console.error('Erro ao acessar microfone:', err));
+    } else {
+      console.error('navigator.mediaDevices.getUserMedia não está disponível');
+    }
+  }
+
   ngAfterViewChecked(): void {
     this.scrollToBottom();
   }
