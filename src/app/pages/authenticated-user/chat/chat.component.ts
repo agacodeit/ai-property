@@ -17,6 +17,7 @@ import { Message } from '../../../shared/models/chat/message';
 export class ChatComponent implements AfterViewChecked {
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
   @ViewChild('canvas', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
   newMessage = '';
   isRecording = false;
@@ -69,6 +70,19 @@ export class ChatComponent implements AfterViewChecked {
 
   ngAfterViewChecked(): void {
     this.scrollToBottom();
+  }
+
+  triggerFileInput() {
+    this.fileInputRef.nativeElement.click();
+  }
+
+  handleFile(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (file) {
+      console.log('Arquivo selecionado:', file);
+      // aqui você pode enviar, mostrar preview, etc.
+    }
   }
 
   async toggleRecording() {

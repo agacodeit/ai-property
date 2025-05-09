@@ -43,7 +43,8 @@
     </div>
 
     <footer class="input-container">
-      <i class="fas fa-paperclip" *ngIf="!isRecording"></i>
+      <i class="fas fa-paperclip" *ngIf="!isRecording" (click)="triggerFileInput()"></i>
+      <input #fileInput type="file" style="display: none" (change)="handleFile($event)" />
 
       <label for="chat-input" class="visually-hidden" *ngIf="!isRecording">Digite sua mensagem</label>
       <input *ngIf="!isRecording" id="chat-input" type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()"
