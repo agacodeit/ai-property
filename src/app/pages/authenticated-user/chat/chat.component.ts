@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewChecked, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Message } from '../../../shared/models/chat/message';
 import { HeaderComponent } from '../../../components/header/header.component';
@@ -16,8 +16,23 @@ import { HeaderComponent } from '../../../components/header/header.component';
 })
 export class ChatComponent implements AfterViewChecked {
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
+  @ViewChild('canvas', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  newMessage: string = '';
+  newMessage = '';
+  isRecording = false;
+  recordingTime = '00:00';
+  audioUrl: string | null = null;
+
+  private mediaRecorder: MediaRecorder | null = null;
+  private recordedChunks: Blob[] = [];
+  private startTime!: number;
+  private intervalId: any;
+
+  private audioContext!: AudioContext;
+  private analyser!: AnalyserNode;
+  private dataArray!: Uint8Array;
+  private source!: MediaStreamAudioSourceNode;
+  private animationId!: number;
 
   messages: Array<Message> = [
     {
@@ -48,8 +63,119 @@ export class ChatComponent implements AfterViewChecked {
     }
   ];
 
+  constructor(private cdr: ChangeDetectorRef) {
+
+  }
+
   ngAfterViewChecked(): void {
     this.scrollToBottom();
+  }
+
+  async toggleRecording() {
+    if (this.isRecording) {
+      this.stopRecording();
+    } else {
+      await this.startRecording();
+    }
+  }
+
+  private async startRecording() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+      // Setup media recorder
+      this.mediaRecorder = new MediaRecorder(stream);
+      this.recordedChunks = [];
+
+      this.mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          this.recordedChunks.push(event.data);
+        }
+      };
+
+      this.mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(this.recordedChunks, { type: 'audio/webm' });
+        this.audioUrl = URL.createObjectURL(audioBlob);
+      };
+
+      this.mediaRecorder.start();
+      this.startTime = Date.now();
+      this.isRecording = true;
+
+      // Iniciar cronômetro
+      this.intervalId = setInterval(() => {
+        const elapsedMs = Date.now() - this.startTime;
+        const seconds = Math.floor((elapsedMs / 1000) % 60);
+        const minutes = Math.floor(elapsedMs / 60000);
+        this.recordingTime = `${this.pad(minutes)}:${this.pad(seconds)}`;
+      }, 500);
+
+      // Setup audio visualization
+      this.audioContext = new AudioContext();
+      this.analyser = this.audioContext.createAnalyser();
+      this.source = this.audioContext.createMediaStreamSource(stream);
+      this.source.connect(this.analyser);
+      this.analyser.fftSize = 2048;
+      this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+      this.cdr.detectChanges(); // força o canvas a ser renderizado antes do uso
+
+      this.drawVisualizer();
+    } catch (err) {
+      console.error('Erro ao acessar microfone:', err);
+    }
+  }
+
+  private stopRecording() {
+    this.isRecording = false;
+    if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
+      this.mediaRecorder.stop();
+    }
+    clearInterval(this.intervalId);
+    this.recordingTime = '00:00';
+
+    // Parar animação e fechar contexto
+    if (this.audioContext) {
+      this.audioContext.close();
+    }
+    cancelAnimationFrame(this.animationId);
+  }
+
+  private pad(num: number): string {
+    return num < 10 ? '0' + num : '' + num;
+  }
+
+  private drawVisualizer() {
+    const canvas = this.canvasRef.nativeElement;
+    const canvasCtx = canvas.getContext('2d')!;
+    canvas.width = 300;
+    canvas.height = 60;
+
+    const draw = () => {
+      this.animationId = requestAnimationFrame(draw);
+
+      this.analyser.getByteTimeDomainData(this.dataArray);
+
+      canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+      canvasCtx.lineWidth = 2;
+      canvasCtx.strokeStyle = '#7f5af0';
+      canvasCtx.beginPath();
+
+      const sliceWidth = canvas.width / this.dataArray.length;
+      let x = 0;
+
+      for (let i = 0; i < this.dataArray.length; i++) {
+        const v = this.dataArray[i] / 128.0;
+        const y = (v * canvas.height) / 2;
+
+        i === 0 ? canvasCtx.moveTo(x, y) : canvasCtx.lineTo(x, y);
+        x += sliceWidth;
+      }
+
+      canvasCtx.lineTo(canvas.width, canvas.height / 2);
+      canvasCtx.stroke();
+    };
+
+    draw();
   }
 
   scrollToBottom(): void {

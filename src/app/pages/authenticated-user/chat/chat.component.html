@@ -41,11 +41,31 @@
         </div>
       </article>
     </div>
+
     <footer class="input-container">
-      <label for="chat-input" class="visually-hidden">Digite sua mensagem</label>
-      <input id="chat-input" type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()"
+      <i class="fas fa-paperclip" *ngIf="!isRecording"></i>
+
+      <label for="chat-input" class="visually-hidden" *ngIf="!isRecording">Digite sua mensagem</label>
+      <input *ngIf="!isRecording" id="chat-input" type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()"
         placeholder="Digite sua mensagem..." autocomplete="off" aria-label="Campo de entrada de mensagem" />
-      <button type="button" (click)="sendMessage()" aria-label="Enviar mensagem">Enviar</button>
+
+      <!-- Botão de gravação -->
+      <i class="fas fa-record-vinyl" [class.recording]="isRecording" (click)="toggleRecording()"
+        aria-label="Gravar áudio"></i>
+
+      <!-- Tempo de gravação -->
+      <span *ngIf="isRecording">{{ recordingTime }}</span>
+
+      <!-- Visualizador de áudio -->
+      <div class="audio-visualizer-container" *ngIf="isRecording">
+        <canvas #canvas></canvas>
+      </div>
+
+      <button type="button" (click)="sendMessage()" aria-label="Enviar mensagem">
+        Enviar
+      </button>
     </footer>
+
+
   </section>
 </main>
