@@ -43,9 +43,12 @@ nav.menu-items ul {
     }
 }
 
-/* Estilo do texto dos itens */
 .menu-item p {
     margin: 0;
     font-size: $font-sm;
     color: var(--txt-1);
+    max-width: 75%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

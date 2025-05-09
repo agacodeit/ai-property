@@ -11,7 +11,7 @@ export class MenuService {
     state: new BehaviorSubject<boolean>(true),
     menuItems: [
       {
-        label: 'Configurações do site',
+        label: 'Busca por apartamentos para compra',
         route: '/auth/chat'
       }
     ]
