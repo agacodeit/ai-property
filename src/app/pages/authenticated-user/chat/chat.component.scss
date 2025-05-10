@@ -175,6 +175,21 @@
     }
 }
 
+@keyframes spin {
+    0% {
+        transform: rotate(-180deg)
+    }
+
+    100% {
+        transform: scale(0deg);
+    }
+}
+
+
+.fa-solid.fa-spinner {
+    animation: spin infinite 1s;
+}
+
 .audio-visualizer-container {
     width: 100%;
 }

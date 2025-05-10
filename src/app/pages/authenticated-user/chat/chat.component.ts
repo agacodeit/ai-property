@@ -3,6 +3,7 @@ import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, ViewChild }
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../../components/header/header.component';
 import { Message } from '../../../shared/models/chat/message';
+import { ChatService } from '../../../services/chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -28,43 +29,23 @@ export class ChatComponent implements AfterViewChecked {
   private recordedChunks: Blob[] = [];
   private startTime!: number;
   private intervalId: any;
-
   private audioContext!: AudioContext;
   private analyser!: AnalyserNode;
   private dataArray!: Uint8Array;
   private source!: MediaStreamAudioSourceNode;
   private animationId!: number;
 
-  messages: Array<Message> = [
-    {
-      role: 'user',
-      text: 'Olá, preciso de um apartamento em Lisboa'
-    },
-    {
-      role: 'bot',
-      text: 'Boa tarde! Poderia me passar mais detalhes do que precisa?'
-    },
-    {
-      role: 'user',
-      text: 'Encontre apartamentos à venda em Lisboa com 2 quartos e menos de 250.000€'
-    },
-    {
-      role: 'bot',
-      text: 'Encontrei 1 imóvel que correspondem à sua busca:',
-      content: {
-        images: ['./assets/images/image1.jpg', './assets/images/image2.jpg', './assets/images/image3.jpg'],
-        title: 'Apartamento T2 em Lisboa',
-        price: 245000,
-        currency: 'EUR',
-        location: 'Lisboa, Avenidas Novas',
-        beds: '2 quartos',
-        description: 'Excelente apartamento T2 totalmente remodelado em zona central de Lisboa. Próximo de transportes e comércio. Boa exposição solar e vista desafogada.',
-        varieties: ['Varanda', 'Cozinha equipada', 'Elevador']
-      }
-    }
-  ];
+  get chat() {
+    return this.chatService.chat;
+  }
 
-  constructor(private cdr: ChangeDetectorRef) {
+  get thinking() {
+    return this.chatService.thinking;
+  }
+
+  constructor(private cdr: ChangeDetectorRef,
+    private chatService: ChatService
+  ) {
 
   }
 
@@ -230,11 +211,7 @@ export class ChatComponent implements AfterViewChecked {
 
     newMessage.text = this.newMessage;
     newMessage.role = 'user';
-    this.messages.push(newMessage);
+    this.chatService.sendMessage(newMessage);
     this.newMessage = '';
-    const newBotMessage = new Message();
-    newBotMessage.text = 'Desculpe, não consegui entender o que você quis dizer.';
-    newBotMessage.role = 'bot';
-    this.messages.push(newBotMessage);
   }
 }

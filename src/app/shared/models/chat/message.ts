@@ -2,6 +2,7 @@ export class Message {
     role: string = '';
     text: string = '';
     content?: Content;
+    chatId: string = '';
 }
 
 export class Content {
