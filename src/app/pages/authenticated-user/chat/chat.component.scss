@@ -43,6 +43,19 @@
             border-radius: $border-radius-sm;
         }
 
+        .message-error-icon {
+            margin-left: 8px;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            box-shadow: 1px 0px 8px -2px #d30e0e;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            background-color: #de4444;
+        }
+
         .message-content {
             border-radius: 12px;
             margin-top: 12px;

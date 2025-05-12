@@ -4,13 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../../components/header/header.component';
 import { Message } from '../../../shared/models/chat/message';
 import { ChatService } from '../../../services/chat.service';
+import { LoaderComponent } from '../../../components/loader/loader.component';
 
 @Component({
   selector: 'app-chat',
   imports: [
     CommonModule,
     FormsModule,
-    HeaderComponent
+    HeaderComponent,
+    LoaderComponent
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
@@ -211,7 +213,10 @@ export class ChatComponent implements AfterViewChecked {
 
     newMessage.text = this.newMessage;
     newMessage.role = 'user';
+
     this.chatService.sendMessage(newMessage);
+
     this.newMessage = '';
+
   }
 }

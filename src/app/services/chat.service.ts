@@ -1,14 +1,13 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable, NgZone } from '@angular/core';
 import { Message } from '../shared/models/chat/message';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-
 
   thinking: boolean = false;
   private chatData: Array<Message> = [
@@ -56,11 +55,19 @@ export class ChatService {
     } */
   ];
 
+  get token() {
+    const token = localStorage.getItem('tkn_ai_prt');
+    if (token) return token;
+    return '';
+  }
+
   get chat(): Array<Message> {
     return this.chatData;
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private zone: NgZone
+  ) { }
 
   setChat(chatId: string) {
 
@@ -70,21 +77,66 @@ export class ChatService {
     this.thinking = value;
   }
 
-  async sendMessage(message: Message) {
+  sendMessage(message: Message) {
     this.chatData.push(message);
-    try {
-      this.setThinking(true);
-      const response = await lastValueFrom(this.http.post<{ answer: string }>(`${environment.url}/query/`, {
-        query: message.text
-      }));
-      this.setThinking(false);
-      const bot = new Message();
-      bot.text = response.answer;
-      bot.role = 'bot';
-      this.chatData.push(bot);
-    } catch (error) {
+    this.setThinking(true);
+    const bot = new Message();
+    bot.text = '';
+    bot.role = 'bot';
+    this.chatData.push(bot);
+    this.streamChat(message.text).subscribe({
+      next: (response) => {
+        debugger
+        const text = response.answer;
+        this.chatData[this.chatData.length - 1].text += ` ${text}`;
+      },
+      error: () => {
+        this.setThinking(false);
+      },
+      complete: () => {
+        this.setThinking(false);
+      },
+    });
+  }
 
-    }
+  streamChat(message: string): Observable<any> {
+
+    return new Observable((observer) => {
+      fetch(`${environment.url}/secure/chat/send`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.token}`
+        },
+        body: JSON.stringify({ message }),
+      }).then((response) => {
+        const reader = response.body?.getReader();
+        const decoder = new TextDecoder();
+
+        const readChunk = () => {
+          reader?.read().then(({ done, value }) => {
+            if (done) {
+              this.zone.run(() => observer.complete());
+              return;
+            }
+
+            const chunk = decoder.decode(value, { stream: true });
+            try {
+              const parsed = JSON.parse(chunk);
+              this.zone.run(() => observer.next(parsed));
+            } catch (e) {
+              console.warn('Erro ao parsear chunk:', chunk);
+            }
+
+            readChunk(); // continue lendo
+          });
+        };
+
+        readChunk();
+      }).catch((error) => {
+        this.zone.run(() => observer.error(error));
+      });
+    });
   }
 
 }

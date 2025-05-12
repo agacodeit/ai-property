@@ -3,6 +3,7 @@ export class Message {
     text: string = '';
     content?: Content;
     chatId: string = '';
+    error?: boolean = false;
 }
 
 export class Content {

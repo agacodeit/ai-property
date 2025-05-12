@@ -3,6 +3,7 @@ import { ThemeService } from '../../services/theme.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -35,6 +36,7 @@ export class LoginComponent {
   ]
 
   constructor(private fb: FormBuilder,
+    private userService: UserService,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -43,10 +45,10 @@ export class LoginComponent {
     });
   }
 
-  onSubmit(): void {
+  async onSubmit() {
     if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
-      this.router.navigate(['/auth/chat/123'])
+      if (await this.userService.authenticate(this.loginForm.value)) this.router.navigate(['/auth/chat/123']);
+      else alert('Erro');
     }
   }
 

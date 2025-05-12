@@ -2,18 +2,22 @@
   <app-header></app-header>
   <section class="chat-container" aria-label="Chat entre usuário e assistente virtual">
     <div #messagesContainer class="messages" role="log" aria-live="polite">
-      <article *ngFor="let message of chat"
+      <article *ngFor="let message of chat; index as i"
         [ngClass]="{'user-message': message.role === 'user', 'bot-message': message.role === 'bot'}">
         <div class="avatar">
           <i class="fas fa-user" *ngIf="message.role === 'user'"></i>
           <i class="fas fa-home" *ngIf="message.role === 'bot'"></i>
         </div>
         <div class="mt-4">
-          <p class="message-bubble">
-            {{ message.text }}
-          </p>
+          <div class="d-flex align-items-end">
+            <p class="message-bubble">
+              {{ message.text }}
+            </p>
+            <div *ngIf="message.error" class="message-error-icon">
+              <i class="fa-solid fa-exclamation"></i>
+            </div>
+          </div>
           <div class="message-content" *ngIf="message.content as content">
-
             <div class="content-images">
               <img *ngFor="let img of content.images" width="200px" height="150px" [src]="img" alt="">
             </div>
@@ -63,15 +67,13 @@
         <canvas #canvas></canvas>
       </div>
 
-      <button type="button" (click)="toggleSendMessage()" aria-label="Enviar mensagem">
+      <button [disabled]="thinking" type="button" (click)="toggleSendMessage()" aria-label="Enviar mensagem">
         @if(thinking){
-        <i class="fa-solid fa-spinner"></i>
+        <loader></loader>
         }@else {
         Enviar
         }
       </button>
     </footer>
-
-
   </section>
 </main>
