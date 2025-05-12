@@ -33,13 +33,11 @@
     max-height: calc(100vh - 150px);
     scroll-behavior: smooth;
 
-    /* rolagem suave */
     article {
         padding: $padding-xs;
         align-items: flex-start;
 
         &.bot-message {
-            background-color: var(--bg-3);
             border-radius: $border-radius-sm;
         }
 
