@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +38,8 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -47,8 +49,10 @@ export class LoginComponent {
 
   async onSubmit() {
     if (this.loginForm.valid) {
-      if (await this.userService.authenticate(this.loginForm.value)) this.router.navigate(['/auth/chat/123']);
-      else alert('Erro');
+      if (await this.userService.authenticate(this.loginForm.value)) this.router.navigate(['/auth/chat']);
+      else {
+        this.toastService.show('erro', 'error')
+      };
     }
   }
 
