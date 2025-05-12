@@ -1,9 +1,12 @@
 <header class="header">
     <div class="header-content">
         <h2>IAProperty</h2>
-        <label class="switch">
-            <input type="checkbox" name="switch" (change)="toggleDarkMode()" [checked]="darkMode" />
-            <span class="slider round"></span>
-        </label>
+        <div class="d-flex align-items-center">
+            <label class="switch">
+                <input type="checkbox" name="switch" (change)="toggleDarkMode()" [checked]="darkMode" />
+                <span class="slider round"></span>
+            </label>
+            <u (click)="logout()" class="ml-8"> <strong>Sair</strong> </u>
+        </div>
     </div>
 </header>

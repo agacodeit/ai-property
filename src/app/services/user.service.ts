@@ -33,4 +33,9 @@ export class UserService {
     localStorage.setItem('tkn_ai_prt', accessToken);
   }
 
+  logout() {
+    this.loggedUserData = null;
+    localStorage.removeItem('tkn_ai_prt');
+  }
+
 }

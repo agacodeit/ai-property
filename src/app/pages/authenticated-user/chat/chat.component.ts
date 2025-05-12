@@ -194,6 +194,8 @@ export class ChatComponent implements AfterViewChecked {
     }
     if (!this.newMessage.trim()) return;
 
+    if (this.thinking) return;
+
     this.sendMessage();
   }
 

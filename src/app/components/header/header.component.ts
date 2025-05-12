@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { ThemeService } from '../../services/theme.service';
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +17,9 @@ export class HeaderComponent {
   }
 
   constructor(private menuService: MenuService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private userService: UserService,
+    private router: Router
   ) {
 
   }
@@ -26,6 +30,11 @@ export class HeaderComponent {
 
   toggleDarkMode() {
     this.themeService.toggleTheme();
+  }
+
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['/']);
   }
 
 }
