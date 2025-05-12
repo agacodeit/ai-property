@@ -91,6 +91,7 @@ export class ChatService {
       },
       error: () => {
         this.setThinking(false);
+        this.chatData[this.chatData.length - 1].text = 'Não consegui compreender...'
       },
       complete: () => {
         this.setThinking(false);
