@@ -86,7 +86,6 @@ export class ChatService {
     this.chatData.push(bot);
     this.streamChat(message.text).subscribe({
       next: (response) => {
-        debugger
         const text = response.answer;
         this.chatData[this.chatData.length - 1].text += ` ${text}`;
       },
