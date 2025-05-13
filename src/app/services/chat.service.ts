@@ -75,7 +75,7 @@ export class ChatService {
     this.streamChat(message.text).subscribe({
       next: (response) => {
         const text = response.answer;
-        this.chatData[this.chatData.length - 1].text += ` ${text}`;
+        if (text) this.chatData[this.chatData.length - 1].text += ` ${text}`;
       },
       error: () => {
         this.setThinking(false);

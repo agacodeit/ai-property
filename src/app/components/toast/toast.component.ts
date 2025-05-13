@@ -15,6 +15,7 @@ export class ToastComponent {
     toasts: { message: string, type: string }[] = [];
 
     showToast(message: string, type: 'success' | 'error' | 'info' | 'warning' = 'info') {
+        this.toasts = [];
         this.toasts.push({ message, type });
 
         setTimeout(() => {

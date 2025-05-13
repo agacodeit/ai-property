@@ -5,6 +5,7 @@ import { HeaderComponent } from '../../../components/header/header.component';
 import { Message } from '../../../shared/models/chat/message';
 import { ChatService } from '../../../services/chat.service';
 import { LoaderComponent } from '../../../components/loader/loader.component';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-chat',
@@ -46,7 +47,8 @@ export class ChatComponent implements AfterViewChecked {
   }
 
   constructor(private cdr: ChangeDetectorRef,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private toastService: ToastService
   ) {
 
   }
@@ -192,7 +194,10 @@ export class ChatComponent implements AfterViewChecked {
     if (this.audioUrl) {
       this.sendMessage(true);
     }
-    if (!this.newMessage.trim()) return;
+    if (!this.newMessage.trim()) {
+      this.toastService.show('Digite uma mensagem', 'warning');
+      return;
+    };
 
     if (this.thinking) return;
 
