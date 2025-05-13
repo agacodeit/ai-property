@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../shared/models/user/user';
 import { lastValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { AuthResult } from '../shared/models/auth/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +18,19 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  async authenticate(credentials: { username: string, password: string }) {
+  async authenticate(credentials: { username: string, password: string }): Promise<AuthResult> {
     try {
-      const response = await lastValueFrom(this.http.post<{ token: string }>(`${environment.url}/auth/login`, credentials));
+      const response = await lastValueFrom(
+        this.http.post<{ token: string }>(`${environment.url}/auth/login`, credentials)
+      );
       this.setToken(response.token);
-      return true;
-    } catch (error) { return false }
+      return { success: true };
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error
+      };
+    }
   }
 
   setLoggedUser(user: User) {

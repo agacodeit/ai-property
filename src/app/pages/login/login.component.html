@@ -10,13 +10,27 @@
                 <input type="email" id="email" formControlName="email" required autocomplete="username" />
             </div>
 
-            <div class="form-group">
+            <div class="form-group password-group">
                 <label for="password">Senha</label>
-                <input type="password" id="password" formControlName="password" required
-                    autocomplete="current-password" />
+                <div class="password-wrapper">
+                    <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" required
+                        autocomplete="current-password" />
+                    <button type="button" class="toggle-password" (click)="togglePasswordVisibility()"
+                        aria-label="Mostrar/ocultar senha">
+                        <i *ngIf="!showPassword" class="fa fa-eye"></i>
+                        <i *ngIf="showPassword" class="fa fa-eye-slash"></i>
+
+                    </button>
+                </div>
             </div>
 
-            <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
+            <button type="submit" class="send-btn" [disabled]="loginForm.invalid">
+                @if(loading){
+                <loader></loader>
+                }@else {
+                Enviar
+                }
+            </button>
 
             <p class="mt-24">Don't have an account? <a href="">Sign up</a></p>
         </form>

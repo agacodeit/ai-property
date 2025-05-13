@@ -12,12 +12,33 @@ main {
             margin-bottom: 24px;
         }
 
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-wrapper input {
+            width: 100%;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: -44px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
         .form-group {
             margin-bottom: 24px;
         }
 
-        button {
+        .send-btn {
             width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
 
@@ -32,7 +53,7 @@ main {
             height: 2px;
         }
 
-        p{
+        p {
             margin: 0 24px;
         }
     }

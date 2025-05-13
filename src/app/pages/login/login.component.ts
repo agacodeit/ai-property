@@ -5,19 +5,24 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { ToastService } from '../../services/toast.service';
+import { ErrorHandlerService } from '../../services/exceptions/error-handler.service';
+import { LoaderComponent } from '../../components/loader/loader.component';
 
 @Component({
   selector: 'app-login',
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoaderComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 
+  showPassword: boolean = false;
   loginForm: FormGroup;
+
   alternativeLogins = [
     {
       alt: 'Continue with Google',
@@ -36,10 +41,14 @@ export class LoginComponent {
     }
   ]
 
+  loading: boolean = false;
+  isSubmitted: boolean = false;
+
   constructor(private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private errorHandlerService: ErrorHandlerService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -47,12 +56,24 @@ export class LoginComponent {
     });
   }
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
   async onSubmit() {
+    this.isSubmitted = true;
     if (this.loginForm.valid) {
-      if (await this.userService.authenticate(this.loginForm.value)) this.router.navigate(['/auth/chat']);
-      else {
-        this.toastService.show('erro', 'error')
-      };
+      this.loading = true;
+      const result = await this.userService.authenticate(this.loginForm.value);
+      if (result.success) {
+        this.loading = false;
+        this.router.navigate(['/auth/chat']);
+      } else if (result.error) {
+        this.loading = false;
+        this.errorHandlerService.handleError(result.error);
+      }
+    } else {
+      this.toastService.show('Formulário inválido');
     }
   }
 
