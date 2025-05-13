@@ -200,7 +200,7 @@ export class ChatComponent implements AfterViewChecked {
   }
 
   async sendMessage(audio?: boolean) {
-    const newMessage = new Message
+    const newMessage = new Message();
     if (audio) {
       const audioElement = new Audio(this.audioUrl);
 

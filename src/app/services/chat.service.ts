@@ -13,33 +13,21 @@ export class ChatService {
   private chatData: Array<Message> = [
     /* {
       chatId: '',
-      read: true,
-      sent: true,
-      received: true,
       role: 'user',
       text: 'Olá, preciso de um apartamento em Lisboa'
     },
     {
       chatId: '',
-      read: true,
-      sent: true,
-      received: true,
       role: 'bot',
       text: 'Boa tarde! Poderia me passar mais detalhes do que precisa?'
     },
     {
       chatId: '',
-      read: true,
-      sent: true,
-      received: true,
       role: 'user',
       text: 'Encontre apartamentos à venda em Lisboa com 2 quartos e menos de 250.000€'
     },
     {
       chatId: '',
-      read: true,
-      sent: true,
-      received: true,
       role: 'bot',
       text: 'Encontrei 1 imóvel que correspondem à sua busca:',
       content: {
@@ -122,8 +110,17 @@ export class ChatService {
 
             const chunk = decoder.decode(value, { stream: true });
             try {
-              const parsed = JSON.parse(chunk);
-              this.zone.run(() => observer.next(parsed));
+              const mustSplit = chunk.indexOf('}{') >= 0;
+              if (mustSplit) {
+                const parts = chunk.split('}{');
+                parts.forEach(c => {
+                  const parsed = JSON.parse(`{${c.replace("{", "").replace("}", "")}}`);
+                  this.zone.run(() => observer.next(parsed));
+                });
+              } else {
+                const parsed = JSON.parse(chunk);
+                this.zone.run(() => observer.next(parsed));
+              }
             } catch (e) {
               console.warn('Erro ao parsear chunk:', chunk);
             }
