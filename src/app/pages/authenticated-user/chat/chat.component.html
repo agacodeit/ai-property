@@ -10,8 +10,8 @@
         </div>
         <div class="mt-4">
           <div class="d-flex align-items-end">
-            <p class="message-bubble">
-              {{ message.text }}
+            <p class="message-bubble d-flex">
+              {{ message.text }} <typing *ngIf="thinking && message.role === 'bot' && chat.length - 1 === i"></typing>
             </p>
             <div *ngIf="message.error" class="message-error-icon">
               <i class="fa-solid fa-exclamation"></i>

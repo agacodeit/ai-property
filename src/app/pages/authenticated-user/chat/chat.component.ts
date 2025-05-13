@@ -6,6 +6,7 @@ import { Message } from '../../../shared/models/chat/message';
 import { ChatService } from '../../../services/chat.service';
 import { LoaderComponent } from '../../../components/loader/loader.component';
 import { ToastService } from '../../../services/toast.service';
+import { TypingComponent } from '../../../components/typing/typing.component';
 
 @Component({
   selector: 'app-chat',
@@ -13,7 +14,8 @@ import { ToastService } from '../../../services/toast.service';
     CommonModule,
     FormsModule,
     HeaderComponent,
-    LoaderComponent
+    LoaderComponent,
+    TypingComponent
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'

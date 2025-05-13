@@ -12,7 +12,8 @@ export class MenuService {
     menuItems: [
       {
         label: 'Busca por apartamentos para compra',
-        route: '/auth/chat'
+        route: '/auth/chat',
+        dateHourIncluded: new Date()
       }
     ]
   };

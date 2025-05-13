@@ -11,9 +11,11 @@ nav.menu-items ul {
     margin: 0;
 
     li {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        h5 {
+            font-size: 12px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
 
         img {
             margin-right: 8px;
@@ -29,6 +31,10 @@ nav.menu-items ul {
     transition: 300ms;
     margin-bottom: 16px;
     min-height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
 
     &.active-menu {
         border-radius: $border-radius-sm;
@@ -47,8 +53,9 @@ nav.menu-items ul {
     margin: 0;
     font-size: $font-sm;
     color: var(--txt-1);
-    max-width: 75%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 75%;
+    display: block;
 }

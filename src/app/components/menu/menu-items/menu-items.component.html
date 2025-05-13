@@ -2,6 +2,7 @@
     <ul>
         <li *ngFor="let menuItem of menu.menuItems" class="menu-item" (click)="navigate(menuItem)"
             [class.active-menu]="currentMenuSelected(menuItem)">
+            <h5>{{menuItem.dateHourIncluded | customDate}}</h5>
             <div class="d-flex align-items-center">
                 <p>{{ menuItem.label }}</p>
             </div>

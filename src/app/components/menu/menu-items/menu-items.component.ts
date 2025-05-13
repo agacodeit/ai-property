@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuService } from '../../../services/menu.service';
 import { MenuItem } from '../../../shared/models/menu';
-import { ThemeService } from '../../../services/theme.service';
-import { Router } from '@angular/router';
+import { CustomDatePipe } from "../../../shared/utils/customDate";
 
 @Component({
   selector: 'app-menu-items',
   imports: [
-    CommonModule
-  ],
+    CommonModule,
+    CustomDatePipe
+],
   templateUrl: './menu-items.component.html',
   styleUrl: './menu-items.component.scss'
 })

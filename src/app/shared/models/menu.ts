@@ -8,4 +8,5 @@ export interface Menu {
 export interface MenuItem {
     label: string;
     route: string;
+    dateHourIncluded: Date;
 }
