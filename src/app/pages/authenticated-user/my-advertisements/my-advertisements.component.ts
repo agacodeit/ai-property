@@ -7,6 +7,7 @@ import { PropertyStatus } from '../../../shared/constants/propertyStatus';
 import { Property } from '../../../shared/models/property/property';
 import { ModalService } from '../../../services/modal/modal.service';
 import { CreateComponent } from './create/create.component';
+import { GeneralMessagesComponent } from '../../../components/general-messages/general-messages.component';
 
 @Component({
   selector: 'app-my-advertisements',
@@ -54,6 +55,23 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
         title: 'Criar anúncio',
         icon: 'fa-solid fa-arrow-trend-up',
         content: property
+      }
+    })?.subscribe(() => {
+      this.modalService.open(MyAdvertisementsComponent, {
+        title: 'Meus anúncios',
+        icon: 'fa-solid fa-arrow-trend-up',
+        fullscreen: true
+      })
+    });
+  }
+
+  deleteProperty(propertyId: string) {
+    this.modalService.close(null, {
+      component: GeneralMessagesComponent,
+      data: {
+        title: 'Remover anúncio',
+        icon: 'fa-solid fa-arrow-trend-up',
+        content: propertyId
       }
     })?.subscribe(() => {
       this.modalService.open(MyAdvertisementsComponent, {
