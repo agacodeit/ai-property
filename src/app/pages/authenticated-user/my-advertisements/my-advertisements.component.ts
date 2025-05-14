@@ -4,6 +4,9 @@ import { ErrorHandlerService } from '../../../services/exceptions/error-handler.
 import { PropertyService } from '../../../services/property/property.service';
 import { LoaderComponent } from "../../../components/loader/loader.component";
 import { PropertyStatus } from '../../../shared/constants/propertyStatus';
+import { Property } from '../../../shared/models/property/property';
+import { ModalService } from '../../../services/modal/modal.service';
+import { CreateComponent } from './create/create.component';
 
 @Component({
   selector: 'app-my-advertisements',
@@ -24,7 +27,8 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
   }
 
   constructor(private propertyService: PropertyService,
-    private errorHandlerService: ErrorHandlerService
+    private errorHandlerService: ErrorHandlerService,
+    private modalService: ModalService
   ) { }
 
   ngOnInit(): void {
@@ -41,6 +45,23 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
       this.errorHandlerService.handleError(response.error);
     }
     this.loadingProperties = false;
+  }
+
+  editProperty(property: Property) {
+    this.modalService.close(null, {
+      component: CreateComponent,
+      data: {
+        title: '',
+        icon: '',
+        content: property
+      }
+    })?.subscribe(() => {
+      this.modalService.open(MyAdvertisementsComponent, {
+        title: 'Meus anúncios',
+        icon: 'fa-solid fa-arrow-trend-up',
+        fullscreen: true
+      })
+    });
   }
 
 }
