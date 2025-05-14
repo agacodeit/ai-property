@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../shared/models/user/user';
 import { lastValueFrom } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { AuthResult } from '../shared/models/auth/auth';
+import { environment } from '../../../environments/environment';
+import { AuthResult } from '../../shared/models/auth/auth';
+import { User } from '../../shared/models/user/user';
 
 @Injectable({
   providedIn: 'root'

@@ -1,8 +1,8 @@
 // error-handler.service.ts
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ToastService } from '../toast.service';
 import { ErrorMessagesService } from './error-message.service';
+import { ToastService } from '../toast/toast.service';
 
 @Injectable({ providedIn: 'root' })
 export class ErrorHandlerService {

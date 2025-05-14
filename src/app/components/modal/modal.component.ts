@@ -3,17 +3,14 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   Output,
-  ViewChild,
-  ViewContainerRef,
-  ComponentFactoryResolver,
-  Type,
   Renderer2,
-  OnDestroy
+  Type,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
-import { menuAnimation } from '../../shared/animations/menu-animations';
 import { modalAnimation } from '../../shared/animations/modal-animations';
-import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-modal',
@@ -34,8 +31,7 @@ export class ModalComponent implements OnDestroy {
 
   @ViewChild('container', { read: ViewContainerRef, static: true }) container!: ViewContainerRef;
 
-  constructor(private renderer: Renderer2,
-    private modalService: ModalService
+  constructor(private renderer: Renderer2
 
   ) {
     // Escutador de tecla "Esc"

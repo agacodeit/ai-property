@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
-import { ThemeService } from '../../services/theme.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
-import { ToastService } from '../../services/toast.service';
-import { ErrorHandlerService } from '../../services/exceptions/error-handler.service';
 import { LoaderComponent } from '../../components/loader/loader.component';
+import { ErrorHandlerService } from '../../services/exceptions/error-handler.service';
+import { ToastService } from '../../services/toast/toast.service';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-login',

@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MenuService } from '../../services/menu.service';
-import { MenuItemsComponent } from './menu-items/menu-items.component';
-import { ModalService } from '../../services/modal.service';
 import { MyAdvertisementsComponent } from '../../pages/authenticated-user/my-advertisements/my-advertisements.component';
+import { MenuService } from '../../services/menu/menu.service';
+import { ModalService } from '../../services/modal/modal.service';
+import { MenuItemsComponent } from './menu-items/menu-items.component';
 
 @Component({
   selector: 'app-menu',

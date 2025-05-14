@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { MenuService } from '../../services/menu.service';
-import { ThemeService } from '../../services/theme.service';
-import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { MenuService } from '../../services/menu/menu.service';
+import { ThemeService } from '../../services/theme/theme.service';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-header',

@@ -3,10 +3,10 @@ import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, ViewChild }
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../../components/header/header.component';
 import { Message } from '../../../shared/models/chat/message';
-import { ChatService } from '../../../services/chat.service';
+import { ChatService } from '../../../services/chat/chat.service';
 import { LoaderComponent } from '../../../components/loader/loader.component';
-import { ToastService } from '../../../services/toast.service';
 import { TypingComponent } from '../../../components/typing/typing.component';
+import { ToastService } from '../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-chat',

@@ -1,8 +1,8 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { Message } from '../shared/models/chat/message';
+import { Message } from '../../shared/models/chat/message';
 import { lastValueFrom, Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

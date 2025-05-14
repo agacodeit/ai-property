@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { MenuService } from '../../services/menu/menu.service';
+import { ThemeService } from '../../services/theme/theme.service';
 import { MenuComponent } from '../../components/menu/menu.component';
-import { MenuService } from '../../services/menu.service';
-import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-authenticated-user',
