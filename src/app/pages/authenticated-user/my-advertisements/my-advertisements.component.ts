@@ -51,8 +51,8 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
     this.modalService.close(null, {
       component: CreateComponent,
       data: {
-        title: '',
-        icon: '',
+        title: 'Criar anúncio',
+        icon: 'fa-solid fa-arrow-trend-up',
         content: property
       }
     })?.subscribe(() => {
