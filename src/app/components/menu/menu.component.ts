@@ -27,7 +27,8 @@ export class MenuComponent {
   openMyAdvertisements() {
     this.modalService.open(MyAdvertisementsComponent, {
       title: 'Meus anúncios',
-      icon: 'fa-solid fa-arrow-trend-up'
+      icon: 'fa-solid fa-arrow-trend-up',
+      fullscreen: true
     })
   }
 

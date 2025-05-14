@@ -1,14 +1,46 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ErrorHandlerService } from '../../../services/exceptions/error-handler.service';
+import { PropertyService } from '../../../services/property/property.service';
+import { LoaderComponent } from "../../../components/loader/loader.component";
+import { PropertyStatus } from '../../../shared/constants/propertyStatus';
 
 @Component({
   selector: 'app-my-advertisements',
   imports: [
-    CommonModule
+    CommonModule,
+    LoaderComponent
   ],
   templateUrl: './my-advertisements.component.html',
   styleUrl: './my-advertisements.component.scss'
 })
-export class MyAdvertisementsComponent {
+export class MyAdvertisementsComponent implements OnInit, OnDestroy {
+
+  loadingProperties: boolean = true;
+  propertyStatus = PropertyStatus;
+
+  get propertyList() {
+    return this.propertyService.propertyList;
+  }
+
+  constructor(private propertyService: PropertyService,
+    private errorHandlerService: ErrorHandlerService
+  ) { }
+
+  ngOnInit(): void {
+    this.listProperties();
+  }
+
+  ngOnDestroy(): void {
+    this.propertyService.clearPropertyList();
+  }
+
+  async listProperties() {
+    const response = await this.propertyService.listProperties();
+    if (response.error) {
+      this.errorHandlerService.handleError(response.error);
+    }
+    this.loadingProperties = false;
+  }
 
 }
