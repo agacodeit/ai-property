@@ -5,6 +5,7 @@ import { ModalService } from '@lucasgomesagacode/modal';
 import { routes } from './app.routes';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { provideHttpClient } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,6 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     ModalService,
     FontAwesomeModule,
-    provideHttpClient()
+    provideHttpClient(),
+    provideAnimations()
   ]
 };

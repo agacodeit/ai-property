@@ -1,0 +1,15 @@
+<div class="modal-backdrop" (click)="onClose()"></div>
+
+<div class="modal" [class.fullscreen]="fullscreen" @modalAnimation>
+    <header>
+        <h1>AIProperty</h1>
+        <div class="title">
+            <i class="{{icon}}"></i>
+            <h2>{{title}}</h2>
+        </div>
+        <button class="close-btn" (click)="onClose()">
+            <i class="fas fa-window-close"></i>
+        </button>
+    </header>
+    <ng-template #container></ng-template>
+</div>
