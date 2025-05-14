@@ -1,5 +1,171 @@
-<main>
-    <button class="primary-btn">
-        Criar anúncio +
-    </button>
+<main class="modal-container">
+    <div class="create-advertisement">
+        <button class="primary-btn">
+            Criar anúncio +
+        </button>
+    </div>
+
+    <div class="advertisements">
+        <div class="message-content" *ngIf="{status: 'PAUSED', images: ['./assets/images/image1.jpg','./assets/images/image2.jpg','./assets/images/image3.jpg'], title: 'titulo', price: 2000, currency: 'EUR', location: 'location',
+                beds: 3, description: 'Um sitio confortável!',varieties: ['Lavanda']
+            } as content">
+            <div class="header">
+                <div class="status" [class.paused]="content.status === 'PAUSED'"
+                    [class.published]="content.status === 'PUBLISHED'">
+                    <i class="mr-12 fa-solid fa-pause"></i>
+                    <p>Pausado</p>
+                </div>
+                <div class="action">
+                    <i class="fas fa-edit"></i>
+                    <i class="fa-solid fa-trash"></i>
+                </div>
+            </div>
+            <div class="content-images">
+                <img *ngFor="let img of content.images" [src]="img" alt="">
+            </div>
+
+            <h3 class="content-title">{{content.title}} </h3>
+            <div class="d-flex align-items-center justify-content-between">
+                <p class="content-price">{{content.price | currency: content.currency}}</p>
+
+                <p class="content-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{content.location}}
+                    <i class="fas fa-bed"></i>
+                    {{content.beds}}
+                </p>
+            </div>
+
+            <p class="content-description">
+                {{content.description}}
+            </p>
+
+            <div class="content-variaties">
+                <div class="item" *ngFor="let item of content.varieties">
+                    <p>{{item}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="message-content" *ngIf="{status: 'PUBLISHED', images: ['./assets/images/image1.jpg','./assets/images/image2.jpg','./assets/images/image3.jpg'], title: 'titulo', price: 2000, currency: 'EUR', location: 'location',
+        beds: 3, description: 'Um sitio confortável!',varieties: ['Lavanda']
+    } as content">
+            <div class="header">
+                <div class="status" [class.paused]="content.status === 'PAUSED'"
+                    [class.published]="content.status === 'PUBLISHED'">
+                    <i class="mr-12 fa-solid fa-play"></i>
+                    <p>Publicado</p>
+                </div>
+                <div class="action">
+                    <i class="fas fa-edit"></i>
+                    <i class="fa-solid fa-trash"></i>
+                </div>
+            </div>
+            <div class="content-images">
+                <img *ngFor="let img of content.images" [src]="img" alt="">
+            </div>
+
+            <h3 class="content-title">{{content.title}} </h3>
+            <div class="d-flex align-items-center justify-content-between">
+                <p class="content-price">{{content.price | currency: content.currency}}</p>
+
+                <p class="content-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{content.location}}
+                    <i class="fas fa-bed"></i>
+                    {{content.beds}}
+                </p>
+            </div>
+
+            <p class="content-description">
+                {{content.description}}
+            </p>
+
+            <div class="content-variaties">
+                <div class="item" *ngFor="let item of content.varieties">
+                    <p>{{item}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="message-content" *ngIf="{status: 'PAUSED', images: ['./assets/images/image1.jpg','./assets/images/image2.jpg','./assets/images/image3.jpg'], title: 'titulo', price: 2000, currency: 'EUR', location: 'location',
+        beds: 3, description: 'Um sitio confortável!',varieties: ['Lavanda']
+    } as content">
+            <div class="header">
+                <div class="status" [class.paused]="content.status === 'PAUSED'"
+                    [class.published]="content.status === 'PUBLISHED'">
+                    <i class="mr-12 fa-solid fa-pause"></i>
+                    <p>Pausado</p>
+                </div>
+                <div class="action">
+                    <i class="fas fa-edit"></i>
+                    <i class="fa-solid fa-trash"></i>
+                </div>
+            </div>
+            <div class="content-images">
+                <img *ngFor="let img of content.images" [src]="img" alt="">
+            </div>
+
+            <h3 class="content-title">{{content.title}} </h3>
+            <div class="d-flex align-items-center justify-content-between">
+                <p class="content-price">{{content.price | currency: content.currency}}</p>
+
+                <p class="content-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{content.location}}
+                    <i class="fas fa-bed"></i>
+                    {{content.beds}}
+                </p>
+            </div>
+
+            <p class="content-description">
+                {{content.description}}
+            </p>
+
+            <div class="content-variaties">
+                <div class="item" *ngFor="let item of content.varieties">
+                    <p>{{item}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="message-content" *ngIf="{status: 'PAUSED', images: ['./assets/images/image1.jpg','./assets/images/image2.jpg','./assets/images/image3.jpg'], title: 'titulo', price: 2000, currency: 'EUR', location: 'location',
+beds: 3, description: 'Um sitio confortável!',varieties: ['Lavanda']
+} as content">
+            <div class="header">
+                <div class="status" [class.paused]="content.status === 'PAUSED'"
+                    [class.published]="content.status === 'PUBLISHED'">
+                    <i class="mr-12 fa-solid fa-pause"></i>
+                    <p>Pausado</p>
+                </div>
+                <div class="action">
+                    <i class="fas fa-edit"></i>
+                    <i class="fa-solid fa-trash"></i>
+                </div>
+            </div>
+            <div class="content-images">
+                <img *ngFor="let img of content.images" [src]="img" alt="">
+            </div>
+
+            <h3 class="content-title">{{content.title}} </h3>
+            <div class="d-flex align-items-center justify-content-between">
+                <p class="content-price">{{content.price | currency: content.currency}}</p>
+
+                <p class="content-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{content.location}}
+                    <i class="fas fa-bed"></i>
+                    {{content.beds}}
+                </p>
+            </div>
+
+            <p class="content-description">
+                {{content.description}}
+            </p>
+
+            <div class="content-variaties">
+                <div class="item" *ngFor="let item of content.varieties">
+                    <p>{{item}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
