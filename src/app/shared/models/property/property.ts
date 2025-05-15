@@ -19,6 +19,7 @@ export class PropertyImage {
     fileCode: string = '';
     downloadUrl?: string;
     file?: File;
+    loaded?: boolean;
 }
 
 export class PropertyHttpResponse {

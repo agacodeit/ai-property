@@ -20,12 +20,20 @@
                     </div>
                 </div>
                 <div class="content-images" *ngIf="property.imageUrls.length; else noImages">
-                    <img *ngFor="let img of property.imageUrls" [src]="img.downloadUrl" alt="">
+                    <div class="image-wrapper" *ngFor="let img of property.imageUrls">
+                        <div class="image-loading" *ngIf="!img.loaded">
+                            <i class="fa-solid fa-image fa-2x"></i>
+                        </div>
+                        <img [src]="img.downloadUrl" alt="" (load)="img.loaded = true" [class.loaded]="img.loaded" />
+                    </div>
                 </div>
                 <ng-template #noImages>
-                    <div class="no-image">
-                        <p>Nenhuma imagem adicionada</p>
-                        <i class="fa-solid fa-image"></i>
+                    <div class="content-images">
+                        <div class="image-wrapper">
+                            <div class="image-loading">
+                                <i class="fa-solid fa-image fa-2x"></i>
+                            </div>
+                        </div>
                     </div>
                 </ng-template>
 

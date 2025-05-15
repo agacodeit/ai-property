@@ -10,7 +10,8 @@
     <!-- Custom file input -->
     <div class="file-upload-wrapper">
         <label for="imageUpload" class="file-upload-label">
-            <i class="fa-solid fa-upload"></i> Selecionar
+            <i class="fa-solid fa-upload"></i>
+            <p>Selecionar</p>
         </label>
         <input type="file" id="imageUpload" multiple (change)="onFilesSelected($event)" hidden />
     </div>
@@ -31,7 +32,7 @@
         <button class="secondary-btn" type="button" (click)="previous()">
             <i class="fa-solid fa-arrow-left"></i> Anterior
         </button>
-        <button class="primary-btn" type="button" (click)="publish()">
+        <button class="primary-btn" type="button" [disabled]="loadingImages" (click)="publish()">
             Publicar anúncio
         </button>
     </div>

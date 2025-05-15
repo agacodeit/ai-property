@@ -10,6 +10,10 @@ button {
     &.primary-btn {
         background-color: var(--primary-1);
 
+        i {
+            color: white;
+        }
+
         &:hover {
             background-color: #0d8e6c;
         }
@@ -30,6 +34,10 @@ button {
         background-color: var(--bg-1);
         border: 1px solid var(--bord-1);
         color: var(--txt-1);
+
+        i {
+            color: var(--txt-1);
+        }
     }
 
 

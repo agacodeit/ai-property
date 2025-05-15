@@ -13,11 +13,13 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrl: './images.component.scss'
 })
 export class ImagesComponent {
+
   @Input() property: Property = new Property();
   @Output() previousEmitter = new EventEmitter();
   @Output() publishEmitter = new EventEmitter();
 
   imageUrls: Array<PropertyImage> = [];
+  loadingImages: boolean = false;
 
   constructor(private uploadService: UploadService,
     private cdr: ChangeDetectorRef
@@ -43,6 +45,7 @@ export class ImagesComponent {
     const files = Array.from(input.files);
 
     (async () => {
+      this.loadingImages = true;
       for (const file of files) {
         const upload = (await this.uploadService.uploadFile(file)).content;
 
@@ -55,6 +58,7 @@ export class ImagesComponent {
         this.imageUrls.push(propertyImage);
         this.cdr.detectChanges();
       }
+      this.loadingImages = false;
     })();
   }
 
@@ -63,6 +67,7 @@ export class ImagesComponent {
   }
 
   publish() {
+    if (this.loadingImages) return;
     this.property.imageUrls = this.imageUrls.map(i => {
       delete i.file;
       return i
