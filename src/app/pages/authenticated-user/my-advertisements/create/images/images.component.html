@@ -1,1 +1,37 @@
-<p>images works!</p>
+<main>
+    <header>
+        <i class="fa-solid fa-image"></i>
+        <div>
+            <h5>Galeria de fotos</h5>
+            <p>Selecione pelo menos 5 fotos do seu imóvel. Escolha uma para ser a foto principal do seu anúncio.</p>
+        </div>
+    </header>
+
+    <!-- Custom file input -->
+    <div class="file-upload-wrapper">
+        <label for="imageUpload" class="file-upload-label">
+            <i class="fa-solid fa-upload"></i> Selecionar
+        </label>
+        <input type="file" id="imageUpload" multiple (change)="onFilesSelected($event)" hidden />
+    </div>
+
+    <!-- Preview das imagens -->
+    <div class="image-preview-container">
+        <div class="image-preview" *ngFor="let image of imageUrls">
+            <div class="remove-image">
+                <i class="fa-solid fa-xmark" (click)="removeImage(image)"></i>
+            </div>
+            <img [src]="getImageUrl(image.file)" alt="{{ image.fileName }}">
+        </div>
+    </div>
+
+
+    <div class="d-flex justify-content-center gap-24">
+        <button class="secondary-btn" type="button" (click)="previous()">
+            <i class="fa-solid fa-arrow-left"></i> Anterior
+        </button>
+        <button class="primary-btn" type="button" (click)="publish()">
+            Publicar anúncio
+        </button>
+    </div>
+</main>

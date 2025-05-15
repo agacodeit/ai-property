@@ -17,10 +17,12 @@ button {
 
 
     &.secondary-btn {
-        background-color: var(--secondary-1);
+        background-color: transparent;
+        border: 1px solid var(--primary-1);
+        color: var(--primary-1);
 
-        &:hover {
-            background-color: #a7b1ad;
+        i {
+            color: var(--primary-1);
         }
     }
 

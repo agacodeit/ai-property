@@ -79,3 +79,27 @@ input {
         display: block;
     }
 }
+
+.file-upload-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.file-upload-label {
+    border: 1px dashed var(--bord-1);
+    background-color: var(--primary-lilac-100);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.file-upload-label:hover {
+    background-color: var(--primary-lilac-80);
+}

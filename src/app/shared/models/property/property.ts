@@ -17,10 +17,12 @@ export class Property {
 export class PropertyImage {
     fileName: string = '';
     fileCode: string = '';
-    downloadUrl: string = '';
+    downloadUrl?: string;
+    file?: File;
 }
 
 export class PropertyHttpResponse {
     success: boolean = false;
     error?: any;
+    content?: any;
 }

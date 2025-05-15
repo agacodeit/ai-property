@@ -11,7 +11,8 @@
             </div>
 
             <div *ngSwitchCase="1">
-                <app-images [property]="property"></app-images>
+                <app-images [property]="property" (previousEmitter)="updateForm($event)"
+                    (publishEmitter)="createProperty($event)"></app-images>
             </div>
         </ng-container>
     </div>

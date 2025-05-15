@@ -19,9 +19,15 @@
                         <i class="fa-solid fa-trash" (click)="deleteProperty(property.id)"></i>
                     </div>
                 </div>
-                <div class="content-images">
+                <div class="content-images" *ngIf="property.imageUrls.length; else noImages">
                     <img *ngFor="let img of property.imageUrls" [src]="img.downloadUrl" alt="">
                 </div>
+                <ng-template #noImages>
+                    <div class="no-image">
+                        <p>Nenhuma imagem adicionada</p>
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+                </ng-template>
 
                 <h3 class="content-title">{{property.title}} </h3>
                 <div class="d-flex align-items-center justify-content-between">
