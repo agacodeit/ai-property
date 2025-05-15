@@ -1,4 +1,18 @@
-<p>create works!</p>
-<button class="primary-btn" (click)="close()">
-    fechar
-</button>
+<div class="tabs">
+    <div class="tab-header">
+        <button *ngFor="let tab of tabs; let i = index" [class.active]="activeTab >= i">
+        </button>
+    </div>
+
+    <div class="tab-content">
+        <ng-container [ngSwitch]="activeTab">
+            <div *ngSwitchCase="0">
+                <app-info [property]="property" (nextStepEmitter)="updateForm($event)"></app-info>
+            </div>
+
+            <div *ngSwitchCase="1">
+                <app-images [property]="property"></app-images>
+            </div>
+        </ng-container>
+    </div>
+</div>

@@ -6,6 +6,14 @@
     margin-top: 2px;
 }
 
+.mb-24 {
+    margin-bottom: 24px;
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
 .ml-2 {
     margin-left: 2px;
 }
@@ -16,6 +24,10 @@
 
 .mr-12 {
     margin-right: 12px;
+}
+
+.mr-16 {
+    margin-right: 16px;
 }
 
 .mb-2 {
@@ -44,6 +56,14 @@
 
 .justify-content-between {
     justify-content: space-between;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.justify-content-end {
+    justify-content: flex-end;
 }
 
 .text-center {

@@ -1,0 +1,14 @@
+main {
+    .action {
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+            margin-right: 16px;
+
+            &:last-of-type {
+                margin: 0;
+            }
+        }
+    }
+}

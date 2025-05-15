@@ -67,7 +67,7 @@
         <canvas #canvas></canvas>
       </div>
 
-      <button [disabled]="thinking" type="button" (click)="toggleSendMessage()" aria-label="Enviar mensagem">
+      <button [disabled]="thinking" type="button" class="primary-btn" (click)="toggleSendMessage()" aria-label="Enviar mensagem">
         @if(thinking){
         <loader></loader>
         }@else {

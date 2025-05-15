@@ -25,6 +25,7 @@ import { modalAnimation } from '../../shared/animations/modal-animations';
 export class ModalComponent implements OnDestroy {
   @Input() title!: string;
   @Input() icon!: string;
+  @Input() content?: any;
   @Input() fullscreen = false;
   @Output() close = new EventEmitter<void>();
   private escListener: () => void;
@@ -34,7 +35,6 @@ export class ModalComponent implements OnDestroy {
   constructor(private renderer: Renderer2
 
   ) {
-    // Escutador de tecla "Esc"
     this.escListener = this.renderer.listen('document', 'keydown', (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         this.onClose();

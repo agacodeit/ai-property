@@ -1,0 +1,28 @@
+.tabs {
+    overflow: hidden;
+}
+
+.tab-header {
+    display: flex;
+    gap: 6px;
+}
+
+.tab-header button {
+    border-radius: 2px;
+    padding: 0;
+    flex: 1;
+    border: none;
+    height: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    background-color: var(--bg-2);
+    transition: background 0.2s ease;
+
+    &.active {
+        background-color: var(--primary-1);
+    }
+}
+
+.tab-content {
+    padding-top: 24px;
+}

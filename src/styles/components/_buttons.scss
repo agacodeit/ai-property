@@ -1,6 +1,5 @@
 button {
     padding: 8px 16px;
-    background-color: var(--primary-1);
     border: none;
     border-radius: 6px;
     height: 48px;
@@ -8,9 +7,29 @@ button {
     cursor: pointer;
     transition: background-color 0.2s;
 
-    &:hover {
-        background-color: #0d8e6c;
+    &.primary-btn {
+        background-color: var(--primary-1);
+
+        &:hover {
+            background-color: #0d8e6c;
+        }
     }
+
+
+    &.secondary-btn {
+        background-color: var(--secondary-1);
+
+        &:hover {
+            background-color: #a7b1ad;
+        }
+    }
+
+    &.outline-btn {
+        background-color: var(--bg-1);
+        border: 1px solid var(--bord-1);
+        color: var(--txt-1);
+    }
+
 
     &:disabled {
         cursor: not-allowed;

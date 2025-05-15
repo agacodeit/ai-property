@@ -1,0 +1,37 @@
+main {
+    header {
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+
+        i {
+            margin-right: 16px;
+            color: var(--primary-1);
+        }
+
+        h5 {
+            color: var(--primary-1);
+            font-weight: 700;
+            font-size: 18px;
+        }
+    }
+
+    .property-type {
+        display: flex;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    form {
+        .grid-column-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 24px;
+        }
+
+        .ammenities {
+            margin-bottom: 24px;
+            margin-top: 16px;
+        }
+    }
+}

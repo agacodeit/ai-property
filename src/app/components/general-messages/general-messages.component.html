@@ -1,1 +1,9 @@
-<p>general-messages works!</p>
+<main>
+    <p>{{content.message}}</p>
+
+    <div class="action" *ngIf="content.btns">
+        <button class="{{btn.class}}" *ngFor="let btn of content.btns" (click)="close(btn.value)">
+            {{btn.label}}
+        </button>
+    </div>
+</main>

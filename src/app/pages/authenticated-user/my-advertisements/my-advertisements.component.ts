@@ -40,6 +40,22 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
     this.propertyService.clearPropertyList();
   }
 
+  createProperty() {
+    this.modalService.close(null, {
+      component: CreateComponent,
+      data: {
+        title: 'Criar anúncio',
+        icon: 'fa-solid fa-arrow-trend-up'
+      }
+    })?.subscribe(() => {
+      this.modalService.open(MyAdvertisementsComponent, {
+        title: 'Meus anúncios',
+        icon: 'fa-solid fa-arrow-trend-up',
+        fullscreen: true
+      })
+    });
+  }
+
   async listProperties() {
     const response = await this.propertyService.listProperties();
     if (response.error) {
@@ -52,9 +68,9 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
     this.modalService.close(null, {
       component: CreateComponent,
       data: {
-        title: 'Criar anúncio',
+        title: 'Editar anúncio',
         icon: 'fa-solid fa-arrow-trend-up',
-        content: property
+        content: { property }
       }
     })?.subscribe(() => {
       this.modalService.open(MyAdvertisementsComponent, {
@@ -71,14 +87,35 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
       data: {
         title: 'Remover anúncio',
         icon: 'fa-solid fa-arrow-trend-up',
-        content: propertyId
+        content: {
+          propertyId,
+          message: 'Deseja realmente remover este anúncio?',
+          btns: [
+            {
+              class: 'secondary-btn',
+              label: 'Cancelar',
+              value: false
+            },
+            {
+              class: 'primary-btn',
+              label: 'Confirmar',
+              value: true
+            }
+          ]
+        }
       }
-    })?.subscribe(() => {
+    })?.subscribe(async (confirm: boolean) => {
+      if (confirm) {
+        const response = await this.propertyService.deleteProperty(propertyId);
+        if (response.error) this.errorHandlerService.handleError(response.error);
+      }
+
       this.modalService.open(MyAdvertisementsComponent, {
         title: 'Meus anúncios',
         icon: 'fa-solid fa-arrow-trend-up',
         fullscreen: true
       })
+
     });
   }
 
