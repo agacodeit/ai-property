@@ -21,7 +21,8 @@
             <div class="remove-image">
                 <i class="fa-solid fa-xmark" (click)="removeImage(image)"></i>
             </div>
-            <img [src]="getImageUrl(image.file)" alt="{{ image.fileName }}">
+            <img *ngIf="!image.downloadUrl" [src]="getImageUrl(image.file)" alt="{{ image.fileName }}">
+            <img *ngIf="image.downloadUrl" [src]="image.downloadUrl" alt="{{ image.fileName }}">
         </div>
     </div>
 

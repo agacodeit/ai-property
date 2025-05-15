@@ -21,13 +21,15 @@ export class InfoComponent implements OnChanges {
   @Output() nextStepEmitter = new EventEmitter();
 
   infoForm: FormGroup = new FormGroup({
+    id: new FormControl(''),
     title: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
-    price: new FormControl(0, Validators.required),
-    bedrooms: new FormControl(0, Validators.required),
-    bathrooms: new FormControl(0, Validators.required),
+    price: new FormControl(null, Validators.required),
+    bedrooms: new FormControl(null, Validators.required),
+    bathrooms: new FormControl(null, Validators.required),
     hasPool: new FormControl(false, Validators.required),
-    hasGourmetBalcony: new FormControl(false, Validators.required)
+    hasGourmetBalcony: new FormControl(false, Validators.required),
+    imageUrls: new FormControl([])
   });
 
   constructor(private toastService: ToastService) {

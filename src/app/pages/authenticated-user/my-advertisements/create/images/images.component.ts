@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Property, PropertyImage } from '../../../../../shared/models/property/property';
 import { CommonModule } from '@angular/common';
 import { UploadService } from '../../../../../services/upload/upload.service';
@@ -21,8 +21,18 @@ export class ImagesComponent {
 
   constructor(private uploadService: UploadService,
     private cdr: ChangeDetectorRef
-  ) {
+  ) { }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['property'].currentValue) {
+      this.imageUrls = this.property.imageUrls;
+      Object.keys(this.property).forEach(key => {
+        const typedKey = key as keyof Property;
+        if (typedKey === 'imageUrls') {
+          this.imageUrls = this.property[typedKey];
+        }
+      });
+    }
   }
 
   onFilesSelected(event: Event) {

@@ -53,8 +53,10 @@ export class CreateComponent {
   }
 
   async createProperty(property: Property) {
-    const response = await this.propertyService.createProperty(property);
-    if (response.error) {
+    let response = null;
+    if (property.id) await this.propertyService.updateProperty(property);
+    else response = await this.propertyService.createProperty(property);
+    if (response && response.error) {
       this.errorHandlerService.handleError(response.error);
       return;
     }
