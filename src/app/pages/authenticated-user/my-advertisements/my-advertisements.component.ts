@@ -64,13 +64,13 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
     this.loadingProperties = false;
   }
 
-  editProperty(property: Property) {
+  editProperty(property: Property, toImages?: boolean) {
     this.modalService.close(null, {
       component: CreateComponent,
       data: {
         title: 'Editar anúncio',
         icon: 'fa-solid fa-arrow-trend-up',
-        content: { property }
+        content: { property, tab: toImages ? 1 : null }
       }
     })?.subscribe(() => {
       this.modalService.open(MyAdvertisementsComponent, {

@@ -41,6 +41,10 @@ export class CreateComponent {
     if (this.modalService.modalRef?.instance?.content?.property) {
       this.property = this.modalService.modalRef.instance.content.property;
     }
+
+    if (this.modalService.modalRef?.instance?.content?.tab) {
+      this.activeTab = this.modalService.modalRef?.instance?.content?.tab;
+    }
   }
 
   close() {

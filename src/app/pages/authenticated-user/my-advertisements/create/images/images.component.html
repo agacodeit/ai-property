@@ -7,7 +7,6 @@
         </div>
     </header>
 
-    <!-- Custom file input -->
     <div class="file-upload-wrapper">
         <label for="imageUpload" class="file-upload-label">
             <i class="fa-solid fa-upload"></i>
@@ -16,14 +15,21 @@
         <input type="file" id="imageUpload" multiple (change)="onFilesSelected($event)" hidden />
     </div>
 
-    <!-- Preview das imagens -->
     <div class="image-preview-container">
         <div class="image-preview" *ngFor="let image of imageUrls">
-            <div class="remove-image">
-                <i class="fa-solid fa-xmark" (click)="removeImage(image)"></i>
+            <div class="remove-image" (click)="removeImage(image)">
+                <i class="fa-solid fa-xmark"></i>
             </div>
-            <img *ngIf="!image.downloadUrl" [src]="getImageUrl(image.file)" alt="{{ image.fileName }}">
-            <img *ngIf="image.downloadUrl" [src]="image.downloadUrl" alt="{{ image.fileName }}">
+            <div class="image-loading" *ngIf="!image.loaded && image.downloadUrl">
+                <i class="fa-solid fa-image fa-2x"></i>
+            </div>
+            <img *ngIf="!image.downloadUrl" [class.loaded]="!image.downloadUrl" [src]="getImageUrl(image.file)"
+                alt="{{ image.fileName }}">
+            <img *ngIf="image.downloadUrl" [class.loaded]="image.loaded" (load)="image.loaded = true"
+                [src]="image.downloadUrl" alt="{{ image.fileName }}">
+        </div>
+        <div class="uploading-images" *ngIf="loadingImages">
+            <loader></loader>
         </div>
     </div>
 
@@ -32,8 +38,12 @@
         <button class="secondary-btn" type="button" (click)="previous()">
             <i class="fa-solid fa-arrow-left"></i> Anterior
         </button>
-        <button class="primary-btn" type="button" [disabled]="loadingImages" (click)="publish()">
-            Publicar anúncio
+        <button class="primary-btn" type="button" (click)="publish()">
+            @if(publishing){
+            <loader></loader>
+            }@else {
+            {{property.id ? 'Editar' : 'Publicar'}} anúncio
+            }
         </button>
     </div>
 </main>

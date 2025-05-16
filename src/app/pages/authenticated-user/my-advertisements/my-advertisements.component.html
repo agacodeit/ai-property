@@ -1,4 +1,4 @@
-<main class="modal-container">
+<main class="regular-container">
     <div class="create-advertisement">
         <button class="primary-btn" (click)="createProperty()">
             Criar anúncio +
@@ -20,13 +20,16 @@
                     </div>
                 </div>
                 <div class="content-images" *ngIf="property.imageUrls.length; else noImages">
-                    <div class="image-wrapper" *ngFor="let img of property.imageUrls">
+
+                    <!-- Mostrar até 3 imagens -->
+                    <div class="image-wrapper" *ngFor="let img of property.imageUrls | slice:0:3">
                         <div class="image-loading" *ngIf="!img.loaded">
                             <i class="fa-solid fa-image fa-2x"></i>
                         </div>
                         <img [src]="img.downloadUrl" alt="" (load)="img.loaded = true" [class.loaded]="img.loaded" />
                     </div>
                 </div>
+
                 <ng-template #noImages>
                     <div class="content-images">
                         <div class="image-wrapper">
@@ -36,8 +39,14 @@
                         </div>
                     </div>
                 </ng-template>
-
-                <h3 class="content-title">{{property.title}} </h3>
+                <div class="content-title">
+                    <h3>{{property.title}} </h3>
+                    <button class="outline-btn" *ngIf="property.imageUrls.length > 3"
+                        (click)="editProperty(property, true)">
+                        Mostrar todas
+                        <span>+ {{property.imageUrls.length - 3}}</span>
+                    </button>
+                </div>
                 <div class="d-flex align-items-center justify-content-between">
                     <p class="content-price">{{property.price | currency: 'EUR'}}</p>
 

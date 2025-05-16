@@ -3,11 +3,14 @@ import { Property, PropertyImage } from '../../../../../shared/models/property/p
 import { CommonModule } from '@angular/common';
 import { UploadService } from '../../../../../services/upload/upload.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { ToastService } from '../../../../../services/toast/toast.service';
+import { LoaderComponent } from '../../../../../components/loader/loader.component';
 
 @Component({
   selector: 'app-images',
   imports: [
-    CommonModule
+    CommonModule,
+    LoaderComponent
   ],
   templateUrl: './images.component.html',
   styleUrl: './images.component.scss'
@@ -20,8 +23,10 @@ export class ImagesComponent {
 
   imageUrls: Array<PropertyImage> = [];
   loadingImages: boolean = false;
+  publishing: boolean = false;
 
   constructor(private uploadService: UploadService,
+    private toastService: ToastService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -31,47 +36,57 @@ export class ImagesComponent {
       Object.keys(this.property).forEach(key => {
         const typedKey = key as keyof Property;
         if (typedKey === 'imageUrls') {
-          this.imageUrls = this.property[typedKey];
+          this.imageUrls = this.property[typedKey].map((img: PropertyImage) => {
+            img.loaded = false;
+            return img;
+          });
         }
       });
     }
   }
 
-  onFilesSelected(event: Event) {
+  async onFilesSelected(event: Event) {
     const input = event.target as HTMLInputElement;
 
     if (!input.files || input.files.length === 0) return;
 
     const files = Array.from(input.files);
 
-    (async () => {
-      this.loadingImages = true;
-      for (const file of files) {
-        const upload = (await this.uploadService.uploadFile(file)).content;
+    this.loadingImages = true;
 
-        const propertyImage: any = {
-          fileCode: upload.code,
-          fileName: file.name,
-          file
-        }
+    const uploadPromises = files.map(async (file) => {
+      const upload = (await this.uploadService.uploadFile(file)).content;
 
-        this.imageUrls.push(propertyImage);
-        this.cdr.detectChanges();
-      }
-      this.loadingImages = false;
-    })();
+      return {
+        fileCode: upload.code,
+        fileName: file.name,
+        file,
+      };
+    });
+
+    const uploadedImages = await Promise.all(uploadPromises);
+
+    this.imageUrls.push(...uploadedImages);
+
+    this.cdr.detectChanges();
+    this.loadingImages = false;
   }
+
 
   previous() {
     this.previousEmitter.next({ property: this.property, tab: 0 });
   }
 
   publish() {
-    if (this.loadingImages) return;
+    if (this.loadingImages) {
+      this.toastService.show('Realizando upload de imagens', 'warning');
+      return;
+    };
     this.property.imageUrls = this.imageUrls.map(i => {
       delete i.file;
       return i
     });
+    this.publishing = true;
     this.publishEmitter.next(this.property);
   }
 
