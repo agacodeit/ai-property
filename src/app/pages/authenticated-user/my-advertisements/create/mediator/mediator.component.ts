@@ -4,12 +4,14 @@ import { ToastService } from '../../../../../services/toast/toast.service';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PropertyService } from '../../../../../services/property/property.service';
+import { LoaderComponent } from '../../../../../components/loader/loader.component';
 
 @Component({
   selector: 'app-mediator',
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoaderComponent
   ],
   templateUrl: './mediator.component.html',
   styleUrl: './mediator.component.scss'

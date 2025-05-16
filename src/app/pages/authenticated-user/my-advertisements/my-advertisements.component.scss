@@ -127,6 +127,18 @@ main {
             }
 
 
+            .property-type {
+                margin-bottom: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                h4 {
+                    font-weight: 600;
+                    font-size: 16px;
+                }
+            }
+
             .content-title {
                 margin-bottom: 8px;
                 display: flex;

@@ -32,7 +32,11 @@
                 <i class="fa-solid fa-arrow-left"></i> Anterior
             </button>
             <button class="primary-btn">
+                @if(publishing){
+                <loader></loader>
+                }@else {
                 {{property.id ? 'Editar' : 'Publicar'}} anúncio
+                }
             </button>
         </div>
     </form>

@@ -9,6 +9,8 @@ import { ModalService } from '../../../services/modal/modal.service';
 import { CreateComponent } from './create/create.component';
 import { GeneralMessagesComponent } from '../../../components/general-messages/general-messages.component';
 import { fadeAnimation } from '../../../shared/animations/fade-animation';
+import { PropertyType } from '../../../shared/constants/propertyTypeEnum';
+import { AdvertisementType } from '../../../shared/constants/advertisementTypeEnum';
 
 @Component({
   selector: 'app-my-advertisements',
@@ -24,6 +26,8 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
 
   loadingProperties: boolean = true;
   propertyStatus = PropertyStatus;
+  propertyType = PropertyType;
+  advertisementType = AdvertisementType;
 
   get propertyList() {
     return this.propertyService.propertyList;

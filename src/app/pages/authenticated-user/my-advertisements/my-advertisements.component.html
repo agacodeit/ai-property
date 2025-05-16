@@ -38,6 +38,12 @@
                         </div>
                     </div>
                 </ng-template>
+
+                <div class="property-type">
+                    <h4>{{propertyType[property.propertyTypeEnum].description}}</h4>
+                    <h4>{{advertisementType[property.advertisementTypeEnum].description}}</h4>
+                </div>
+
                 <div class="content-title">
                     <h3>{{property.title}} </h3>
                     <button class="outline-btn" *ngIf="property.imageUrls.length > 3"
@@ -51,9 +57,11 @@
 
                     <p class="content-location">
                         <i class="fas fa-map-marker-alt"></i>
-                        {{property.location}}
-                        <i class="fas fa-bed"></i>
+                        {{property.propertyAddress.city}} - {{property.propertyAddress.state}}
+                        <i class="fas fa-bed ml-8"></i>
                         {{property.bedrooms}}
+                        <i class="fas fa-toilet ml-8"></i>
+                        {{property.bathrooms}}
                     </p>
                 </div>
 
