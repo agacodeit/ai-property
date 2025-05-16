@@ -6,6 +6,7 @@
 
     <form [formGroup]="infoForm" (ngSubmit)="submit()">
 
+        <label class="mb-4" for="">Moradia</label>
         <div class="property-type">
             <button class="mr-16 outline-btn" [class.active]="infoForm.controls['propertyTypeEnum'].value === 'HOUSE'"
                 (click)="setPropertyType('HOUSE')" type="button">
@@ -24,7 +25,7 @@
             </div>
             <div>
                 <label class="mb-4" for="">Tipo de anúncio</label>
-                <div class="property-type mb-0" style="margin-top: 7px !important;">
+                <div class="property-type">
                     <button class="mr-16 outline-btn"
                         [class.active]="infoForm.controls['advertisementTypeEnum'].value === 'RENT'"
                         (click)="setAdvertisementType('RENT')" type="button">
@@ -48,7 +49,7 @@
 
         <div class="grid-column-3">
             <div class="form-group mb-24">
-                <label for="price">Valor do aluguel</label>
+                <label for="price">Valor do arrendamento</label>
                 <input type="text" appCurrencyMask id="price" formControlName="price" placeholder="€0" />
             </div>
             <div class="form-group mb-24">
@@ -56,7 +57,7 @@
                 <input type="number" id="bedrooms" formControlName="bedrooms" />
             </div>
             <div class="form-group mb-24">
-                <label for="bathrooms">Banheiros</label>
+                <label for="bathrooms">Casas de banho</label>
                 <input type="number" id="bathrooms" formControlName="bathrooms" />
             </div>
         </div>
