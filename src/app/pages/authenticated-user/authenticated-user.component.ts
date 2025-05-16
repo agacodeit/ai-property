@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { MenuService } from '../../services/menu/menu.service';
 import { ThemeService } from '../../services/theme/theme.service';
 import { MenuComponent } from '../../components/menu/menu.component';
+import { menuAnimation } from '../../shared/animations/menu-animations';
 
 @Component({
   selector: 'app-authenticated-user',
@@ -16,7 +17,8 @@ import { MenuComponent } from '../../components/menu/menu.component';
     MenuComponent
   ],
   templateUrl: './authenticated-user.component.html',
-  styleUrl: './authenticated-user.component.scss'
+  styleUrl: './authenticated-user.component.scss',
+  animations: [menuAnimation]
 })
 export class AuthenticatedUserComponent {
 
@@ -25,7 +27,7 @@ export class AuthenticatedUserComponent {
   }
 
   get menuState() {
-    return this.menuService.menu.state.value;
+    return this.menuService.menu.state;
   }
 
   constructor(private menuService: MenuService,

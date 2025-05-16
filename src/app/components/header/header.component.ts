@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuService } from '../../services/menu/menu.service';
@@ -6,11 +7,17 @@ import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [
+    CommonModule
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+
+  get menuState() {
+    return this.menuService.menu.state.value;
+  }
 
   get darkMode() {
     return this.themeService.darkMode;
@@ -35,6 +42,10 @@ export class HeaderComponent {
   logout() {
     this.userService.logout();
     this.router.navigate(['/']);
+  }
+
+  toggleMenu() {
+    this.menuService.setMenuState(!this.menuState);
   }
 
 }

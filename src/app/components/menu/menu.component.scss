@@ -7,6 +7,26 @@
     max-width: 250px;
     height: 100vh;
 
+    .hamburguer-container {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+
+        .hamburguer-position {
+            padding: 4px;
+            border-radius: 4px;
+
+            &:hover {
+                background-color: var(--txt-1);
+
+                i {
+                    color: var(--bg-4);
+                }
+            }
+
+            cursor: pointer;
+        }
+    }
 
     header {
         margin-bottom: 24px;
@@ -22,8 +42,8 @@
     }
 
     .my-advertisements {
-        position: fixed;
-        bottom: 24px;
+        position: absolute;
+        bottom: 74px;
         display: flex;
         align-items: center;
         background-color: var(--bg-5);

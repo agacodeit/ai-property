@@ -20,6 +20,10 @@ export class MenuComponent {
     return this.menuService.menu;
   }
 
+  get menuState() {
+    return this.menuService.menu.state.value;
+  }
+
   constructor(private menuService: MenuService,
     private modalService: ModalService
   ) { }
@@ -30,6 +34,10 @@ export class MenuComponent {
       icon: 'fa-solid fa-arrow-trend-up',
       fullscreen: true
     })
+  }
+
+  toggleMenu() {
+    this.menuService.setMenuState(!this.menu.state);
   }
 
 }

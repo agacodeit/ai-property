@@ -1,7 +1,11 @@
 <main class="menu-container box-shadow">
+    <div class="hamburguer-container">
+        <div class="hamburguer-position" (click)="toggleMenu()" *ngIf="menuState">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </div>
     <header>
         <h2>AIProperty</h2>
-
         <button class="primary-btn"> Nova conversa + </button>
     </header>
     <app-menu-items></app-menu-items>

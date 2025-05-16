@@ -1,5 +1,5 @@
 <div class="main-container">
-    <div class="submenu-container" *ngIf="menuState">
+    <div class="submenu-container" *ngIf="menuState | async" @menuAnimation>
         <app-menu></app-menu>
     </div>
     <div class="main-content">
