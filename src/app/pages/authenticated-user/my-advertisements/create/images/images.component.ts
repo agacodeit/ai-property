@@ -19,11 +19,10 @@ export class ImagesComponent {
 
   @Input() property: Property = new Property();
   @Output() previousEmitter = new EventEmitter();
-  @Output() publishEmitter = new EventEmitter();
+  @Output() nextStepEmitter = new EventEmitter();
 
   imageUrls: Array<PropertyImage> = [];
   loadingImages: boolean = false;
-  publishing: boolean = false;
 
   constructor(private uploadService: UploadService,
     private toastService: ToastService,
@@ -77,17 +76,9 @@ export class ImagesComponent {
     this.previousEmitter.next({ property: this.property, tab: 0 });
   }
 
-  publish() {
-    if (this.loadingImages) {
-      this.toastService.show('Realizando upload de imagens', 'warning');
-      return;
-    };
-    this.property.imageUrls = this.imageUrls.map(i => {
-      delete i.file;
-      return i
-    });
-    this.publishing = true;
-    this.publishEmitter.next(this.property);
+  submit() {
+    this.property.imageUrls = this.imageUrls;
+    this.nextStepEmitter.next({ property: this.property, tab: 2 });
   }
 
   getImageUrl(file: any): string {

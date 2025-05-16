@@ -1,4 +1,8 @@
+import { AdvertisementTypeEnum } from "../../constants/advertisementTypeEnum";
 import { PropertyStatusEnum } from "../../constants/propertyStatus";
+import { PropertyTypeEnum } from "../../constants/propertyTypeEnum";
+import { Mediator } from "./Mediator";
+import { PropertyAddress } from "./propertyAddress";
 
 export class Property {
     id: string = '';
@@ -12,6 +16,10 @@ export class Property {
     hasGourmetBalcony: boolean = false;
     imageUrls: Array<PropertyImage> = [];
     propertyStatusEnum: PropertyStatusEnum = PropertyStatusEnum.CREATED;
+    propertyTypeEnum: PropertyTypeEnum = PropertyTypeEnum.HOUSE;
+    advertisementTypeEnum: AdvertisementTypeEnum = AdvertisementTypeEnum.RENT;
+    propertyAddress: PropertyAddress = new PropertyAddress();
+    mediator: Mediator = new Mediator()
 }
 
 export class PropertyImage {

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Property, PropertyHttpResponse } from '../../shared/models/property/property';
 import { lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +75,20 @@ export class PropertyService {
 
   clearPropertyList() {
     this.propertyListData = null;
+  }
+
+  patchFormValues(formGroup: FormGroup, data: any): void {
+    Object.keys(data).forEach(key => {
+      const value = data[key];
+
+      const control = formGroup.get(key);
+
+      if (control instanceof FormGroup && value && typeof value === 'object' && !Array.isArray(value)) {
+        this.patchFormValues(control, value);
+      } else if (control) {
+        control.setValue(value);
+      }
+    });
   }
 
 }

@@ -7,17 +7,36 @@
     <form [formGroup]="infoForm" (ngSubmit)="submit()">
 
         <div class="property-type">
-            <button class="mr-16 outline-btn" type="button">
+            <button class="mr-16 outline-btn" [class.active]="infoForm.controls['propertyTypeEnum'].value === 'HOUSE'"
+                (click)="setPropertyType('HOUSE')" type="button">
                 Casa
             </button>
-            <button type="button" class="outline-btn">
+            <button type="button" [class.active]="infoForm.controls['propertyTypeEnum'].value === 'APARTMENT'"
+                class="outline-btn" (click)="setPropertyType('APARTMENT')">
                 Apartamento
             </button>
         </div>
 
-        <div class="form-group mb-24">
-            <label for="title">Título do anúncio</label>
-            <input type="text" id="title" formControlName="title" placeholder="Escolha um título" />
+        <div class="grid-column-2 mb-24">
+            <div class="form-group">
+                <label for="title">Título do anúncio</label>
+                <input type="text" id="title" formControlName="title" placeholder="Escolha um título" />
+            </div>
+            <div>
+                <label class="mb-4" for="">Tipo de anúncio</label>
+                <div class="property-type mb-0" style="margin-top: 7px !important;">
+                    <button class="mr-16 outline-btn"
+                        [class.active]="infoForm.controls['advertisementTypeEnum'].value === 'RENT'"
+                        (click)="setAdvertisementType('RENT')" type="button">
+                        Arrendamento
+                    </button>
+                    <button type="button" class="outline-btn"
+                        [class.active]="infoForm.controls['advertisementTypeEnum'].value === 'BUY'"
+                        (click)="setAdvertisementType('BUY')">
+                        Compra e Venda
+                    </button>
+                </div>
+            </div>
         </div>
 
 
@@ -62,6 +81,46 @@
                     Varanda Gourmet
                     <span class="custom-checkbox"></span>
                 </label>
+            </div>
+        </div>
+
+        <div formGroupName="propertyAddress">
+            <div class="form-group mb-24">
+                <label for="zipCode">Post code</label>
+                <input type="text" id="zipCode" formControlName="zipCode" placeholder="00000-00" />
+            </div>
+
+            <div class="form-group mb-24">
+                <label for="street">Moradia</label>
+                <input type="text" id="street" formControlName="street" placeholder="Rua teste" />
+            </div>
+
+            <div class="grid-column-2 mb-24">
+                <div class="form-group">
+                    <label for="city">Cidade</label>
+                    <input type="text" id="city" formControlName="city" placeholder="Porto" />
+                </div>
+                <div class="form-group">
+                    <label for="state">Estado</label>
+                    <input type="text" id="state" formControlName="state" placeholder="Estado" />
+                </div>
+            </div>
+
+
+            <div class="grid-column-2 mb-24">
+                <div class="form-group">
+                    <label for="number">Número</label>
+                    <input type="text" id="number" formControlName="number" placeholder="123" />
+                </div>
+                <div class="form-group">
+                    <label for="complement">Complemento</label>
+                    <input type="text" id="complement" formControlName="complement" placeholder="Casa 2" />
+                </div>
+            </div>
+
+            <div class="form-group mb-24">
+                <label for="neighborhood">Bairro</label>
+                <input type="text" id="neighborhood" formControlName="neighborhood" placeholder="Centro" />
             </div>
         </div>
 

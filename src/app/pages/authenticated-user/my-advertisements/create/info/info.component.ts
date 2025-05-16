@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CurrencyMaskDirective } from '../../../../../shared/directives/currency-mask.directive';
+import { PropertyService } from '../../../../../services/property/property.service';
 import { ToastService } from '../../../../../services/toast/toast.service';
+import { AdvertisementTypeEnum } from '../../../../../shared/constants/advertisementTypeEnum';
+import { PropertyTypeEnum } from '../../../../../shared/constants/propertyTypeEnum';
+import { CurrencyMaskDirective } from '../../../../../shared/directives/currency-mask.directive';
 import { Property } from '../../../../../shared/models/property/property';
 
 @Component({
@@ -29,20 +32,33 @@ export class InfoComponent implements OnChanges {
     bathrooms: new FormControl(null, Validators.required),
     hasPool: new FormControl(false, Validators.required),
     hasGourmetBalcony: new FormControl(false, Validators.required),
-    imageUrls: new FormControl([])
+    imageUrls: new FormControl([]),
+    propertyTypeEnum: new FormControl('', Validators.required),
+    advertisementTypeEnum: new FormControl('', Validators.required),
+    propertyAddress: new FormGroup({
+      street: new FormControl('', Validators.required),
+      zipCode: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.required),
+      number: new FormControl('', Validators.required),
+      state: new FormControl('', Validators.required),
+      complement: new FormControl(''),
+      neighborhood: new FormControl('', Validators.required)
+    }),
+    mediator: new FormGroup({
+      name: new FormControl(''),
+      email: new FormControl(''),
+      phone: new FormControl(''),
+      link: new FormControl(''),
+    })
   });
 
-  constructor(private toastService: ToastService) {
-
-  }
+  constructor(private toastService: ToastService,
+    private propertyService: PropertyService
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['property'].currentValue) {
-      Object.keys(this.property).forEach(key => {
-        const typedKey = key as keyof Property;
-        const control = this.infoForm.controls[typedKey];
-        if (control) control.setValue(this.property[typedKey]);
-      });
+    if (changes['property']?.currentValue) {
+      this.propertyService.patchFormValues(this.infoForm, this.property);
     }
   }
 
@@ -51,5 +67,14 @@ export class InfoComponent implements OnChanges {
       this.nextStepEmitter.next({ property: this.infoForm.value, tab: 1 });
     } else this.toastService.show('Formulário inválido', 'error');
   }
+
+  setAdvertisementType(advertisementTypeEnum: string) {
+    this.infoForm.get('advertisementTypeEnum')?.setValue(advertisementTypeEnum as AdvertisementTypeEnum);
+  }
+
+  setPropertyType(propertyTypeEnum: string) {
+    this.infoForm.get('propertyTypeEnum')?.setValue(propertyTypeEnum as PropertyTypeEnum);
+  }
+
 
 }

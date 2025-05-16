@@ -6,13 +6,15 @@ import { ImagesComponent } from "./images/images.component";
 import { InfoComponent } from "./info/info.component";
 import { PropertyService } from '../../../../services/property/property.service';
 import { ErrorHandlerService } from '../../../../services/exceptions/error-handler.service';
+import { MediatorComponent } from './mediator/mediator.component';
 
 @Component({
   selector: 'app-create',
   imports: [
     CommonModule,
     InfoComponent,
-    ImagesComponent
+    ImagesComponent,
+    MediatorComponent
   ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
@@ -29,6 +31,10 @@ export class CreateComponent {
     {
       label: 'Imagens',
       index: 1
+    },
+    {
+      label: 'Dados do mediador',
+      index: 2
     }
   ];
 

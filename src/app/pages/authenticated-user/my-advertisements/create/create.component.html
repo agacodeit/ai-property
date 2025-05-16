@@ -12,7 +12,12 @@
 
             <div *ngSwitchCase="1">
                 <app-images [property]="property" (previousEmitter)="updateForm($event)"
-                    (publishEmitter)="createProperty($event)"></app-images>
+                    (nextStepEmitter)="updateForm($event)"></app-images>
+            </div>
+
+            <div *ngSwitchCase="2">
+                <app-mediator [property]="property" (previousEmitter)="updateForm($event)"
+                    (publishEmitter)="createProperty($event)"></app-mediator>
             </div>
         </ng-container>
     </div>

@@ -1,0 +1,40 @@
+<main>
+    <header>
+        <i class="fa-solid fa-user"></i>
+        <h5>Dados do mediador</h5>
+    </header>
+
+    <form [formGroup]="mediatorForm" (ngSubmit)="publish()">
+        <div formGroupName="mediator">
+            <div class="form-group mb-24">
+                <label for="name">Nome</label>
+                <input type="text" id="name" formControlName="name" placeholder="Informe o nome do mediador" />
+            </div>
+
+            <div class="form-group mb-24">
+                <label for="email">E-mail</label>
+                <input type="text" id="email" formControlName="email" placeholder="Informe o e-mail" />
+            </div>
+
+            <div class="form-group mb-24">
+                <label for="phone">Telemóvel</label>
+                <input type="text" id="phone" formControlName="phone" placeholder="Informe o telemóvel" />
+            </div>
+
+            <div class="form-group mb-24">
+                <label for="link">Link do site</label>
+                <input type="text" id="link" formControlName="link" placeholder="Informe o link do site" />
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center gap-24">
+            <button class="secondary-btn" type="button" (click)="previous()">
+                <i class="fa-solid fa-arrow-left"></i> Anterior
+            </button>
+            <button class="primary-btn">
+                {{property.id ? 'Editar' : 'Publicar'}} anúncio
+            </button>
+        </div>
+    </form>
+
+</main>
