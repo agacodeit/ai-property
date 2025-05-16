@@ -4,8 +4,7 @@
             Criar anúncio +
         </button>
     </div>
-    <section *ngIf="propertyList">
-
+    <section *ngIf="propertyList" @fadeAnimation>
         <div class="advertisements">
             <div class="message-content" *ngFor="let property of propertyList">
                 <div class="header">

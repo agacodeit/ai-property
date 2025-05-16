@@ -7,6 +7,7 @@ import { ChatService } from '../../../services/chat/chat.service';
 import { LoaderComponent } from '../../../components/loader/loader.component';
 import { TypingComponent } from '../../../components/typing/typing.component';
 import { ToastService } from '../../../services/toast/toast.service';
+import { fadeAnimation } from '../../../shared/animations/fade-animation';
 
 @Component({
   selector: 'app-chat',
@@ -18,7 +19,8 @@ import { ToastService } from '../../../services/toast/toast.service';
     TypingComponent
   ],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss'
+  styleUrl: './chat.component.scss',
+  animations: [fadeAnimation]
 })
 export class ChatComponent implements AfterViewChecked {
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;

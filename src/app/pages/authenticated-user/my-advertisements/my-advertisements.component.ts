@@ -8,6 +8,7 @@ import { Property } from '../../../shared/models/property/property';
 import { ModalService } from '../../../services/modal/modal.service';
 import { CreateComponent } from './create/create.component';
 import { GeneralMessagesComponent } from '../../../components/general-messages/general-messages.component';
+import { fadeAnimation } from '../../../shared/animations/fade-animation';
 
 @Component({
   selector: 'app-my-advertisements',
@@ -16,7 +17,8 @@ import { GeneralMessagesComponent } from '../../../components/general-messages/g
     LoaderComponent
   ],
   templateUrl: './my-advertisements.component.html',
-  styleUrl: './my-advertisements.component.scss'
+  styleUrl: './my-advertisements.component.scss',
+  animations: [fadeAnimation]
 })
 export class MyAdvertisementsComponent implements OnInit, OnDestroy {
 

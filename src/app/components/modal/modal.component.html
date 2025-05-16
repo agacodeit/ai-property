@@ -1,4 +1,4 @@
-<div class="modal-backdrop" (click)="onClose()"></div>
+<div class="modal-backdrop" [class.custom-width]="!fullscreen" (click)="onClose()"></div>
 
 <div class="modal" [class.fullscreen]="fullscreen" @modalAnimation>
     <header class="modal-header">
