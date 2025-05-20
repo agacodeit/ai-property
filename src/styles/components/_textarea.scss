@@ -1,9 +1,9 @@
 textarea {
     padding: 12px;
     border: none;
-    border-radius: 6px;
+    border-radius: 16px;
     outline: none;
-    border: 1px solid var(--bord-1);
+    border: 1px solid var(--bord-2);
     resize: none;
 }
 
@@ -16,7 +16,8 @@ textarea {
     }
 
     textarea {
-        background-color: var(--bg-1);
+        box-sizing: border-box;
+        background-color: var(--bg-2);
         color: var(--txt-1);
 
         &::placeholder {

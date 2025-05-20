@@ -1,6 +1,6 @@
 <main>
   <app-header></app-header>
-  <section class="chat-container" aria-label="Chat entre usuário e assistente virtual">
+  <section class="chat-container regular-container" aria-label="Chat entre usuário e assistente virtual">
     <div #messagesContainer class="messages" role="log" aria-live="polite" *ngIf="chat && chat.length > 0">
       <article *ngFor="let message of chat; index as i"
         [ngClass]="{'user-message': message.role === 'user', 'bot-message': message.role === 'bot'}">
@@ -51,35 +51,62 @@
       <p>Seu assistente imobiliário inteligente. Pergunte sobre imóveis à venda ou para arrendamento.</p>
     </div>
 
-    <footer class="input-container">
-      <i class="fas fa-paperclip" *ngIf="!isRecording" (click)="triggerFileInput()"></i>
-      <input #fileInput type="file" style="display: none" (change)="handleFile($event)" />
+    <div class="shortcuts">
+      <div class="chip">
+        <i class="fa-solid fa-key"></i>
+        <p>Arrendamento</p>
+      </div>
+      <div class="chip">
+        <i class="fa-solid fa-house"></i>
+        <p>Compra e Venda</p>
+      </div>
+      <div class="chip">
+        <i class="fa-solid fa-money-bill-wave"></i>
+        <p>Financiamento</p>
+      </div>
+      <div class="chip">
+        <i class="fa-solid fa-house-crack"></i>
+        <p>Seguros</p>
+      </div>
+      <div class="chip">
+        <i class="fa-solid fa-section"></i>
+        <p>Legislação</p>
+      </div>
+    </div>
 
-      <label for="chat-input" class="visually-hidden" *ngIf="!isRecording">Digite sua mensagem</label>
-      <input *ngIf="!isRecording" id="chat-input" type="text" [(ngModel)]="newMessage"
-        (keydown.enter)="toggleSendMessage()" placeholder="Digite sua mensagem..." autocomplete="off"
-        aria-label="Campo de entrada de mensagem" />
-
-      <!-- Botão de gravação -->
-      <i class="fas fa-record-vinyl" [class.recording]="isRecording" [class.audio-ready]="audioUrl"
-        (click)="toggleRecording()" aria-label="Gravar áudio"></i>
-
-      <!-- Tempo de gravação -->
-      <span *ngIf="isRecording">{{ recordingTime }}</span>
-
-      <!-- Visualizador de áudio -->
-      <div class="audio-visualizer-container" *ngIf="isRecording">
-        <canvas #canvas></canvas>
+    <footer class="textarea-container box-shadow">
+      <div class="form-group">
+        <label for="chat-textarea" class="visually-hidden" *ngIf="!isRecording">Digite sua mensagem</label>
+        <textarea *ngIf="!isRecording" id="chat-textarea" type="text" [(ngModel)]="newMessage"
+          placeholder="Digite sua mensagem..." aria-label="Campo de entrada de mensagem"></textarea>
       </div>
 
-      <button [disabled]="thinking" type="button" class="primary-btn" (click)="toggleSendMessage()"
-        aria-label="Enviar mensagem">
-        @if(thinking){
-        <loader></loader>
-        }@else {
-        Enviar
-        }
-      </button>
+      <div class="action">
+        <button *ngIf="!isRecording" (click)="triggerFileInput()">
+          <i class="fas fa-paperclip"></i>
+        </button>
+        <input #fileInput type="file" style="display: none" (change)="handleFile($event)" />
+
+        <button (click)="toggleRecording()">
+          <i class="fa-solid fa-microphone" [class.recording]="isRecording" [class.audio-ready]="audioUrl"
+            aria-label="Gravar áudio"></i>
+        </button>
+
+        <span *ngIf="isRecording">{{ recordingTime }}</span>
+
+        <div class="audio-visualizer-container" *ngIf="isRecording">
+          <canvas #canvas></canvas>
+        </div>
+
+        <button [disabled]="thinking" type="button" class="primary-btn" (click)="toggleSendMessage()"
+          aria-label="Enviar mensagem">
+          @if(thinking){
+          <loader></loader>
+          }@else {
+          <i class="fa-solid fa-paper-plane"></i>
+          }
+        </button>
+      </div>
     </footer>
   </section>
 </main>

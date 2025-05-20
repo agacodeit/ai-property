@@ -122,7 +122,9 @@ export class ChatComponent implements AfterViewChecked {
       this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
       this.cdr.detectChanges();
 
-      this.drawVisualizer();
+      setTimeout(() => {
+        this.drawVisualizer();
+      }, 1);
     } catch (err) {
       console.error('Erro ao acessar microfone:', err);
     }
