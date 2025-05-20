@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Property } from '../../../../../shared/models/property/property';
 import { ToastService } from '../../../../../services/toast/toast.service';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PropertyService } from '../../../../../services/property/property.service';
 import { LoaderComponent } from '../../../../../components/loader/loader.component';
@@ -50,9 +50,9 @@ export class MediatorComponent implements OnChanges {
       email: new FormControl('', Validators.required),
       phone: new FormControl('', Validators.required),
       link: new FormControl('', Validators.required)
-    })
+    }),
+    commodities: new FormArray([])
   });
-
 
   constructor(private toastService: ToastService,
     private propertyService: PropertyService

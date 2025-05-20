@@ -3,6 +3,7 @@ import { PropertyStatusEnum } from "../../constants/propertyStatus";
 import { PropertyTypeEnum } from "../../constants/propertyTypeEnum";
 import { Mediator } from "./Mediator";
 import { PropertyAddress } from "./propertyAddress";
+import { PropertyCommodity } from "./propertyCommodity";
 
 export class Property {
     id: string = '';
@@ -19,7 +20,8 @@ export class Property {
     propertyTypeEnum: PropertyTypeEnum = PropertyTypeEnum.HOUSE;
     advertisementTypeEnum: AdvertisementTypeEnum = AdvertisementTypeEnum.RENT;
     propertyAddress: PropertyAddress = new PropertyAddress();
-    mediator: Mediator = new Mediator()
+    mediator: Mediator = new Mediator();
+    commodities: Array<PropertyCommodity> = [];
 }
 
 export class PropertyImage {

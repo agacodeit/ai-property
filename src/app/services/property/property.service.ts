@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Property, PropertyHttpResponse } from '../../shared/models/property/property';
 import { lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { PropertyCommodity } from '../../shared/models/property/propertyCommodity';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,11 @@ import { FormGroup } from '@angular/forms';
 export class PropertyService {
 
   private propertyListData: Array<Property> | null = null;
+  private commodityListData: Array<PropertyCommodity> = [];
+
+  get commodityList() {
+    return this.commodityListData;
+  }
 
   get propertyList() {
     return this.propertyListData;
@@ -21,7 +27,7 @@ export class PropertyService {
   async createProperty(property: Property): Promise<PropertyHttpResponse> {
     try {
       await lastValueFrom(
-        this.http.post(`${environment.url}/property/create`, property)
+        this.http.post(`${environment.url}/secure/property/create`, property)
       );
       return { success: true };
     } catch (error: any) {
@@ -35,7 +41,7 @@ export class PropertyService {
   async listProperties(): Promise<PropertyHttpResponse> {
     try {
       const response = await lastValueFrom(
-        this.http.get<Array<Property>>(`${environment.url}/property/listAll`)
+        this.http.get<Array<Property>>(`${environment.url}/secure/property/listAll`)
       );
       this.propertyListData = response;
       return { success: true };
@@ -49,7 +55,7 @@ export class PropertyService {
 
   async deleteProperty(propertyId: string): Promise<PropertyHttpResponse> {
     try {
-      await lastValueFrom(this.http.delete(`${environment.url}/property/delete/${propertyId}`));
+      await lastValueFrom(this.http.delete(`${environment.url}/secure/property/delete/${propertyId}`));
       return { success: true };
     } catch (error: any) {
       return {
@@ -62,7 +68,7 @@ export class PropertyService {
   async updateProperty(property: Property): Promise<PropertyHttpResponse> {
     try {
       await lastValueFrom(
-        this.http.put(`${environment.url}/property/update/${property.id}`, property)
+        this.http.put(`${environment.url}/secure/property/update/${property.id}`, property)
       );
       return { success: true };
     } catch (error: any) {
@@ -77,18 +83,39 @@ export class PropertyService {
     this.propertyListData = null;
   }
 
+
   patchFormValues(formGroup: FormGroup, data: any): void {
     Object.keys(data).forEach(key => {
-      const value = data[key];
-
+      let value = data[key];
       const control = formGroup.get(key);
+
+      if (!control) return;
 
       if (control instanceof FormGroup && value && typeof value === 'object' && !Array.isArray(value)) {
         this.patchFormValues(control, value);
-      } else if (control) {
-        control.setValue(value);
+
+      } else if (control instanceof FormArray) {
+        if (!Array.isArray(value)) {
+          value = [];
+        }
+        control.clear();
+        value.forEach((val: any) => {
+          control.push(new FormControl(val));
+        });
+
+      } else {
+        control.setValue(value ?? '');
       }
     });
+  }
+
+  async listCommodities(): Promise<any> {
+    try {
+      const response = await lastValueFrom(
+        this.http.get<Array<PropertyCommodity>>(`${environment.url}/secure/commodities/listAll`)
+      );
+      this.commodityListData = response;
+    } catch (error) { }
   }
 
 }

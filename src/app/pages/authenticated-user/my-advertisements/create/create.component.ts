@@ -7,6 +7,7 @@ import { InfoComponent } from "./info/info.component";
 import { PropertyService } from '../../../../services/property/property.service';
 import { ErrorHandlerService } from '../../../../services/exceptions/error-handler.service';
 import { MediatorComponent } from './mediator/mediator.component';
+import { PropertyCommodity } from '../../../../shared/models/property/propertyCommodity';
 
 @Component({
   selector: 'app-create',
@@ -44,6 +45,7 @@ export class CreateComponent {
     private propertyService: PropertyService,
     private errorHandlerService: ErrorHandlerService
   ) {
+    this.propertyService.listCommodities();
     if (this.modalService.modalRef?.instance?.content?.property) {
       this.property = this.modalService.modalRef.instance.content.property;
     }
@@ -54,7 +56,7 @@ export class CreateComponent {
   }
 
   close() {
-    this.modalService.close({ value: 'fechou com esse valor' })
+    this.modalService.close();
   }
 
   updateForm(event: { property: Property, tab: number }) {

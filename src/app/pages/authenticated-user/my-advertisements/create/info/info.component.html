@@ -62,26 +62,18 @@
             </div>
         </div>
 
-        <p>Comodidades disponíveis</p>
+        <div *ngIf="commodityList.length > 0">
+            <p>Comodidades disponíveis</p>
 
-        <div class="ammenities">
-            <div class="form-group">
-                <label class="m-0" for="hasPool">
-                    <input type="checkbox"
-                        (change)="infoForm.controls['hasPool'].setValue(!infoForm.controls['hasPool'].value)"
-                        [checked]="infoForm.controls['hasPool'].value" id="hasPool" />
-                    Piscina
-                    <span class="custom-checkbox"></span>
-                </label>
-            </div>
-            <div class="form-group">
-                <label class="m-0" for="hasGourmetBalcony">
-                    <input type="checkbox"
-                        (change)="infoForm.controls['hasGourmetBalcony'].setValue(!infoForm.controls['hasGourmetBalcony'].value)"
-                        [checked]="infoForm.controls['hasGourmetBalcony'].value" id="hasGourmetBalcony" />
-                    Varanda Gourmet
-                    <span class="custom-checkbox"></span>
-                </label>
+            <div class="ammenities">
+                <div class="form-group" *ngFor="let commodity of commodityList">
+                    <label class="m-0">
+                        <input type="checkbox" (change)="updateCommodities(commodity)"
+                            [checked]="isCommodityIncluded(commodity)" />
+                        {{ commodity.description }}
+                        <span class="custom-checkbox"></span>
+                    </label>
+                </div>
             </div>
         </div>
 

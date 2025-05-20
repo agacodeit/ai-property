@@ -38,12 +38,12 @@ export class UserService {
   }
 
   setToken(accessToken: string) {
-    localStorage.setItem('tkn_ai_prt', accessToken);
+    sessionStorage.setItem('tkn_ai_prt', accessToken);
   }
 
   logout() {
     this.loggedUserData = null;
-    localStorage.removeItem('tkn_ai_prt');
+    sessionStorage.removeItem('tkn_ai_prt');
   }
 
 }

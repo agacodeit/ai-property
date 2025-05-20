@@ -13,15 +13,12 @@ export class ErrorHandlerService {
 
   handleError(error: any): void {
     let message = 'Erro desconhecido';
-
     if (error instanceof HttpErrorResponse) {
       const code = error.error?.message;
       message = this.errorMessages.getFriendlyMessage(code);
     } else if (error instanceof Error) {
       message = error.message;
     }
-
     this.toastService.show(message, 'error');
-    console.error('Erro capturado:', error);
   }
 }

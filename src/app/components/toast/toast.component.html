@@ -1,5 +1,8 @@
 <div class="toast-container">
     <div *ngFor="let toast of toasts" [ngClass]="['toast', toast.type]">
         <p>{{ toast.message }}</p>
+        <div *ngIf="toast.timer" class="toast-timer">
+            <div class="toast-progress" [style.width.%]="toast.progress"></div>
+        </div>
     </div>
 </div>

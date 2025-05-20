@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PropertyService } from '../../../../../services/property/property.service';
 import { ToastService } from '../../../../../services/toast/toast.service';
 import { AdvertisementTypeEnum } from '../../../../../shared/constants/advertisementTypeEnum';
 import { PropertyTypeEnum } from '../../../../../shared/constants/propertyTypeEnum';
 import { CurrencyMaskDirective } from '../../../../../shared/directives/currency-mask.directive';
-import { Property } from '../../../../../shared/models/property/property';
 import { InputMaskDirective } from '../../../../../shared/directives/input-mask.directive';
+import { Property } from '../../../../../shared/models/property/property';
+import { PropertyCommodity } from '../../../../../shared/models/property/propertyCommodity';
 
 @Component({
   selector: 'app-info',
@@ -51,8 +52,17 @@ export class InfoComponent implements OnChanges {
       email: new FormControl(''),
       phone: new FormControl(''),
       link: new FormControl(''),
-    })
+    }),
+    commodities: new FormArray([])
   });
+
+  get commodities(): FormArray {
+    return this.infoForm.get('commodities') as FormArray;
+  }
+
+  get commodityList() {
+    return this.propertyService.commodityList;
+  }
 
   constructor(private toastService: ToastService,
     private propertyService: PropertyService
@@ -78,5 +88,19 @@ export class InfoComponent implements OnChanges {
     this.infoForm.get('propertyTypeEnum')?.setValue(propertyTypeEnum as PropertyTypeEnum);
   }
 
+
+  isCommodityIncluded(commodity: PropertyCommodity): boolean {
+    return this.commodities.controls.some(control => control.value?.id === commodity.id);
+  }
+
+  updateCommodities(commodity: PropertyCommodity): void {
+    const index = this.commodities.controls.findIndex(control => control.value?.id === commodity.id);
+
+    if (index === -1) {
+      this.commodities.push(new FormControl(commodity));
+    } else {
+      this.commodities.removeAt(index);
+    }
+  }
 
 }

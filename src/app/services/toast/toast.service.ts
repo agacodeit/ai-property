@@ -12,7 +12,11 @@ export class ToastService {
     this.toastComponent = toastComponent;
   }
 
-  show(message: string, type: 'success' | 'error' | 'info' | 'warning' = 'info') {
-    this.toastComponent?.showToast(message, type);
+  show(message: string, type: 'success' | 'error' | 'info' | 'warning' = 'info', timer?: number) {
+    this.toastComponent?.showToast(message, type, timer);
+  }
+
+  clear() {
+    this.toastComponent.toasts.shift();
   }
 }
