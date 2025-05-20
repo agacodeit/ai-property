@@ -208,6 +208,11 @@ main {
                 &:last-of-type {
                     padding: 8px;
                     background-color: var(--bg-5);
+                    transition: 300ms;
+
+                    &:hover {
+                        opacity: 0.8;
+                    }
                 }
             }
 
