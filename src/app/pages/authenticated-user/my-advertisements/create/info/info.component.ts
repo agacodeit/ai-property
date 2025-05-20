@@ -7,13 +7,15 @@ import { AdvertisementTypeEnum } from '../../../../../shared/constants/advertise
 import { PropertyTypeEnum } from '../../../../../shared/constants/propertyTypeEnum';
 import { CurrencyMaskDirective } from '../../../../../shared/directives/currency-mask.directive';
 import { Property } from '../../../../../shared/models/property/property';
+import { InputMaskDirective } from '../../../../../shared/directives/input-mask.directive';
 
 @Component({
   selector: 'app-info',
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    CurrencyMaskDirective
+    CurrencyMaskDirective,
+    InputMaskDirective
   ],
   templateUrl: './info.component.html',
   styleUrl: './info.component.scss'

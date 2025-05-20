@@ -81,7 +81,7 @@
           placeholder="Digite sua mensagem..." aria-label="Campo de entrada de mensagem"></textarea>
       </div>
 
-      <div class="action">
+      <div class="action" [class.recording]="isRecording">
         <button *ngIf="!isRecording" (click)="triggerFileInput()">
           <i class="fas fa-paperclip"></i>
         </button>

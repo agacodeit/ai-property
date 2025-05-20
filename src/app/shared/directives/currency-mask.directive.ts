@@ -67,9 +67,13 @@ export class CurrencyMaskDirective implements ControlValueAccessor {
 
     private formatToCurrency(value: number): string {
         if (isNaN(value)) return '';
-        return value.toLocaleString('de-DE', {
-            style: 'currency',
-            currency: 'EUR'
-        });
+
+        const parts = value.toFixed(2).split('.');
+        const integerPart = parts[0];
+        const decimalPart = parts[1];
+
+        const withThousands = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+        return `€ ${withThousands}.${decimalPart}`;
     }
 }
