@@ -44,7 +44,7 @@ export class ChatService {
   ];
 
   get token() {
-    const token = localStorage.getItem('tkn_ai_prt');
+    const token = sessionStorage.getItem('tkn_ai_prt');
     if (token) return token;
     return '';
   }
@@ -72,6 +72,7 @@ export class ChatService {
     bot.text = '';
     bot.role = 'bot';
     this.chatData.push(bot);
+
     this.streamChat(message.text).subscribe({
       next: (response) => {
         const text = response.answer;
@@ -88,7 +89,6 @@ export class ChatService {
   }
 
   streamChat(message: string): Observable<any> {
-
     return new Observable((observer) => {
       fetch(`${environment.url}/secure/chat/send`, {
         method: 'POST',
