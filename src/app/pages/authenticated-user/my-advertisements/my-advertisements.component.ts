@@ -11,6 +11,7 @@ import { GeneralMessagesComponent } from '../../../components/general-messages/g
 import { fadeAnimation } from '../../../shared/animations/fade-animation';
 import { PropertyType } from '../../../shared/constants/propertyTypeEnum';
 import { AdvertisementType } from '../../../shared/constants/advertisementTypeEnum';
+import { ToastService } from '../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-my-advertisements',
@@ -35,7 +36,8 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
 
   constructor(private propertyService: PropertyService,
     private errorHandlerService: ErrorHandlerService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -53,7 +55,8 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
         title: 'Criar anúncio',
         icon: 'fa-solid fa-arrow-trend-up'
       }
-    })?.subscribe(() => {
+    })?.subscribe((confirm: boolean) => {
+      if (confirm) this.toastService.show('Anúncio criado com sucesso', 'success');
       this.modalService.open(MyAdvertisementsComponent, {
         title: 'Meus anúncios',
         icon: 'fa-solid fa-arrow-trend-up',
@@ -78,7 +81,8 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
         icon: 'fa-solid fa-arrow-trend-up',
         content: { property, tab: toImages ? 1 : null }
       }
-    })?.subscribe(() => {
+    })?.subscribe((confirm: boolean) => {
+      if (confirm) this.toastService.show('Anúncio editado com sucesso', 'success');
       this.modalService.open(MyAdvertisementsComponent, {
         title: 'Meus anúncios',
         icon: 'fa-solid fa-arrow-trend-up',
@@ -114,6 +118,9 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
       if (confirm) {
         const response = await this.propertyService.deleteProperty(propertyId);
         if (response.error) this.errorHandlerService.handleError(response.error);
+        else {
+          this.toastService.show('Anúncio removido com sucesso!', 'success');
+        }
       }
 
       this.modalService.open(MyAdvertisementsComponent, {
