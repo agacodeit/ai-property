@@ -10,8 +10,8 @@
         </div>
         <div class="mt-4">
           <div class="d-flex align-items-end">
-            <p class="message-bubble d-flex">
-              {{ message.text }} <typing *ngIf="thinking && message.role === 'bot' && chat.length - 1 === i"></typing>
+            <p class="message-bubble d-flex" [innerHTML]="message.text">
+              <typing *ngIf="thinking && message.role === 'bot' && chat.length - 1 === i"></typing>
             </p>
             <div *ngIf="message.error" class="message-error-icon">
               <i class="fa-solid fa-exclamation"></i>
@@ -37,8 +37,8 @@
             </p>
 
             <div class="content-variaties">
-              <div class="item" *ngFor="let item of content.varieties">
-                <p>{{item}}</p>
+              <div class="item" *ngFor="let commodity of content.commodities">
+                <p>{{commodity.description}}</p>
               </div>
             </div>
           </div>
@@ -77,8 +77,9 @@
     <footer class="textarea-container box-shadow">
       <div class="form-group">
         <label for="chat-textarea" class="visually-hidden" *ngIf="!isRecording">Digite sua mensagem</label>
-        <textarea *ngIf="!isRecording" id="chat-textarea" type="text" [(ngModel)]="newMessage"
-          placeholder="Digite sua mensagem..." aria-label="Campo de entrada de mensagem"></textarea>
+        <textarea (keydown)="handleKeyDown($event)" *ngIf="!isRecording" id="chat-textarea" type="text"
+          [(ngModel)]="newMessage" placeholder="Digite sua mensagem..."
+          aria-label="Campo de entrada de mensagem"></textarea>
       </div>
 
       <div class="action" [class.recording]="isRecording">

@@ -30,10 +30,15 @@ export class CurrencyMaskDirective implements ControlValueAccessor {
     }
 
     writeValue(value: any): void {
-        const numericValue = this.parseToNumber(String(value));
-        const formatted = this.formatToCurrency(numericValue);
+        if (value === null || value === undefined) {
+            this.renderer.setProperty(this.el, 'value', '');
+            return;
+        }
+
+        const formatted = this.formatToCurrency(Number(value));
         this.renderer.setProperty(this.el, 'value', formatted);
     }
+
 
     registerOnChange(fn: any): void {
         this.onChange = fn;

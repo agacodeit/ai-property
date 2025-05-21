@@ -1,3 +1,5 @@
+import { PropertyCommodity } from "../property/propertyCommodity";
+
 export class Message {
     role: string = '';
     text: string = '';
@@ -14,5 +16,5 @@ export class Content {
     location: string = '';
     beds: string = '';
     description: string = '';
-    varieties: Array<string> = [];
+    commodities: Array<PropertyCommodity> = [];
 }

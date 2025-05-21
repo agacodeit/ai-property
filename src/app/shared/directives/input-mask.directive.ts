@@ -16,6 +16,7 @@ export class InputMaskDirective implements OnInit {
 
     ngOnInit(): void {
         this.el.nativeElement.maxLength = this.mask.length;
+        this.onInput(null);
     }
 
     @HostListener('input', ['$event'])

@@ -232,4 +232,12 @@ export class ChatComponent implements AfterViewChecked {
     this.newMessage = '';
 
   }
+
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.toggleSendMessage();
+    }
+  }
+  
 }
