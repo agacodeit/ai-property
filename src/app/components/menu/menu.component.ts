@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MyAdvertisementsComponent } from '../../pages/authenticated-user/my-advertisements/my-advertisements.component';
 import { MenuService } from '../../services/menu/menu.service';
 import { ModalService } from '../../services/modal/modal.service';
 import { MenuItemsComponent } from './menu-items/menu-items.component';
+import { ChatService } from '../../services/chat/chat.service';
 
 @Component({
   selector: 'app-menu',
@@ -25,8 +26,10 @@ export class MenuComponent {
   }
 
   constructor(private menuService: MenuService,
-    private modalService: ModalService
-  ) { }
+    private modalService: ModalService,
+    private chatService: ChatService) {
+    this.chatService.listChatSessions();
+  }
 
   openMyAdvertisements() {
     this.modalService.open(MyAdvertisementsComponent, {
@@ -38,6 +41,10 @@ export class MenuComponent {
 
   toggleMenu() {
     this.menuService.setMenuState(!this.menu.state);
+  }
+
+  startNewChat() {
+    this.chatService.startNewChat();
   }
 
 }

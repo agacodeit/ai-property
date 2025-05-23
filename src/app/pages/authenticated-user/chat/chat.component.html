@@ -1,8 +1,8 @@
 <main>
   <app-header></app-header>
   <section class="chat-container regular-container" aria-label="Chat entre usuário e assistente virtual">
-    <div #messagesContainer class="messages" role="log" aria-live="polite" *ngIf="chat && chat.length > 0">
-      <article *ngFor="let message of chat; index as i"
+    <div #messagesContainer class="messages" role="log" aria-live="polite" *ngIf="chat && chat.messages.length > 0">
+      <article *ngFor="let message of chat.messages; index as i"
         [ngClass]="{'user-message': message.role === 'user', 'bot-message': message.role === 'bot'}">
         <div class="avatar">
           <i class="fas fa-user" *ngIf="message.role === 'user'"></i>
@@ -11,7 +11,7 @@
         <div class="mt-4">
           <div class="d-flex align-items-end">
             <p class="message-bubble d-flex" [innerHTML]="message.text">
-              <typing *ngIf="thinking && message.role === 'bot' && chat.length - 1 === i"></typing>
+              <typing *ngIf="thinking && message.role === 'bot' && chat.messages.length - 1 === i"></typing>
             </p>
             <div *ngIf="message.error" class="message-error-icon">
               <i class="fa-solid fa-exclamation"></i>
@@ -23,7 +23,7 @@
             </div>
 
             <h3 class="content-title">{{content.title}} </h3>
-            <p class="content-price">{{content.price | currency: content.currency}}</p>
+            <p class="content-price">{{content.price | currency: 'EUR'}}</p>
 
             <p class="content-location">
               <i class="fas fa-map-marker-alt"></i>
@@ -38,7 +38,7 @@
 
             <div class="content-variaties">
               <div class="item" *ngFor="let commodity of content.commodities">
-                <p>{{commodity.description}}</p>
+                <p>{{commodity}}</p>
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@
       </article>
     </div>
 
-    <div class="start-chatting small-container" *ngIf="!chat || chat.length === 0" @fadeAnimation>
+    <div class="start-chatting small-container" *ngIf="!chat || chat.messages.length === 0" @fadeAnimation>
       <h1>Bem-vindo ao AI Property</h1>
       <p>Seu assistente imobiliário inteligente. Pergunte sobre imóveis à venda ou para arrendamento.</p>
     </div>

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Menu, MenuItem } from '../../shared/models/menu';
+import { Chat } from '../../shared/models/chat/chat';
+import moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +11,7 @@ export class MenuService {
 
   private menuData: Menu = {
     state: new BehaviorSubject<boolean>(true),
-    menuItems: [
-      {
-        label: 'Busca por apartamentos para compra',
-        route: '/auth/chat',
-        dateHourIncluded: new Date()
-      }
-    ]
+    menuItems: []
   };
 
   private submenuData: MenuItem | undefined;
@@ -44,6 +40,19 @@ export class MenuService {
 
   setSubmenu(menuItem: MenuItem) {
     this.submenuData = menuItem;
+  }
+
+  setChatSessions(chats: Array<Chat>) {
+    this.menuData.menuItems = chats.map((c: Chat) => {
+      return {
+        label: c.id,
+        route: '/auth/chat',
+        dateHourIncluded: moment.utc(c.updatedAt).valueOf(),
+        id: c.id
+      }
+    }).sort(
+      (a, b) => new Date(b.dateHourIncluded).getTime() - new Date(a.dateHourIncluded).getTime()
+    )
   }
 
 }

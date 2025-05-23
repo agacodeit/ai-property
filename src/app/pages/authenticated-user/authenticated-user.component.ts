@@ -32,9 +32,7 @@ export class AuthenticatedUserComponent {
 
   constructor(private menuService: MenuService,
     private themeService: ThemeService
-  ) {
-    this.menuService.setSubmenu(this.menuService.menu.menuItems[0]);
-  }
+  ) { }
 
   openMenu() {
     this.menuService.setMenuState(!this.menuService.menu.state.value);

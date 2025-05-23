@@ -10,13 +10,13 @@ import { MenuService } from '../../../services/menu/menu.service';
   imports: [
     CommonModule,
     CustomDatePipe
-],
+  ],
   templateUrl: './menu-items.component.html',
   styleUrl: './menu-items.component.scss'
 })
 export class MenuItemsComponent {
 
-  get menu(){
+  get menu() {
     return this.menuService.menu;
   }
 
@@ -35,16 +35,12 @@ export class MenuItemsComponent {
 
   }
 
-  navigate(item: MenuItem, event?: MouseEvent) {
-    if (event) {
-      event.stopPropagation();
-    }
-    const currentUrl = this.router.url;
-
-    if (currentUrl === item.route) {
-      return;
-    }
-    this.router.navigate([item.route]);
+  navigate(item: MenuItem) {
+    this.router.navigate([item.route], {
+      queryParams: {
+        id: item.id
+      }
+    });
   }
 
   currentMenuSelected(menuItem: MenuItem) {

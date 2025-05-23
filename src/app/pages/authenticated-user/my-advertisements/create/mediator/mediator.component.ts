@@ -38,10 +38,12 @@ export class MediatorComponent implements OnChanges {
     advertisementTypeEnum: new FormControl(''),
     propertyAddress: new FormGroup({
       street: new FormControl(''),
+      number: new FormControl(''),
       zipCode: new FormControl(''),
       city: new FormControl(''),
-      number: new FormControl(''),
-      state: new FormControl(''),
+      district: new FormControl(''),
+      parish: new FormControl(''),
+      country: new FormControl(''),
       complement: new FormControl(''),
       neighborhood: new FormControl('')
     }),

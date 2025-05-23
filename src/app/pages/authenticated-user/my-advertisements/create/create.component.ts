@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { ErrorHandlerService } from '../../../../services/exceptions/error-handler.service';
 import { ModalService } from '../../../../services/modal/modal.service';
+import { PropertyService } from '../../../../services/property/property.service';
 import { Property } from '../../../../shared/models/property/property';
 import { ImagesComponent } from "./images/images.component";
 import { InfoComponent } from "./info/info.component";
-import { PropertyService } from '../../../../services/property/property.service';
-import { ErrorHandlerService } from '../../../../services/exceptions/error-handler.service';
 import { MediatorComponent } from './mediator/mediator.component';
-import { PropertyCommodity } from '../../../../shared/models/property/propertyCommodity';
 
 @Component({
   selector: 'app-create',

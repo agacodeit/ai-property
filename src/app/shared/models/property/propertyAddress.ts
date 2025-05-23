@@ -1,9 +1,11 @@
 export class PropertyAddress {
-    street: string = '';
-    zipCode: string = '';
+    country: string = '';
+    district: string = '';
     city: string = '';
-    number: string = '';
-    state: string = '';
-    complement: string = '';
+    parish: string = '';
     neighborhood: string = '';
+    street: string = '';
+    number: string = '';
+    zipCode: string = '';
+    complement: string = '';
 }

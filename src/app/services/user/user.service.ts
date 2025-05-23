@@ -4,6 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthResult } from '../../shared/models/auth/auth';
 import { User } from '../../shared/models/user/user';
+import { ChatService } from '../chat/chat.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,9 @@ export class UserService {
     return this.loggedUserData;
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private chatService: ChatService
+  ) { }
 
   async authenticate(credentials: { username: string, password: string }): Promise<AuthResult> {
     try {
@@ -44,6 +47,7 @@ export class UserService {
   logout() {
     this.loggedUserData = null;
     sessionStorage.removeItem('tkn_ai_prt');
+    this.chatService.clearChat();
   }
 
 }

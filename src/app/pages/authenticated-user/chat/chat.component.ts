@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../../components/header/header.component';
 import { Message } from '../../../shared/models/chat/message';
@@ -8,6 +8,7 @@ import { LoaderComponent } from '../../../components/loader/loader.component';
 import { TypingComponent } from '../../../components/typing/typing.component';
 import { ToastService } from '../../../services/toast/toast.service';
 import { fadeAnimation } from '../../../shared/animations/fade-animation';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -22,7 +23,7 @@ import { fadeAnimation } from '../../../shared/animations/fade-animation';
   styleUrl: './chat.component.scss',
   animations: [fadeAnimation]
 })
-export class ChatComponent implements AfterViewChecked {
+export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
   @ViewChild('canvas', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
@@ -52,9 +53,20 @@ export class ChatComponent implements AfterViewChecked {
 
   constructor(private cdr: ChangeDetectorRef,
     private chatService: ChatService,
-    private toastService: ToastService
-  ) {
+    private toastService: ToastService,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
+  ngOnInit(): void {
+    let chatId = this.activatedRoute.snapshot.queryParams['id'];
+    this.activatedRoute.queryParams.subscribe((params) => {
+      chatId = params['id'];
+      if (chatId) {
+        this.chatService.setChat(chatId);
+      }
+    });
+
+    if (chatId) this.chatService.setChat(chatId);
   }
 
   ngAfterViewChecked(): void {
@@ -239,5 +251,5 @@ export class ChatComponent implements AfterViewChecked {
       this.toggleSendMessage();
     }
   }
-  
+
 }

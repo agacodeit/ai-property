@@ -1,8 +1,11 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { Message } from '../../shared/models/chat/message';
 import { lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { Chat } from '../../shared/models/chat/chat';
+import { Message } from '../../shared/models/chat/message';
+import { MenuService } from '../menu/menu.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,38 +13,8 @@ import { environment } from '../../../environments/environment';
 export class ChatService {
 
   thinking: boolean = false;
-  private chatData: Array<Message> = [
-    /* {
-      chatId: '',
-      role: 'user',
-      text: 'Olá, preciso de um apartamento em Lisboa'
-    },
-    {
-      chatId: '',
-      role: 'bot',
-      text: 'Boa tarde! Poderia me passar mais detalhes do que precisa?'
-    },
-    {
-      chatId: '',
-      role: 'user',
-      text: 'Encontre apartamentos à venda em Lisboa com 2 quartos e menos de 250.000€'
-    },
-    {
-      chatId: '',
-      role: 'bot',
-      text: 'Encontrei 1 imóvel que correspondem à sua busca:',
-      content: {
-        images: ['./assets/images/image1.jpg', './assets/images/image2.jpg', './assets/images/image3.jpg'],
-        title: 'Apartamento T2 em Lisboa',
-        price: 245000,
-        currency: 'EUR',
-        location: 'Lisboa, Avenidas Novas',
-        beds: '2 quartos',
-        description: 'Excelente apartamento T2 totalmente remodelado em zona central de Lisboa. Próximo de transportes e comércio. Boa exposição solar e vista desafogada.',
-        varieties: ['Varanda', 'Cozinha equipada', 'Elevador']
-      }
-    } */
-  ];
+  private chatData: Chat | null = null;
+  private chatSessionsData: Array<Chat> = [];
 
   get token() {
     const token = sessionStorage.getItem('tkn_ai_prt');
@@ -49,16 +22,43 @@ export class ChatService {
     return '';
   }
 
-  get chat(): Array<Message> {
+  get chatSessions(): Array<Chat> {
+    return this.chatSessionsData;
+  }
+
+  get chat(): Chat | null {
     return this.chatData;
   }
 
   constructor(private http: HttpClient,
-    private zone: NgZone
-  ) { }
+    private menuService: MenuService,
+    private router: Router,
+    private zone: NgZone) { }
 
-  setChat(chatId: string) {
+  async setChat(chatId: string) {
+    this.chatData = new Chat();
+    this.chatData.id = chatId;
+    try {
+      const response = await lastValueFrom(this.http.get<any>(`${environment.url}/secure/chat/listChatMessages/${chatId}`));
 
+      this.chatData.messages = response.map((r: any) => {
+        let parsedContent: any = null;
+        let isObject = false;
+        if (typeof r.content === 'string' && (r.content.trim().startsWith('{') || r.content.trim().startsWith('['))) {
+          try {
+            parsedContent = JSON.parse(r.content);
+            isObject = true;
+          } catch (e) { }
+        }
+        return {
+          text: !isObject ? r.content : 'Encontrei os imóveis abaixo:',
+          role: r.role === 'assistant' ? 'bot' : 'user',
+          content: parsedContent
+        }
+      });
+    } catch (error) {
+
+    }
   }
 
   setThinking(value: boolean) {
@@ -66,21 +66,29 @@ export class ChatService {
   }
 
   sendMessage(message: Message) {
-    this.chatData.push(message);
-    this.setThinking(true);
-    const bot = new Message();
-    bot.text = '';
-    bot.role = 'bot';
-    this.chatData.push(bot);
+    if (!this.chatData) this.chatData = new Chat();
 
-    this.streamChat(message.text).subscribe({
+    this.chatData.messages.push(message);
+    message.chatId = this.chatData.id;
+
+    this.setThinking(true);
+
+    this.streamChat(this.chatData.id, message.text).subscribe({
       next: (response) => {
-        const text = response.answer;
-        if (text) this.chatData[this.chatData.length - 1].text += ` ${text}`;
+        let chatMessage = new Message();
+        chatMessage.role = 'bot';
+        chatMessage.text = response.answer || 'Encontrei esses imóveis disponíveis';
+        chatMessage.content = response.content;
+        chatMessage.chatId = this.chatData!.id;;
+
+        this.chatData!.messages.push(chatMessage);
+        console.log(response);
+
+        this.listChatSessions();
       },
       error: () => {
         this.setThinking(false);
-        this.chatData[this.chatData.length - 1].text = 'Não consegui compreender...'
+        this.chatData!.messages[this.chatData!.messages.length - 1].text = 'Não consegui compreender...';
       },
       complete: () => {
         this.setThinking(false);
@@ -88,7 +96,22 @@ export class ChatService {
     });
   }
 
-  streamChat(message: string): Observable<any> {
+  startNewChat() {
+    if (this.chat?.id && this.chat?.messages.length === 0) return;
+    this.chatData = new Chat();
+    this.router.navigate(['/auth/chat'], {
+      queryParams: {
+        id: this.chatData.id
+      }
+    })
+    this.listChatSessions();
+  }
+
+  clearChat() {
+    this.chatData = null;
+  }
+
+  streamChat(chatId: string, message: string): Observable<any> {
     return new Observable((observer) => {
       fetch(`${environment.url}/secure/chat/send`, {
         method: 'POST',
@@ -96,7 +119,7 @@ export class ChatService {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${this.token}`
         },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ id: chatId, message }),
       }).then((response) => {
         const reader = response.body?.getReader();
         const decoder = new TextDecoder();
@@ -134,6 +157,18 @@ export class ChatService {
         this.zone.run(() => observer.error(error));
       });
     });
+  }
+
+  setChatSessions(chats: Array<Chat>) {
+    this.menuService.setChatSessions(chats);
+  }
+
+  async listChatSessions() {
+    try {
+      const response = await lastValueFrom(this.http.get<Array<Chat>>(`${environment.url}/secure/chat/listUserChatSessions`));
+      this.chatSessionsData = response;
+      this.setChatSessions(response);
+    } catch (error) { }
   }
 
 }

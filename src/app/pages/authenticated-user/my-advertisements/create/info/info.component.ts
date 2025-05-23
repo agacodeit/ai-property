@@ -40,10 +40,12 @@ export class InfoComponent implements OnChanges {
     advertisementTypeEnum: new FormControl('', Validators.required),
     propertyAddress: new FormGroup({
       street: new FormControl('', Validators.required),
+      number: new FormControl('', Validators.required),
       zipCode: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
-      number: new FormControl('', Validators.required),
-      state: new FormControl('', Validators.required),
+      district: new FormControl('', Validators.required),
+      parish: new FormControl('', Validators.required),
+      country: new FormControl('', Validators.required),
       complement: new FormControl(''),
       neighborhood: new FormControl('', Validators.required)
     }),
@@ -75,6 +77,7 @@ export class InfoComponent implements OnChanges {
   }
 
   submit() {
+    debugger
     if (this.infoForm.valid) {
       this.nextStepEmitter.next({ property: this.infoForm.value, tab: 1 });
     } else this.toastService.show('Formulário inválido', 'error');
