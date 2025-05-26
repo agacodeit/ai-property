@@ -67,4 +67,8 @@ export class ToastComponent {
         clearInterval(toast.intervalId);
         this.toasts = this.toasts.filter(t => t !== toast);
     }
+
+    clear() {
+        this.toasts = [];
+    }
 }  
