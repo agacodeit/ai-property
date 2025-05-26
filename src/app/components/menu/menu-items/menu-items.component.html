@@ -1,11 +1,17 @@
 <nav *ngIf="menu" class="menu-items">
     <ul>
-        <li *ngFor="let menuItem of menu.menuItems" class="menu-item" (click)="navigate(menuItem)"
-            [class.active-menu]="currentMenuSelected(menuItem)">
-            <h5>{{menuItem.dateHourIncluded | customDate}}</h5>
-            <div class="d-flex align-items-center">
-                <p>{{ menuItem.label }}</p>
-            </div>
+        <li *ngFor="let group of groupedMenu">
+            <h5>{{ group.date | customDate }}</h5>
+
+            <ul>
+                <li *ngFor="let menuItem of group.menuItems" class="menu-item" (click)="navigate(menuItem)"
+                    [class.active-menu]="currentMenuSelected(menuItem)">
+
+                    <div class="d-flex align-items-center">
+                        <p>{{ menuItem.label }}</p>
+                    </div>
+                </li>
+            </ul>
         </li>
     </ul>
 </nav>
