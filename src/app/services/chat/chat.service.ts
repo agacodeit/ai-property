@@ -6,6 +6,7 @@ import { Chat } from '../../shared/models/chat/chat';
 import { Message } from '../../shared/models/chat/message';
 import { MenuService } from '../menu/menu.service';
 import { Router } from '@angular/router';
+import { ApiResponse } from '../../shared/models/api/api';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class ChatService {
     private router: Router,
     private zone: NgZone) { }
 
-  async setChat(chatId: string) {
+  async setChat(chatId: string): Promise<ApiResponse> {
     this.chatData = new Chat();
     this.chatData.id = chatId;
     try {
@@ -56,8 +57,12 @@ export class ChatService {
           content: parsedContent
         }
       });
-    } catch (error) {
-
+      return { success: true, content: response };
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error
+      };
     }
   }
 

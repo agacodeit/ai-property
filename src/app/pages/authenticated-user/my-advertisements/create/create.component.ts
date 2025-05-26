@@ -7,6 +7,7 @@ import { Property } from '../../../../shared/models/property/property';
 import { ImagesComponent } from "./images/images.component";
 import { InfoComponent } from "./info/info.component";
 import { MediatorComponent } from './mediator/mediator.component';
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
   selector: 'app-create',
@@ -40,7 +41,12 @@ export class CreateComponent {
 
   activeTab = 0;
 
+  get loggedUser() {
+    return this.userService.loggedUser;
+  }
+
   constructor(private modalService: ModalService,
+    private userService: UserService,
     private propertyService: PropertyService,
     private errorHandlerService: ErrorHandlerService
   ) {
@@ -65,6 +71,7 @@ export class CreateComponent {
 
   async createProperty(property: Property) {
     let response = null;
+    property.userId = this.loggedUser!.id;
     if (property.id) await this.propertyService.updateProperty(property);
     else response = await this.propertyService.createProperty(property);
     if (response && response.error) {

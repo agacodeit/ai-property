@@ -7,6 +7,7 @@ import { PropertyCommodity } from "./propertyCommodity";
 
 export class Property {
     id: string = '';
+    userId: string = '';
     title: string = '';
     description: string = '';
     location: string = '';

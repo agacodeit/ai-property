@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { AuthResult } from '../../shared/models/auth/auth';
 import { User } from '../../shared/models/user/user';
 import { ChatService } from '../chat/chat.service';
+import { ApiResponse } from '../../shared/models/api/api';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +37,20 @@ export class UserService {
     }
   }
 
-  setLoggedUser(user: User) {
+  async getLoggedUser(): Promise<ApiResponse> {
+    try {
+      const response = await lastValueFrom(this.http.get<User>(`${environment.url}/secure/user/loggedUser`));
+      return {
+        success: true,
+        content: response
+      };
+    } catch (error) {
+      return { success: false, error };
+    }
+  }
 
+  setLoggedUser(user: User) {
+    this.loggedUserData = user;
   }
 
   setToken(accessToken: string) {
