@@ -25,6 +25,10 @@ export class MenuComponent {
     return this.menuService.menu.state.value;
   }
 
+  get chatSessions(){
+    return this.chatService.chatSessions;
+  }
+
   constructor(private menuService: MenuService,
     private modalService: ModalService,
     private chatService: ChatService) {

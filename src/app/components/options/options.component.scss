@@ -1,0 +1,21 @@
+main {
+    border-radius: 12px;
+    background-color: var(--bg-2);
+    border: 1px solid var(--bord-1);
+    position: absolute;
+    right: 0;
+    top: 16px;
+    z-index: 4;
+
+    .items {
+        .item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+
+            i {
+                margin-right: 12px;
+            }
+        }
+    }
+}

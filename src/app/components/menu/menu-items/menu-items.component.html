@@ -1,16 +1,19 @@
 <nav *ngIf="menu" class="menu-items">
     <ul>
-        <li *ngFor="let group of groupedMenu">
+        <li *ngFor="let group of grouped">
             <h5>{{ group.date | customDate }}</h5>
 
             <ul>
-                <li *ngFor="let menuItem of group.menuItems" class="menu-item" (click)="navigate(menuItem)"
-                    [class.active-menu]="currentMenuSelected(menuItem)">
+                <li *ngFor="let menuItem of group.menuItems" class="menu-item"
+                    [class.active-menu]="currentMenuSelected(menuItem)" (click)="navigate(menuItem)">
 
                     <div class="d-flex align-items-center action">
-                        <p>{{ menuItem.label }}</p>
-                        <div class="icons">
-                            <i class="fa-solid fa-trash" (click)="deleteMenuItem(menuItem)"></i>
+                        <p *ngIf="editingChat != menuItem.id; else enableInput">{{ menuItem.label }}</p>
+                        <div class="icons" *ngIf="editingChat != menuItem.id">
+                            <i class="fa-solid fa-filter" (click)="openOptions(menuItem)"></i>
+                        </div>
+                        <div *ngIf="showOptions?.id === menuItem.id">
+                            <app-options (emitter)="triggerAction($event)"></app-options>
                         </div>
                     </div>
                 </li>
@@ -18,3 +21,6 @@
         </li>
     </ul>
 </nav>
+<ng-template #enableInput>
+    <input type="text">
+</ng-template>

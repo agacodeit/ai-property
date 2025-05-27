@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuService } from '../../../services/menu/menu.service';
 import { fadeAnimation } from '../../../shared/animations/fade-animation';
-import { MenuItem } from '../../../shared/models/menu';
+import { Menu, MenuItem } from '../../../shared/models/menu';
 import { CustomDatePipe } from "../../../shared/utils/customDate";
 import { ModalService } from '../../../services/modal/modal.service';
 import { GeneralMessagesComponent } from '../../general-messages/general-messages.component';
@@ -11,57 +11,35 @@ import { ChatService } from '../../../services/chat/chat.service';
 import { ErrorHandlerService } from '../../../services/exceptions/error-handler.service';
 import { ToastService } from '../../../services/toast/toast.service';
 import { FormsModule, NgModel } from '@angular/forms';
+import { OptionsComponent } from '../../options/options.component';
 
 @Component({
   selector: 'app-menu-items',
   imports: [
     CommonModule,
-    CustomDatePipe
+    CustomDatePipe,
+    OptionsComponent
   ],
   standalone: true,
   templateUrl: './menu-items.component.html',
   styleUrl: './menu-items.component.scss',
   animations: [fadeAnimation]
 })
-export class MenuItemsComponent {
+export class MenuItemsComponent implements OnChanges {
 
   editingChat: string | null = null;
+  showOptions: MenuItem | null = null;
   activeMenuItem: MenuItem | null = null;
+  grouped: Array<{ date: Date; menuItems: MenuItem[] }> = [];
 
-  get menu() {
-    return this.menuService.menu;
-  }
+  @Input() chatSessions: any | null = null;
 
   get menuSelected() {
     return location.pathname;
   }
 
-  get groupedMenu(): Array<{ date: Date; menuItems: MenuItem[] }> {
-    const items = this.menu.menuItems;
-    const grouped: Array<{ date: Date; menuItems: MenuItem[] }> = [];
-
-    items.reduce((prev, item) => {
-      const itemDate = new Date(item.dateHourIncluded);
-      const dateOnly = new Date(itemDate.getFullYear(), itemDate.getMonth(), itemDate.getDate());
-      const group = grouped.find(g =>
-        g.date.getFullYear() === dateOnly.getFullYear() &&
-        g.date.getMonth() === dateOnly.getMonth() &&
-        g.date.getDate() === dateOnly.getDate()
-      );
-
-      if (group) {
-        group.menuItems.push(item);
-      } else {
-        grouped.push({
-          date: dateOnly,
-          menuItems: [item],
-        });
-      }
-
-      return prev;
-    }, null);
-
-    return grouped;
+  get menu() {
+    return this.menuService.menu;
   }
 
   constructor(private router: Router,
@@ -71,6 +49,10 @@ export class MenuItemsComponent {
     private errorHandlerService: ErrorHandlerService,
     private toastService: ToastService
   ) { }
+
+  ngOnChanges(): void {
+    this.updateGroupedItems();
+  }
 
   navigate(item: MenuItem) {
     this.router.navigate([item.route], {
@@ -87,20 +69,8 @@ export class MenuItemsComponent {
     return false;
   }
 
-  sameDate(index: number) {
-    if (index === 0) return false;
-
-    const previousDate = new Date(this.menu.menuItems[index - 1].dateHourIncluded);
-    const currentDate = new Date(this.menu.menuItems[index].dateHourIncluded);
-
-    const same = previousDate.getDate() === currentDate.getDate() &&
-      previousDate.getMonth() === currentDate.getMonth() &&
-      previousDate.getFullYear() === currentDate.getFullYear();
-    return same;
-  }
-
-  editMenuItem(menuItem: MenuItem) {
-    this.editingChat = menuItem.id;
+  openOptions(menuItem: MenuItem) {
+    this.showOptions = menuItem;
   }
 
   deleteMenuItem(menuItem: MenuItem) {
@@ -135,6 +105,43 @@ export class MenuItemsComponent {
         this.chatService.clearChat();
       }
     });
+  }
+
+  triggerAction(action: number) {
+    if (action === 1) {
+      this.editingChat = this.showOptions!.id;
+    } else if (action === 2) {
+      this.deleteMenuItem(this.showOptions!)
+    }
+    this.showOptions = null;
+  }
+
+  updateGroupedItems() {
+    const items = this.menu?.menuItems || [];
+    const grouped: Array<{ date: Date; menuItems: MenuItem[] }> = [];
+
+    items.reduce((prev, item) => {
+      const itemDate = new Date(item.dateHourIncluded);
+      const dateOnly = new Date(itemDate.getFullYear(), itemDate.getMonth(), itemDate.getDate());
+      const group = grouped.find(g =>
+        g.date.getFullYear() === dateOnly.getFullYear() &&
+        g.date.getMonth() === dateOnly.getMonth() &&
+        g.date.getDate() === dateOnly.getDate()
+      );
+
+      if (group) {
+        group.menuItems.push(item);
+      } else {
+        grouped.push({
+          date: dateOnly,
+          menuItems: [item],
+        });
+      }
+
+      return prev;
+    }, null);
+
+    this.grouped = grouped;
   }
 
 }
