@@ -71,7 +71,14 @@ export class ChatService {
   }
 
   sendMessage(message: Message) {
-    if (!this.chatData) this.chatData = new Chat();
+    if (!this.chatData) {
+      this.chatData = new Chat();
+      this.router.navigate(['/auth/chat'], {
+        queryParams: {
+          id: this.chatData.id
+        }
+      })
+    };
 
     this.chatData.messages.push(message);
     message.chatId = this.chatData.id;
