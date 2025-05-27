@@ -1,9 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuService } from '../../../services/menu/menu.service';
+import { fadeAnimation } from '../../../shared/animations/fade-animation';
 import { MenuItem } from '../../../shared/models/menu';
 import { CustomDatePipe } from "../../../shared/utils/customDate";
-import { MenuService } from '../../../services/menu/menu.service';
+import { ModalService } from '../../../services/modal/modal.service';
+import { GeneralMessagesComponent } from '../../general-messages/general-messages.component';
+import { ChatService } from '../../../services/chat/chat.service';
+import { ErrorHandlerService } from '../../../services/exceptions/error-handler.service';
+import { ToastService } from '../../../services/toast/toast.service';
 
 @Component({
   selector: 'app-menu-items',
@@ -12,11 +18,12 @@ import { MenuService } from '../../../services/menu/menu.service';
     CustomDatePipe
   ],
   templateUrl: './menu-items.component.html',
-  styleUrl: './menu-items.component.scss'
+  styleUrl: './menu-items.component.scss',
+  animations: [fadeAnimation]
 })
 export class MenuItemsComponent {
 
-  hoveredMenuItem: MenuItem | null = null;
+  showIcons: string | null = null;
   activeMenuItem: MenuItem | null = null;
 
   get menu() {
@@ -34,7 +41,6 @@ export class MenuItemsComponent {
     items.reduce((prev, item) => {
       const itemDate = new Date(item.dateHourIncluded);
       const dateOnly = new Date(itemDate.getFullYear(), itemDate.getMonth(), itemDate.getDate());
-      // Procura grupo existente para essa data (comparando só ano, mes, dia)
       const group = grouped.find(g =>
         g.date.getFullYear() === dateOnly.getFullYear() &&
         g.date.getMonth() === dateOnly.getMonth() &&
@@ -42,7 +48,7 @@ export class MenuItemsComponent {
       );
 
       if (group) {
-        group.menuItems.push(item); // Adiciona no grupo existente
+        group.menuItems.push(item);
       } else {
         grouped.push({
           date: dateOnly,
@@ -50,16 +56,18 @@ export class MenuItemsComponent {
         });
       }
 
-      return prev; // Não precisamos acumular valor, só iterar
+      return prev;
     }, null);
 
     return grouped;
   }
 
-
-
   constructor(private router: Router,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private modalService: ModalService,
+    private chatService: ChatService,
+    private errorHandlerService: ErrorHandlerService,
+    private toastService: ToastService
   ) { }
 
   ngOnChanges() {
@@ -93,5 +101,42 @@ export class MenuItemsComponent {
     return same;
   }
 
+  editMenuItem(menuItem: MenuItem) {
+    debugger
+  }
+
+  deleteMenuItem(menuItem: MenuItem) {
+    this.modalService.open(GeneralMessagesComponent, {
+      title: 'Remover conversa',
+      icon: 'fa-brands fa-rocketchat',
+      content: {
+        message: 'Deseja realmente remover esta conversa?',
+        btns: [
+          {
+            class: 'secondary-btn',
+            label: 'Cancelar',
+            value: false
+          },
+          {
+            class: 'primary-btn',
+            label: 'Confirmar',
+            value: true
+          }
+        ]
+      }
+    })?.subscribe(async (confirm: boolean) => {
+      if (confirm) {
+        const response = await this.chatService.removeChatSession(menuItem.id);
+        if (response.error) this.errorHandlerService.handleError(response.error);
+        else {
+          this.toastService.show('Anúncio removido com sucesso!', 'success');
+        }
+      }
+      this.chatService.listChatSessions();
+      if (menuItem.id === this.chatService.chat?.id) {
+        this.chatService.clearChat();
+      }
+    });
+  }
 
 }

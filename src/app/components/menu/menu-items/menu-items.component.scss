@@ -41,6 +41,7 @@ nav.menu-items ul {
         img {
             margin-right: 8px;
         }
+
     }
 }
 
@@ -69,6 +70,39 @@ nav.menu-items ul {
         //background-color: var(--bg-hv-1);
         border-radius: $border-radius-sm;
     }
+
+    .action {
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        .icons {
+            padding: 4px;
+            background-color: var(--bg-2);
+            position: absolute;
+            right: 0;
+            gap: 12px;
+            border-radius: 8px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            display: flex;
+
+            i {
+                font-size: 12px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    &:hover {
+        .action {
+            .icons {
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
+    }
 }
 
 .menu-item p {
@@ -78,6 +112,5 @@ nav.menu-items ul {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 85%;
     display: block;
 }

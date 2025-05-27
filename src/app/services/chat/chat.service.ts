@@ -114,6 +114,7 @@ export class ChatService {
 
   clearChat() {
     this.chatData = null;
+    this.router.navigate(['/auth/chat']);
   }
 
   streamChat(chatId: string, message: string): Observable<any> {
@@ -174,6 +175,20 @@ export class ChatService {
       this.chatSessionsData = response;
       this.setChatSessions(response);
     } catch (error) { }
+  }
+
+  async removeChatSession(chatId: string): Promise<ApiResponse> {
+    try {
+      await lastValueFrom(this.http.delete(`${environment.url}/secure/chat/delete/${chatId}`));
+      return {
+        success: true
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error
+      }
+    }
   }
 
 }

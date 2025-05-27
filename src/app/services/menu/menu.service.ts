@@ -48,7 +48,8 @@ export class MenuService {
         label: c.id,
         route: '/auth/chat',
         dateHourIncluded: moment.utc(c.updatedAt).valueOf(),
-        id: c.id
+        id: c.id,
+        title: c.title
       }
     }).sort(
       (a, b) => new Date(b.dateHourIncluded).getTime() - new Date(a.dateHourIncluded).getTime()

@@ -51,7 +51,7 @@
       <p>Seu assistente imobiliário inteligente. Pergunte sobre imóveis à venda ou para arrendamento.</p>
     </div>
 
-    <div class="shortcuts">
+    <!--   <div class="shortcuts">
       <div class="chip">
         <i class="fa-solid fa-key"></i>
         <p>Arrendamento</p>
@@ -72,7 +72,7 @@
         <i class="fa-solid fa-section"></i>
         <p>Legislação</p>
       </div>
-    </div>
+    </div> -->
 
     <footer class="textarea-container box-shadow">
       <div class="form-group">
@@ -83,15 +83,15 @@
       </div>
 
       <div class="action" [class.recording]="isRecording">
-        <button *ngIf="!isRecording" (click)="triggerFileInput()">
+        <!-- <button *ngIf="!isRecording" (click)="triggerFileInput()">
           <i class="fas fa-paperclip"></i>
-        </button>
+        </button> -->
         <input #fileInput type="file" style="display: none" (change)="handleFile($event)" />
 
-        <button (click)="toggleRecording()">
+        <!-- <button (click)="toggleRecording()">
           <i class="fa-solid fa-microphone" [class.recording]="isRecording" [class.audio-ready]="audioUrl"
             aria-label="Gravar áudio"></i>
-        </button>
+        </button> -->
 
         <span *ngIf="isRecording">{{ recordingTime }}</span>
 

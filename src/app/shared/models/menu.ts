@@ -9,5 +9,6 @@ export interface MenuItem {
     label: string;
     route: string;
     dateHourIncluded: any;
+    title: string;
     id: string;
 }
