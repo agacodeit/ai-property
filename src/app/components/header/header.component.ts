@@ -33,11 +33,11 @@ export class HeaderComponent {
           icon: this.darkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon',
           label: this.darkMode ? 'Default mode' : 'Dark mode'
         },
-        {
+        /* {
           id: 2,
           icon: 'fa-solid fa-gear',
           label: 'Configurações'
-        },
+        }, */
         {
           id: 3,
           icon: 'fa-solid fa-right-from-bracket',
