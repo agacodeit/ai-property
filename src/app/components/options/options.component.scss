@@ -17,6 +17,8 @@ main {
         }
 
         .item {
+            max-width: 230px;
+            min-width: 80px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -29,6 +31,9 @@ main {
             p {
                 font-size: 14px;
                 font-weight: 300;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
             }
 
             i {
