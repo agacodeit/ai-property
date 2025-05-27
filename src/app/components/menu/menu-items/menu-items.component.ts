@@ -10,6 +10,7 @@ import { GeneralMessagesComponent } from '../../general-messages/general-message
 import { ChatService } from '../../../services/chat/chat.service';
 import { ErrorHandlerService } from '../../../services/exceptions/error-handler.service';
 import { ToastService } from '../../../services/toast/toast.service';
+import { FormsModule, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-menu-items',
@@ -17,13 +18,14 @@ import { ToastService } from '../../../services/toast/toast.service';
     CommonModule,
     CustomDatePipe
   ],
+  standalone: true,
   templateUrl: './menu-items.component.html',
   styleUrl: './menu-items.component.scss',
   animations: [fadeAnimation]
 })
 export class MenuItemsComponent {
 
-  showIcons: string | null = null;
+  editingChat: string | null = null;
   activeMenuItem: MenuItem | null = null;
 
   get menu() {
@@ -70,10 +72,6 @@ export class MenuItemsComponent {
     private toastService: ToastService
   ) { }
 
-  ngOnChanges() {
-
-  }
-
   navigate(item: MenuItem) {
     this.router.navigate([item.route], {
       queryParams: {
@@ -102,7 +100,7 @@ export class MenuItemsComponent {
   }
 
   editMenuItem(menuItem: MenuItem) {
-    debugger
+    this.editingChat = menuItem.id;
   }
 
   deleteMenuItem(menuItem: MenuItem) {

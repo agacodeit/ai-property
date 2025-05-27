@@ -6,10 +6,10 @@
             <ul>
                 <li *ngFor="let menuItem of group.menuItems" class="menu-item" (click)="navigate(menuItem)"
                     [class.active-menu]="currentMenuSelected(menuItem)">
+
                     <div class="d-flex align-items-center action">
                         <p>{{ menuItem.label }}</p>
                         <div class="icons">
-                            <i class="fa-solid fa-pen-to-square" (click)="editMenuItem(menuItem)"></i>
                             <i class="fa-solid fa-trash" (click)="deleteMenuItem(menuItem)"></i>
                         </div>
                     </div>

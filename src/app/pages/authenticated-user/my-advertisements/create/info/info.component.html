@@ -49,7 +49,8 @@
 
         <div class="grid-column-3">
             <div class="form-group mb-24">
-                <label for="price">Valor do arrendamento</label>
+                <label for="price">Valor {{infoForm.get('advertisementTypeEnum')!.value === 'RENT' ? 'do arrendamento' :
+                    'da compra'}}</label>
                 <input type="text" appCurrencyMask id="price" formControlName="price" placeholder="€0" />
             </div>
             <div class="form-group mb-24">
