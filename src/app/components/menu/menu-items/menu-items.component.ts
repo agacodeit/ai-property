@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, Input, OnChanges, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuService } from '../../../services/menu/menu.service';
 import { fadeAnimation } from '../../../shared/animations/fade-animation';
 import { Menu, MenuItem } from '../../../shared/models/menu';
@@ -47,6 +47,7 @@ export class MenuItemsComponent implements OnChanges {
   }
 
   constructor(private router: Router,
+    private activatedRoute: ActivatedRoute,
     private menuService: MenuService,
     private modalService: ModalService,
     private chatService: ChatService,
@@ -67,7 +68,8 @@ export class MenuItemsComponent implements OnChanges {
   }
 
   currentMenuSelected(menuItem: MenuItem) {
-    if (location.pathname.includes(menuItem.route)) {
+    const { id } = this.activatedRoute.snapshot.queryParams;
+    if (id && id === menuItem.id) {
       return true;
     }
     return false;
