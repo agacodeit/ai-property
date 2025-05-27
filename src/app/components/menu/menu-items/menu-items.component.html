@@ -12,8 +12,8 @@
                         </p>
                         <ng-template #enableInput>
                             <div class="d-flex align-items-center editing">
-                                <input #inputRef [attr.data-id]="menuItem.id" type="text"
-                                    [(ngModel)]="editingChatValue">
+                                <input (keyup.enter)="confirmEdition(menuItem)" #inputRef [attr.data-id]="menuItem.id"
+                                    type="text" [(ngModel)]="editingChatValue">
                                 <div class="d-flex icon">
                                     <i class="fa-solid fa-circle-xmark" (click)="cancelEdition()"></i>
                                     <i class="fa-solid fa-circle-check" (click)="confirmEdition(menuItem)"></i>
