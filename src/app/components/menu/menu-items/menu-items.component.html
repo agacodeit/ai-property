@@ -9,6 +9,9 @@
 
                     <div class="d-flex align-items-center action">
                         <p *ngIf="editingChat != menuItem.id; else enableInput">{{ menuItem.label }}</p>
+                        <ng-template #enableInput>
+                            <input type="text" [value]="menuItem.title || menuItem.label">
+                        </ng-template>
                         <div class="icons" *ngIf="editingChat != menuItem.id">
                             <i class="fa-solid fa-filter" (click)="openOptions(menuItem)"></i>
                         </div>
@@ -21,6 +24,3 @@
         </li>
     </ul>
 </nav>
-<ng-template #enableInput>
-    <input type="text">
-</ng-template>

@@ -77,6 +77,15 @@ nav.menu-items ul {
         align-items: center;
         position: relative;
 
+        input {
+            background-color: transparent;
+            height: fit-content;
+            color: var(--txt-1);
+            padding: 4px;
+            width: 100%;
+            border-radius: 4px;
+        }
+
         .icons {
             padding: 4px;
             background-color: var(--bg-2);
