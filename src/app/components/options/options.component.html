@@ -1,12 +1,8 @@
-<main>
+<main #mainElement>
     <div class="items">
-        <div class="item" (click)="choose(1)">
-            <i class="fa-solid fa-pen-to-square"></i>
-            <p>Editar</p>
-        </div>
-        <div class="item" (click)="choose(2)">
-            <i class="fa-solid fa-trash"></i>
-            <p>Excluir</p>
+        <div class="item" (click)="choose(option.id)" *ngFor="let option of options" (click)="choose(1)">
+            <i class="{{option.icon}}" [ngStyle]="{'color': option.color || ''}"></i>
+            <p [ngStyle]="{'color': option.color || ''}">{{option.label}}</p>
         </div>
     </div>
 </main>

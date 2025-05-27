@@ -1,7 +1,7 @@
 main {
     border-radius: 12px;
     background-color: var(--bg-2);
-    border: 1px solid var(--bord-1);
+    border: 0.1px solid var(--bord-1);
     position: absolute;
     right: 0;
     top: 16px;
@@ -14,6 +14,11 @@ main {
             display: flex;
             align-items: center;
             padding: 8px 0;
+
+            p {
+                font-size: 14px;
+                font-weight: 300;
+            }
 
             i {
                 margin-right: 12px;

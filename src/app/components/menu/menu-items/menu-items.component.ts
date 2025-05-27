@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, Input, OnChanges, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, QueryList, ViewChildren } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuService } from '../../../services/menu/menu.service';
-import { fadeAnimation } from '../../../shared/animations/fade-animation';
-import { Menu, MenuItem } from '../../../shared/models/menu';
-import { CustomDatePipe } from "../../../shared/utils/customDate";
-import { ModalService } from '../../../services/modal/modal.service';
-import { GeneralMessagesComponent } from '../../general-messages/general-messages.component';
 import { ChatService } from '../../../services/chat/chat.service';
 import { ErrorHandlerService } from '../../../services/exceptions/error-handler.service';
+import { MenuService } from '../../../services/menu/menu.service';
+import { ModalService } from '../../../services/modal/modal.service';
 import { ToastService } from '../../../services/toast/toast.service';
-import { FormsModule, NgModel } from '@angular/forms';
+import { fadeAnimation } from '../../../shared/animations/fade-animation';
+import { MenuItem } from '../../../shared/models/menu';
+import { CustomDatePipe } from "../../../shared/utils/customDate";
+import { GeneralMessagesComponent } from '../../general-messages/general-messages.component';
 import { OptionsComponent } from '../../options/options.component';
+import { Option } from '../../../shared/models/components/option';
 
 @Component({
   selector: 'app-menu-items',
@@ -29,14 +30,27 @@ import { OptionsComponent } from '../../options/options.component';
 export class MenuItemsComponent implements OnChanges {
 
   @ViewChildren('inputRef') inputElements!: QueryList<ElementRef>;
+  @Input() chatSessions: any | null = null;
+
+  editOptions: Option[] = [
+    {
+      id: 1,
+      icon: 'fa-solid fa-pen-to-square',
+      label: 'Editar'
+    },
+    {
+      id: 2,
+      icon: 'fa-solid fa-trash',
+      label: 'Excluir',
+      color: '#d54343'
+    }
+  ];
 
   editingChatValue: string = '';
   editingChat: string | null = null;
   showOptions: MenuItem | null = null;
-  activeMenuItem: MenuItem | null = null;
   grouped: Array<{ date: Date; menuItems: MenuItem[] }> = [];
 
-  @Input() chatSessions: any | null = null;
 
   get menuSelected() {
     return location.pathname;

@@ -24,7 +24,7 @@
                             <i class="fa-solid fa-filter" (click)="openOptions(menuItem)"></i>
                         </div>
                         <div *ngIf="showOptions?.id === menuItem.id">
-                            <app-options (emitter)="triggerAction($event)"></app-options>
+                            <app-options [options]="editOptions" (emitter)="triggerAction($event)"></app-options>
                         </div>
                     </div>
                 </li>
