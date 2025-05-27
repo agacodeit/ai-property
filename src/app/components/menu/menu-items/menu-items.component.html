@@ -8,9 +8,17 @@
                     [class.active-menu]="currentMenuSelected(menuItem)" (click)="navigate(menuItem)">
 
                     <div class="d-flex align-items-center action">
-                        <p *ngIf="editingChat != menuItem.id; else enableInput">{{ menuItem.label }}</p>
+                        <p *ngIf="editingChat != menuItem.id; else enableInput">{{ menuItem.title || menuItem.label }}
+                        </p>
                         <ng-template #enableInput>
-                            <input type="text" [value]="menuItem.title || menuItem.label">
+                            <div class="d-flex align-items-center editing">
+                                <input #inputRef [attr.data-id]="menuItem.id" type="text"
+                                    [(ngModel)]="editingChatValue">
+                                <div class="d-flex icon">
+                                    <i class="fa-solid fa-circle-xmark" (click)="cancelEdition()"></i>
+                                    <i class="fa-solid fa-circle-check" (click)="confirmEdition(menuItem)"></i>
+                                </div>
+                            </div>
                         </ng-template>
                         <div class="icons" *ngIf="editingChat != menuItem.id">
                             <i class="fa-solid fa-filter" (click)="openOptions(menuItem)"></i>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuService } from '../../../services/menu/menu.service';
 import { fadeAnimation } from '../../../shared/animations/fade-animation';
@@ -18,7 +18,8 @@ import { OptionsComponent } from '../../options/options.component';
   imports: [
     CommonModule,
     CustomDatePipe,
-    OptionsComponent
+    OptionsComponent,
+    FormsModule
   ],
   standalone: true,
   templateUrl: './menu-items.component.html',
@@ -27,6 +28,9 @@ import { OptionsComponent } from '../../options/options.component';
 })
 export class MenuItemsComponent implements OnChanges {
 
+  @ViewChildren('inputRef') inputElements!: QueryList<ElementRef>;
+
+  editingChatValue: string = '';
   editingChat: string | null = null;
   showOptions: MenuItem | null = null;
   activeMenuItem: MenuItem | null = null;
@@ -110,6 +114,14 @@ export class MenuItemsComponent implements OnChanges {
   triggerAction(action: number) {
     if (action === 1) {
       this.editingChat = this.showOptions!.id;
+      this.editingChatValue = this.showOptions!.title || this.showOptions!.title;
+
+      setTimeout(() => {
+        const input = this.inputElements.find(
+          (el) => el.nativeElement.getAttribute('data-id') === this.editingChat
+        );
+        input?.nativeElement.focus();
+      });
     } else if (action === 2) {
       this.deleteMenuItem(this.showOptions!)
     }
@@ -142,6 +154,21 @@ export class MenuItemsComponent implements OnChanges {
     }, null);
 
     this.grouped = grouped;
+  }
+
+  cancelEdition() {
+    this.editingChat = null;
+  }
+
+  async confirmEdition(menuItem: MenuItem) {
+    const response = await this.chatService.editChatTitle(menuItem.id, this.editingChatValue);
+    if (response.error) this.errorHandlerService.handleError(response.error);
+    else {
+      menuItem.title = this.editingChatValue;
+      this.editingChatValue = '';
+      this.editingChat = null;
+      this.toastService.show('Título editado com sucesso!', 'success');
+    }
   }
 
 }

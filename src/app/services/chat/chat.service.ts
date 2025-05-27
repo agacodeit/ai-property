@@ -199,4 +199,18 @@ export class ChatService {
     }
   }
 
+  async editChatTitle(chatId: string, title: string): Promise<ApiResponse> {
+    try {
+      await lastValueFrom(this.http.put(`${environment.url}/secure/chat/update/title/${chatId}`, { title }));
+      return {
+        success: true
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error
+      }
+    }
+  }
+
 }
