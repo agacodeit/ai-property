@@ -4,16 +4,27 @@ main {
     border: 0.1px solid var(--bord-1);
     position: absolute;
     right: 0;
-    top: 16px;
+    top: 24px;
     z-index: 4;
 
     .items {
-        padding: 8px 16px;
+        padding: 16px;
+
+        h5 {
+            font-size: 14px;
+            border-bottom: 1px solid var(--bord-2);
+            padding-bottom: 16px;
+        }
 
         .item {
+            cursor: pointer;
             display: flex;
             align-items: center;
             padding: 8px 0;
+
+            &:hover {
+                opacity: 0.6;
+            }
 
             p {
                 font-size: 14px;
@@ -22,6 +33,7 @@ main {
 
             i {
                 margin-right: 12px;
+                width: 16px;
             }
         }
     }

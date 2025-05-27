@@ -12,7 +12,7 @@ import { MenuItem } from '../../../shared/models/menu';
 import { CustomDatePipe } from "../../../shared/utils/customDate";
 import { GeneralMessagesComponent } from '../../general-messages/general-messages.component';
 import { OptionsComponent } from '../../options/options.component';
-import { Option } from '../../../shared/models/components/option';
+import { Option, OptionContainer } from '../../../shared/models/components/option';
 
 @Component({
   selector: 'app-menu-items',
@@ -32,19 +32,21 @@ export class MenuItemsComponent implements OnChanges {
   @ViewChildren('inputRef') inputElements!: QueryList<ElementRef>;
   @Input() chatSessions: any | null = null;
 
-  editOptions: Option[] = [
-    {
-      id: 1,
-      icon: 'fa-solid fa-pen-to-square',
-      label: 'Editar'
-    },
-    {
-      id: 2,
-      icon: 'fa-solid fa-trash',
-      label: 'Excluir',
-      color: '#d54343'
-    }
-  ];
+  editOptions: OptionContainer = {
+    options: [
+      {
+        id: 1,
+        icon: 'fa-solid fa-pen-to-square',
+        label: 'Editar'
+      },
+      {
+        id: 2,
+        icon: 'fa-solid fa-trash',
+        label: 'Excluir',
+        color: '#d54343'
+      }
+    ]
+  };
 
   editingChatValue: string = '';
   editingChat: string | null = null;

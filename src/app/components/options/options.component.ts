@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
-import { Option } from '../../shared/models/components/option';
+import { Option, OptionContainer } from '../../shared/models/components/option';
 
 @Component({
   selector: 'app-options',
@@ -14,7 +14,7 @@ import { Option } from '../../shared/models/components/option';
 export class OptionsComponent {
   @ViewChild('mainElement') mainElement!: ElementRef;
 
-  @Input() options: Option[] = [];
+  @Input() container: OptionContainer | undefined;
   @Output() emitter = new EventEmitter();
 
   @HostListener('document:click', ['$event'])

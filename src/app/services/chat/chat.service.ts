@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { Chat } from '../../shared/models/chat/chat';
 import { Message } from '../../shared/models/chat/message';
 import { MenuService } from '../menu/menu.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiResponse } from '../../shared/models/api/api';
 
 @Injectable({
@@ -34,6 +34,7 @@ export class ChatService {
   constructor(private http: HttpClient,
     private menuService: MenuService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private zone: NgZone) { }
 
   async setChat(chatId: string): Promise<ApiResponse> {
@@ -70,14 +71,14 @@ export class ChatService {
     this.thinking = value;
   }
 
-  sendMessage(message: Message) {
+  async sendMessage(message: Message) {
     if (!this.chatData) {
       this.chatData = new Chat();
-      this.router.navigate(['/auth/chat'], {
-        queryParams: {
-          id: this.chatData.id
-        }
-      })
+      await this.router.navigate(['/auth/chat'], {
+        relativeTo: this.activatedRoute,
+        queryParams: { id: this.chatData.id },
+        queryParamsHandling: 'merge'
+      });
     };
 
     this.chatData.messages.push(message);
@@ -95,13 +96,13 @@ export class ChatService {
 
         this.chatData!.messages.push(chatMessage);
 
-        //this.listChatSessions();
       },
       error: () => {
         this.setThinking(false);
         this.chatData!.messages[this.chatData!.messages.length - 1].text = 'Não consegui compreender...';
       },
       complete: () => {
+        this.listChatSessions();
         this.setThinking(false);
       },
     });
