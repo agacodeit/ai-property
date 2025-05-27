@@ -84,16 +84,17 @@ export class ChatService {
     message.chatId = this.chatData.id;
 
     this.setThinking(true);
+    let chatMessage = new Message();
+    chatMessage.role = 'bot';
+    this.chatData!.messages.push(chatMessage);
 
     this.streamChat(this.chatData.id, message.text).subscribe({
       next: (response) => {
-        let chatMessage = new Message();
-        chatMessage.role = 'bot';
-        chatMessage.text = response.answer || 'Encontrei esses imóveis disponíveis';
-        chatMessage.content = response.content;
-        chatMessage.chatId = this.chatData!.id;;
+        let updatedChat = this.chatData!.messages[this.chatData!.messages.length - 1];
+        updatedChat.text = response.answer || 'Encontrei esses imóveis disponíveis';
+        updatedChat.content = response.content;
+        updatedChat.chatId = this.chatData!.id;
 
-        this.chatData!.messages.push(chatMessage);
         console.log(response);
 
         this.listChatSessions();

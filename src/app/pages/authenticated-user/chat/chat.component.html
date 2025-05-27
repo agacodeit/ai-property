@@ -11,8 +11,8 @@
         <div class="mt-4">
           <div class="d-flex align-items-end">
             <p class="message-bubble d-flex" [innerHTML]="message.text">
-              <typing *ngIf="thinking && message.role === 'bot' && chat.messages.length - 1 === i"></typing>
             </p>
+            <typing *ngIf="thinking && message.role === 'bot' && chat.messages.length - 1 === i"></typing>
             <div *ngIf="message.error" class="message-error-icon">
               <i class="fa-solid fa-exclamation"></i>
             </div>
