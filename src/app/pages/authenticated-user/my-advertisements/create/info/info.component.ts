@@ -77,7 +77,6 @@ export class InfoComponent implements OnChanges {
   }
 
   submit() {
-    debugger
     if (this.infoForm.valid) {
       this.nextStepEmitter.next({ property: this.infoForm.value, tab: 1 });
     } else this.toastService.show('Formulário inválido', 'error');
