@@ -117,7 +117,7 @@ export class MenuItemsComponent implements OnChanges {
         const response = await this.chatService.removeChatSession(menuItem.id);
         if (response.error) this.errorHandlerService.handleError(response.error);
         else {
-          this.toastService.show('Anúncio removido com sucesso!', 'success');
+          this.toastService.show('Conversa removida com sucesso!', 'success');
         }
       }
       this.chatService.listChatSessions();
