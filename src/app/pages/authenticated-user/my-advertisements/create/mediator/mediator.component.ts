@@ -76,6 +76,7 @@ export class MediatorComponent implements OnChanges {
 
   publish() {
     this.formSubmitted = true;
+    this.mediatorForm.markAllAsTouched();
     if (this.mediatorForm.valid) {
       this.publishing = true;
       this.property = this.mediatorForm.value;
