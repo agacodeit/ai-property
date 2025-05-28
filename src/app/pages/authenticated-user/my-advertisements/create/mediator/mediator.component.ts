@@ -45,9 +45,7 @@ export class MediatorComponent implements OnChanges {
       city: new FormControl(''),
       district: new FormControl(''),
       parish: new FormControl(''),
-      country: new FormControl(''),
-      complement: new FormControl(''),
-      neighborhood: new FormControl('')
+      country: new FormControl('')
     }),
     mediator: new FormGroup({
       name: new FormControl('', Validators.required),

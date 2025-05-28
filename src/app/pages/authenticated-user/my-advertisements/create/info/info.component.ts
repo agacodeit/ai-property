@@ -120,23 +120,17 @@ export class InfoComponent implements OnChanges {
     const input = event.target;
     let value = input.value;
 
-    // Remove caracteres não numéricos (caso venha algo errado)
     value = value.replace(/[^0-9]/g, '');
 
-    // Remove zeros à esquerda
     value = value.replace(/^0+(?!$)/, '');
 
-    // Se vazio após remover, assume 0
     let number = value ? parseInt(value, 10) : 0;
 
-    // Limites
     if (number < 0) number = 0;
     if (number > 99) number = 99;
 
-    // Atualiza o input
     input.value = number;
 
-    // Atualiza o formControl
     const control = this.infoForm.get(input.getAttribute('formControlName'));
     if (control) {
       control.setValue(number);
