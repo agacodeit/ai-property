@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PropertyService } from '../../../../../services/property/property.service';
 import { ToastService } from '../../../../../services/toast/toast.service';
 import { AdvertisementTypeEnum } from '../../../../../shared/constants/advertisementTypeEnum';
@@ -9,7 +9,7 @@ import { CurrencyMaskDirective } from '../../../../../shared/directives/currency
 import { InputMaskDirective } from '../../../../../shared/directives/input-mask.directive';
 import { Property } from '../../../../../shared/models/property/property';
 import { PropertyCommodity } from '../../../../../shared/models/property/propertyCommodity';
-import { isInvalid } from '../../../../../shared/utils/validators';
+import { isInvalid, scrollToInvalidField } from '../../../../../shared/utils/validators';
 
 @Component({
   selector: 'app-info',
@@ -84,7 +84,11 @@ export class InfoComponent implements OnChanges {
     this.infoForm.markAllAsTouched();
     if (this.infoForm.valid) {
       this.nextStepEmitter.next({ property: this.infoForm.value, tab: 1 });
-    } else this.toastService.show('Formulário inválido', 'error');
+    } else {
+      debugger
+      scrollToInvalidField(this.infoForm);
+      this.toastService.show('Formulário inválido', 'error');
+    };
   }
 
   setAdvertisementType(advertisementTypeEnum: string) {

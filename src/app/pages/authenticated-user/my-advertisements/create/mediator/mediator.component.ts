@@ -5,7 +5,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormArray } fr
 import { CommonModule } from '@angular/common';
 import { PropertyService } from '../../../../../services/property/property.service';
 import { LoaderComponent } from '../../../../../components/loader/loader.component';
-import { isInvalid } from '../../../../../shared/utils/validators';
+import { isInvalid, scrollToInvalidField } from '../../../../../shared/utils/validators';
 
 @Component({
   selector: 'app-mediator',
@@ -82,7 +82,10 @@ export class MediatorComponent implements OnChanges {
       this.property = this.mediatorForm.value;
       this.publishEmitter.next(this.property);
       return;
-    } else this.toastService.show('Formulário inválido', 'error');
+    } else {
+      scrollToInvalidField(this.mediatorForm);
+      this.toastService.show('Formulário inválido', 'error')
+    };
 
     this.publishing = false;
   }
