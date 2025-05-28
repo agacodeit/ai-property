@@ -21,7 +21,8 @@
         <div class="grid-column-2 mb-24">
             <div class="form-group">
                 <label for="title">Título do anúncio</label>
-                <input type="text" id="title" formControlName="title" placeholder="Escolha um título" />
+                <input [ngClass]="{'invalid': isInvalid(infoForm.get('title'))}" type="text" id="title"
+                    formControlName="title" placeholder="Escolha um título" />
             </div>
             <div>
                 <label class="mb-4" for="">Tipo da moradia</label>
@@ -43,23 +44,26 @@
 
         <div class="form-group mb-24">
             <label for="description">Descrição</label>
-            <textarea id="description" formControlName="description" placeholder="Descreva seu imóvel"
-                rows="10"></textarea>
+            <textarea [ngClass]="{'invalid': isInvalid(infoForm.get('description'))}" id="description"
+                formControlName="description" placeholder="Descreva seu imóvel" rows="10"></textarea>
         </div>
 
         <div class="grid-column-3">
             <div class="form-group mb-24">
                 <label for="price">Valor {{infoForm.get('advertisementTypeEnum')!.value === 'RENT' ? 'do arrendamento' :
                     'da compra'}}</label>
-                <input type="text" appCurrencyMask id="price" formControlName="price" placeholder="€0" />
+                <input type="text" appCurrencyMask id="price" formControlName="price" placeholder="€0"
+                    [ngClass]="{'invalid': isInvalid(infoForm.get('price'))}" />
             </div>
             <div class="form-group mb-24">
                 <label for="bedrooms">Quartos</label>
-                <input type="number" id="bedrooms" formControlName="bedrooms" />
+                <input [ngClass]="{'invalid': isInvalid(infoForm.get('bedrooms'))}" type="number" id="bedrooms"
+                    formControlName="bedrooms" />
             </div>
             <div class="form-group mb-24">
                 <label for="bathrooms">Casas de banho</label>
-                <input type="number" id="bathrooms" formControlName="bathrooms" />
+                <input [ngClass]="{'invalid': isInvalid(infoForm.get('bathrooms'))}" type="number" id="bathrooms"
+                    formControlName="bathrooms" />
             </div>
         </div>
 
@@ -81,23 +85,26 @@
         <div formGroupName="propertyAddress">
             <div class="form-group mb-24">
                 <label for="zipCode">Post code</label>
-                <input type="text" [inputMask]="'00000-000'" id="zipCode" formControlName="zipCode"
-                    placeholder="00000-000" />
+                <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('zipCode'))}" type="text"
+                    [inputMask]="'00000-000'" id="zipCode" formControlName="zipCode" placeholder="00000-000" />
             </div>
 
             <div class="form-group mb-24">
                 <label for="street">Moradia</label>
-                <input type="text" id="street" formControlName="street" placeholder="Rua teste" />
+                <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('street'))}" type="text"
+                    id="street" formControlName="street" placeholder="Rua teste" />
             </div>
 
             <div class="grid-column-2 mb-24">
                 <div class="form-group">
                     <label for="city">Cidade</label>
-                    <input type="text" id="city" formControlName="city" placeholder="Porto" />
+                    <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('city'))}" type="text"
+                        id="city" formControlName="city" placeholder="Porto" />
                 </div>
                 <div class="form-group">
                     <label for="district">Distrito</label>
-                    <input type="text" id="district" formControlName="district" placeholder="Estado" />
+                    <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('district'))}"
+                        type="text" id="district" formControlName="district" placeholder="Estado" />
                 </div>
             </div>
 
@@ -105,7 +112,8 @@
             <div class="grid-column-2 mb-24">
                 <div class="form-group">
                     <label for="number">Número</label>
-                    <input type="text" id="number" formControlName="number" placeholder="123" />
+                    <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('number'))}"
+                        type="text" id="number" formControlName="number" placeholder="123" />
                 </div>
                 <div class="form-group">
                     <label for="complement">Complemento</label>
@@ -116,16 +124,19 @@
 
                 <div class="form-group">
                     <label for="parish">Freguesia</label>
-                    <input type="text" id="parish" formControlName="parish" placeholder="123" />
+                    <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('parish'))}"
+                        type="text" id="parish" formControlName="parish" placeholder="123" />
                 </div>
                 <div class="form-group">
                     <label for="country">País</label>
-                    <input type="text" id="country" formControlName="country" placeholder="Casa 2" />
+                    <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('country'))}"
+                        type="text" id="country" formControlName="country" placeholder="Casa 2" />
                 </div>
             </div>
             <div class="form-group mb-24">
                 <label for="neighborhood">Bairro</label>
-                <input type="text" id="neighborhood" formControlName="neighborhood" placeholder="Centro" />
+                <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('neighborhood'))}"
+                    type="text" id="neighborhood" formControlName="neighborhood" placeholder="Centro" />
             </div>
         </div>
 

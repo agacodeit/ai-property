@@ -27,5 +27,9 @@ textarea {
             line-height: 100%;
             letter-spacing: 0%;
         }
+
+        &.invalid {
+            border: 2px solid #d54343;
+        }
     }
 }

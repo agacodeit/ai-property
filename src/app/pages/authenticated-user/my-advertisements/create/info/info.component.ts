@@ -9,6 +9,7 @@ import { CurrencyMaskDirective } from '../../../../../shared/directives/currency
 import { InputMaskDirective } from '../../../../../shared/directives/input-mask.directive';
 import { Property } from '../../../../../shared/models/property/property';
 import { PropertyCommodity } from '../../../../../shared/models/property/propertyCommodity';
+import { isInvalid } from '../../../../../shared/utils/validators';
 
 @Component({
   selector: 'app-info',
@@ -25,6 +26,8 @@ export class InfoComponent implements OnChanges {
 
   @Input() property: Property = new Property();
   @Output() nextStepEmitter = new EventEmitter();
+
+  formSubmited: boolean = false;
 
   infoForm: FormGroup = new FormGroup({
     id: new FormControl(''),
@@ -77,6 +80,8 @@ export class InfoComponent implements OnChanges {
   }
 
   submit() {
+    this.formSubmited = true;
+    this.infoForm.markAllAsTouched();
     if (this.infoForm.valid) {
       this.nextStepEmitter.next({ property: this.infoForm.value, tab: 1 });
     } else this.toastService.show('Formulário inválido', 'error');
@@ -103,6 +108,11 @@ export class InfoComponent implements OnChanges {
     } else {
       this.commodities.removeAt(index);
     }
+  }
+
+  isInvalid(formControl: any): any {
+    if (!this.formSubmited) return false;
+    return isInvalid(formControl);
   }
 
 }

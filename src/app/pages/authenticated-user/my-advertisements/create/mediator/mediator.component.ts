@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormArray } fr
 import { CommonModule } from '@angular/common';
 import { PropertyService } from '../../../../../services/property/property.service';
 import { LoaderComponent } from '../../../../../components/loader/loader.component';
+import { isInvalid } from '../../../../../shared/utils/validators';
 
 @Component({
   selector: 'app-mediator',
@@ -23,6 +24,7 @@ export class MediatorComponent implements OnChanges {
   @Output() publishEmitter = new EventEmitter();
 
   publishing: boolean = false;
+  formSubmitted: boolean = false;
 
   mediatorForm: FormGroup = new FormGroup({
     id: new FormControl(''),
@@ -73,6 +75,7 @@ export class MediatorComponent implements OnChanges {
   }
 
   publish() {
+    this.formSubmitted = true;
     if (this.mediatorForm.valid) {
       this.publishing = true;
       this.property = this.mediatorForm.value;
@@ -81,6 +84,11 @@ export class MediatorComponent implements OnChanges {
     } else this.toastService.show('Formulário inválido', 'error');
 
     this.publishing = false;
+  }
+
+  isInvalid(formControl: any): any {
+    if (!this.formSubmitted) return false;
+    return isInvalid(formControl);
   }
 
 }
