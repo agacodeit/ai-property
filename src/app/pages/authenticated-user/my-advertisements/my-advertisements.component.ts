@@ -53,7 +53,10 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
       component: CreateComponent,
       data: {
         title: 'Criar anúncio',
-        icon: 'fa-solid fa-arrow-trend-up'
+        icon: 'fa-solid fa-arrow-trend-up',
+        content: {
+          backdrop: false
+        }
       }
     })?.subscribe((confirm: boolean) => {
       if (confirm) this.toastService.show('Anúncio criado com sucesso', 'success');

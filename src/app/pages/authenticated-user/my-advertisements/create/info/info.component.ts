@@ -48,9 +48,7 @@ export class InfoComponent implements OnChanges {
       city: new FormControl('', Validators.required),
       district: new FormControl('', Validators.required),
       parish: new FormControl('', Validators.required),
-      country: new FormControl('', Validators.required),
-      complement: new FormControl(''),
-      neighborhood: new FormControl('', Validators.required)
+      country: new FormControl('', Validators.required)
     }),
     mediator: new FormGroup({
       name: new FormControl(''),
@@ -85,7 +83,6 @@ export class InfoComponent implements OnChanges {
     if (this.infoForm.valid) {
       this.nextStepEmitter.next({ property: this.infoForm.value, tab: 1 });
     } else {
-      debugger
       scrollToInvalidField(this.infoForm);
       this.toastService.show('Formulário inválido', 'error');
     };
@@ -118,5 +115,33 @@ export class InfoComponent implements OnChanges {
     if (!this.formSubmited) return false;
     return isInvalid(formControl);
   }
+
+  preventInvalidNumber(event: any) {
+    const input = event.target;
+    let value = input.value;
+
+    // Remove caracteres não numéricos (caso venha algo errado)
+    value = value.replace(/[^0-9]/g, '');
+
+    // Remove zeros à esquerda
+    value = value.replace(/^0+(?!$)/, '');
+
+    // Se vazio após remover, assume 0
+    let number = value ? parseInt(value, 10) : 0;
+
+    // Limites
+    if (number < 0) number = 0;
+    if (number > 99) number = 99;
+
+    // Atualiza o input
+    input.value = number;
+
+    // Atualiza o formControl
+    const control = this.infoForm.get(input.getAttribute('formControlName'));
+    if (control) {
+      control.setValue(number);
+    }
+  }
+
 
 }
