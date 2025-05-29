@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  url: 'https://app.aiproperty.chat/aiproperty/api/v1'
+  url: 'http://localhost:8080/aiproperty/api/v1'
 };

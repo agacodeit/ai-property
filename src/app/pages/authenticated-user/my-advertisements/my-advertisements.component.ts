@@ -82,7 +82,7 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
       data: {
         title: 'Editar anúncio',
         icon: 'fa-solid fa-arrow-trend-up',
-        content: { property, tab: toImages ? 1 : null }
+        content: { property, tab: toImages ? 1 : null, backdrop: false }
       }
     })?.subscribe((confirm: boolean) => {
       if (confirm) this.toastService.show('Anúncio editado com sucesso', 'success');
