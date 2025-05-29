@@ -17,12 +17,14 @@ textarea {
 
     textarea {
         box-sizing: border-box;
-        background-color: var(--bg-2);
+        background-color: var(--bg-1);
         color: var(--txt-1);
+        font-size: 16px;
+        border: 1px solid var(--bord-1);
 
         &::placeholder {
             color: var(--bg-6);
-            font-weight: 500;
+            font-weight: 300;
             font-size: 14px;
             line-height: 100%;
             letter-spacing: 0%;
