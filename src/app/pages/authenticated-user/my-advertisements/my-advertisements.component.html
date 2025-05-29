@@ -1,16 +1,17 @@
 <main class="regular-container">
     <div class="create-advertisement">
         <button class="primary-btn" (click)="createProperty()">
-            Criar anúncio +
+            Criar anúncio <i
+                class="ml-4 fa-solid fa-up-right-from-square"></i> 
         </button>
     </div>
     <section *ngIf="propertyList" @fadeAnimation>
         <div class="advertisements">
             <div class="message-content" *ngFor="let property of propertyList">
                 <div class="header">
-                    <div class="status" [class.paused]="property.propertyStatusEnum === 'PAUSED'"
+                    <div class="status" [class.created]="property.propertyStatusEnum === 'CREATED'" [class.paused]="property.propertyStatusEnum === 'PAUSED'"
                         [class.published]="property.propertyStatusEnum === 'PUBLISHED'">
-                        <i class="mr-12 fa-solid {{propertyStatus[property.propertyStatusEnum].icon}}"></i>
+                        <i class="mr-8 fa-solid {{propertyStatus[property.propertyStatusEnum].icon}}"></i>
                         <p>{{propertyStatus[property.propertyStatusEnum].description}}</p>
                     </div>
                     <div class="action">
@@ -39,22 +40,29 @@
                     </div>
                 </ng-template>
 
+               
+               
+
                 <div class="property-type">
                     <h4>{{propertyType[property.propertyTypeEnum].description}}</h4>
-                    <h4>{{advertisementType[property.advertisementTypeEnum].description}}</h4>
+                    <div class="content-btn">
+                        <h4>{{advertisementType[property.advertisementTypeEnum].description}}</h4>
+                        <button class="outline-btn" *ngIf="property.imageUrls.length > 3"
+                            (click)="editProperty(property, true)">
+                            Mostrar todas
+                            <span>+ {{property.imageUrls.length - 3}}</span>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="content-title">
                     <h3>{{property.title}} </h3>
-                    <button class="outline-btn" *ngIf="property.imageUrls.length > 3"
-                        (click)="editProperty(property, true)">
-                        Mostrar todas
-                        <span>+ {{property.imageUrls.length - 3}}</span>
-                    </button>
                 </div>
-                <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex mt-16">
                     <p class="content-price">{{property.price | currency: 'EUR'}}</p>
+                </div>
 
+                <div class="d-flex mt-12">
                     <p class="content-location">
                         <i class="fas fa-map-marker-alt"></i>
                         {{property.propertyAddress.city}} - {{property.propertyAddress.country}}
@@ -70,14 +78,14 @@
                 </p>
 
                 <div class="content-variaties">
-                    <div class="item" *ngFor="let item of []">
-                        <p>{{item}}</p>
+                    <div class="item" *ngFor="let item of property.commodities">
+                        <p>{{item.description}}</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="text-center" *ngIf="propertyList.length === 0">
-            <i>Nenhum anuncio criado</i>
+            <i>Nenhum anúncio criado.</i>
         </div>
     </section>
     <section *ngIf="!propertyList && loadingProperties">

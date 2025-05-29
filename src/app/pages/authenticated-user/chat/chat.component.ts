@@ -252,4 +252,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  showAll(images: string[]) {
+  }
+
 }

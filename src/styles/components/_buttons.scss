@@ -1,8 +1,8 @@
 button {
-    padding: 8px 16px;
+    padding: 14px 16px;
     border: none;
-    border-radius: 6px;
-    height: 48px;
+    border-radius: 12px;
+    height: 44px;
     color: white;
     cursor: pointer;
     transition: background-color 0.2s;
@@ -31,9 +31,12 @@ button {
     }
 
     &.outline-btn {
-        background-color: var(--bg-1);
-        border: 1px solid var(--bord-1);
+        border: 1px solid var(--txt-1);
         color: var(--txt-1);
+        border-radius: 12px;
+        font-size: 14px;
+        background-color: var(--bg-1);
+
 
         i {
             color: var(--txt-1);

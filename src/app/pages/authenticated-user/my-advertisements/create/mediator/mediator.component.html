@@ -31,15 +31,15 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-center gap-24">
+        <div class="d-flex justify-content-center gap-24 buttons">
             <button class="secondary-btn" type="button" (click)="previous()">
-                <i class="fa-solid fa-arrow-left"></i> Anterior
+                <i class="mr-4 fa-solid fa-arrow-left"></i> Anterior
             </button>
             <button class="primary-btn">
                 @if(publishing){
                 <loader></loader>
                 }@else {
-                {{property.id ? 'Editar' : 'Publicar'}} anúncio
+                {{property.id ? 'Editar' : 'Publicar'}} anúncio <i style="font-size: 16px;" class="ml-4 fa-solid fa-check"></i>
                 }
             </button>
         </div>

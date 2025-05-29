@@ -16,10 +16,10 @@ main {
         }
 
         p {
-            font-weight: 400;
+            font-weight: 300;
             font-size: 14px;
             line-height: 130%;
-            color: var(--bg-6);
+            color: var(--txt-2);
         }
     }
 
@@ -52,13 +52,18 @@ main {
         width: fit-content;
     }
 
+    .file-upload-wrapper {
+        label {
+            color: var(--txt-2);
+        }
+    }
+
     .image-preview img {
         width: 120px;
         height: 120px;
         object-fit: cover;
         display: none;
-        border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        border-radius: 12px;
         border: 1px solid var(--bord-1);
 
         &.loaded {
@@ -69,11 +74,20 @@ main {
     .image-preview .remove-image {
         padding: 2px 6px;
         background-color: var(--primary-1);
-        border: 1px solid var(--bord-1);
-        border-radius: 4px;
+        border: 1px solid white;
+        border-radius: 20px;
         position: absolute;
         top: -5px;
         right: -5px;
         cursor: pointer;
+        i {
+            color: white;
+        }
+    }
+
+    .buttons {
+        button {
+            min-width: 130px;
+        }
     }
 }
