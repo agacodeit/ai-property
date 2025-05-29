@@ -91,12 +91,22 @@ export class ChatService {
 
     this.streamChat(this.chatData.id, message.text).subscribe({
       next: (response) => {
+
         let lastChat = this.chatData!.messages[this.chatData!.messages.length - 1];
-        lastChat.text = response.answer;
-        lastChat.chatId = this.chatData!.id;
 
-        lastChat.content = response.content;
-
+        if (!lastChat.id || lastChat?.id === response?.id) {
+          lastChat.id = response.id;
+          lastChat.text = response.answer;
+          lastChat.chatId = this.chatData!.id;
+          lastChat.content = response.content;
+        } else if (lastChat.id !== response.id) {
+          let chatMessage = new Message();
+          chatMessage.role = 'bot';
+          chatMessage.text = response.answer;
+          chatMessage.chatId = this.chatData!.id;
+          chatMessage.content = response.content;
+          this.chatData!.messages.push(chatMessage);
+        }
 
       },
       error: () => {
