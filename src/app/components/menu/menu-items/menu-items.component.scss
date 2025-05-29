@@ -6,9 +6,9 @@
     margin-bottom: 16px;
 }
 nav.menu-items {
-    padding: $padding-sm;
-    max-height: calc(100vh - 100px); // Ajuste 100px conforme o tamanho do seu header ou outros elementos fixos
-    height: 424px;
+    padding: 0;
+    max-height: calc(100vh - 265px);
+    overflow-y: scroll;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-1) transparent;
 

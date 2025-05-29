@@ -85,16 +85,28 @@ export class ChatService {
     message.chatId = this.chatData.id;
 
     this.setThinking(true);
+    let chatMessage = new Message();
+    chatMessage.role = 'bot';
+    this.chatData!.messages.push(chatMessage);
 
     this.streamChat(this.chatData.id, message.text).subscribe({
       next: (response) => {
-        let chatMessage = new Message();
-        chatMessage.role = 'bot';
-        chatMessage.text = response.answer || 'Encontrei esses imóveis disponíveis';
-        chatMessage.content = response.content;
-        chatMessage.chatId = this.chatData!.id;;
 
-        this.chatData!.messages.push(chatMessage);
+        let lastChat = this.chatData!.messages[this.chatData!.messages.length - 1];
+
+        if (!lastChat.id || lastChat?.id === response?.id) {
+          lastChat.id = response.id;
+          lastChat.text = response.answer;
+          lastChat.chatId = this.chatData!.id;
+          lastChat.content = response.content;
+        } else if (lastChat.id !== response.id) {
+          let chatMessage = new Message();
+          chatMessage.role = 'bot';
+          chatMessage.text = response.answer;
+          chatMessage.chatId = this.chatData!.id;
+          chatMessage.content = response.content;
+          this.chatData!.messages.push(chatMessage);
+        }
 
       },
       error: () => {
