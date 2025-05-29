@@ -21,6 +21,10 @@ main {
 
     .create-advertisement {
         margin-bottom: 36px;
+
+        button {
+            min-width: 160px;
+        }
     }
 
     .advertisements {
@@ -37,6 +41,7 @@ main {
             border-radius: 12px;
             padding: 12px;
             border: 1px solid #e5e5e5;
+            background-color: var(--white);
 
             .header {
                 display: flex;
@@ -134,8 +139,37 @@ main {
                 justify-content: space-between;
 
                 h4 {
-                    font-weight: 600;
+                    font-weight: 500;
                     font-size: 16px;
+                }
+            }
+
+            .content-btn {
+                margin-bottom: 8px;
+                display: flex;
+                align-items: flex-start;
+                justify-content: end;
+                margin-bottom: 16px;
+
+                .outline-btn {
+                    height: 29px;
+                    padding: 6px 12px;
+                    position: relative;
+                    background-color: var(--white);
+                    margin-top: 16px;
+
+                    span {
+                        padding: 4px;
+                        background-color: var(--primary-1);
+                        border: 1px solid var(--bord-1);
+                        border-radius: 20px;
+                        position: absolute;
+                        top: -5px;
+                        right: -10px;
+                        font-size: 8px;
+                        cursor: pointer;
+                        color: var(--white);
+                    }
                 }
             }
 
@@ -146,26 +180,29 @@ main {
                 justify-content: space-between;
 
                 h3 {
-                    font-weight: 600;
-                    font-size: 20px;
+                    font-weight: 500;
+                    font-size: 18px;
                     margin: 0;
                 }
 
                 .outline-btn {
-                    height: 30px;
+                    height: 29px;
                     padding: 6px 12px;
                     position: relative;
+                    background-color: var(--white);
+                    margin-top: 12px;
 
                     span {
-                        padding: 2px 6px;
+                        padding: 4px;
                         background-color: var(--primary-1);
                         border: 1px solid var(--bord-1);
-                        border-radius: 4px;
+                        border-radius: 20px;
                         position: absolute;
                         top: -5px;
                         right: -10px;
                         font-size: 8px;
                         cursor: pointer;
+                        color: var(--white);
                     }
                 }
             }

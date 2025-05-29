@@ -1,7 +1,12 @@
 @use '../../../../styles/abstracts/' as *;
 
+.title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
 nav.menu-items {
-    padding: 0;
+    padding: $padding-sm;
     max-height: calc(100vh - 100px); // Ajuste 100px conforme o tamanho do seu header ou outros elementos fixos
     height: 424px;
     scrollbar-width: thin;
@@ -26,7 +31,7 @@ nav.menu-items ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    padding-bottom: 24px;
+    padding-bottom: 20px;
 
     li {
 
@@ -44,7 +49,7 @@ nav.menu-items ul {
 }
 
 .same-date {
-    margin-top: -24px;
+    margin-top: -20px;
 }
 
 /* Estilo dos itens do menu */

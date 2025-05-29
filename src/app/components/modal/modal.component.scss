@@ -35,7 +35,7 @@
 
         h1,
         .close-btn {
-            width: 300px;
+            width: 123px;
         }
 
         .title {
@@ -83,6 +83,10 @@
     position: sticky;
     top: 0;
     z-index: 10;
+    .title-text {
+        font-size: 18px;
+        font-weight: 500;
+    }
 }
 
 .modal-content {

@@ -2,10 +2,10 @@
 
 <div class="modal" [class.fullscreen]="fullscreen" @modalAnimation>
     <header class="modal-header">
-        <h1 [hidden]="!fullscreen">AIProperty</h1>
+        <h2 [hidden]="!fullscreen">AIProperty</h2>
         <div class="title">
             <i class="{{icon}}"></i>
-            <h2>{{title}}</h2>
+            <div class="title-text">{{title}}</div>
         </div>
         <button class="close-btn">
             <i class="fa-solid fa-xmark" (click)="onClose()"></i>

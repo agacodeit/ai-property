@@ -1,16 +1,23 @@
-<main class="menu-container box-shadow">
-    <div class="hamburguer-container">
-        <div class="hamburguer-position" (click)="toggleMenu()" *ngIf="menuState">
-            <i class="fa-solid fa-bars"></i>
-        </div>
-    </div>
+<main class="menu-container">
     <header>
-        <h2>AIProperty</h2>
-        <button class="primary-btn" (click)="startNewChat()"> Nova conversa + </button>
+        <div class="header-container">
+            <h2>AIProperty</h2>
+            <div class="hamburguer-container">
+                <div class="hamburguer-position" (click)="toggleMenu()" *ngIf="menuState">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+        </div>
+        <button class="primary-btn" (click)="startNewChat()"> Nova conversa <i
+                class="ml-4 fa-solid fa-up-right-from-square"></i> </button>
     </header>
     <app-menu-items [chatSessions]="chatSessions"></app-menu-items>
     <div class="my-advertisements" (click)="openMyAdvertisements()">
         <i class="fa-solid fa-arrow-trend-up"></i>
-        <p>Meus anúncios</p>
+        <div>
+            <p>Meus anúncios</p>
+            <span>Sua vitrine de anúncios, sob seu comando.</span>
+        </div>
+
     </div>
 </main>

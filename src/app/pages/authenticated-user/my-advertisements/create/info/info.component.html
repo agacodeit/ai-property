@@ -6,24 +6,24 @@
 
     <form [formGroup]="infoForm" (ngSubmit)="submit()">
 
-        <label class="mb-4" for="">Moradia</label>
-        <div class="property-type">
-            <button class="mr-16 outline-btn" [class.active]="infoForm.controls['propertyTypeEnum'].value === 'HOUSE'"
-                (click)="setPropertyType('HOUSE')" type="button">
-                Casa
-            </button>
-            <button type="button" [class.active]="infoForm.controls['propertyTypeEnum'].value === 'APARTMENT'"
-                class="outline-btn" (click)="setPropertyType('APARTMENT')">
-                Apartamento
-            </button>
-        </div>
+        <div class="d-flex align-items-start justify-content-between mb-24">
+            <div>
+                <label class="mb-4" for="">Moradia</label>
 
-        <div class="grid-column-2 mb-24">
-            <div class="form-group">
-                <label for="title">Título do anúncio</label>
-                <input [ngClass]="{'invalid': isInvalid(infoForm.get('title'))}" type="text" id="title"
-                    formControlName="title" placeholder="Escolha um título" />
+                <div class="property-type">
+
+                    <button class="mr-16 outline-btn"
+                        [class.active]="infoForm.controls['propertyTypeEnum'].value === 'HOUSE'"
+                        (click)="setPropertyType('HOUSE')" type="button">
+                        Casa
+                    </button>
+                    <button type="button" [class.active]="infoForm.controls['propertyTypeEnum'].value === 'APARTMENT'"
+                        class="outline-btn" (click)="setPropertyType('APARTMENT')">
+                        Apartamento
+                    </button>
+                </div>
             </div>
+
             <div>
                 <label class="mb-4" for="">Tipo da moradia</label>
                 <div class="property-type">
@@ -42,10 +42,20 @@
         </div>
 
 
+        <div class="grid-column-2 mb-24">
+            <div class="form-group">
+                <label for="title">Título do anúncio</label>
+                <input [ngClass]="{'invalid': isInvalid(infoForm.get('title'))}" type="text" id="title"
+                    formControlName="title" placeholder="Escolha um título" />
+            </div>
+        </div>
+
+
+
         <div class="form-group mb-24">
             <label for="description">Descrição</label>
             <textarea [ngClass]="{'invalid': isInvalid(infoForm.get('description'))}" id="description"
-                formControlName="description" placeholder="Descreva seu imóvel" rows="10"></textarea>
+                formControlName="description" placeholder="Descreva seu imóvel" rows="8"></textarea>
         </div>
 
         <div class="grid-column-3">
@@ -112,32 +122,35 @@
 
             </div>
 
-            <div class="form-group mb-24">
-                <label for="district">Distrito</label>
-                <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('district'))}" type="text"
-                    id="district" formControlName="district" placeholder="Estado" />
-            </div>
-            <div class="grid-column-2 mb-24">
-                <div class="form-group ">
-                    <label for="zipCode">Código Postal (CP)</label>
-                    <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('zipCode'))}"
-                        type="text" [inputMask]="'0000-000'" id="zipCode" formControlName="zipCode"
-                        placeholder="0000-000" />
+            <div class="grid-column-3">
+                <div class="form-group mb-24">
+                    <label for="district">Distrito</label>
+                    <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('district'))}" type="text"
+                        id="district" formControlName="district" placeholder="Estado" />
+                </div>
+                <div class="grid-column-2 mb-24">
+                    <div class="form-group ">
+                        <label for="zipCode">Código Postal (CP)</label>
+                        <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('zipCode'))}"
+                            type="text" [inputMask]="'0000-000'" id="zipCode" formControlName="zipCode"
+                            placeholder="0000-000" />
+                    </div>
+                </div>
+                <div class="grid-column-2 mb-24">
+                    <div class="form-group">
+                        <label for="country">País</label>
+                        <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('country'))}"
+                            type="text" id="country" formControlName="country" placeholder="Casa 2" />
+                    </div>
                 </div>
             </div>
-            <div class="grid-column-2 mb-24">
-                <div class="form-group">
-                    <label for="country">País</label>
-                    <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('country'))}"
-                        type="text" id="country" formControlName="country" placeholder="Casa 2" />
-                </div>
-            </div>
+            
         </div>
 
 
         <div class="d-flex justify-content-center">
             <button class="primary-btn">
-                Próximo <i class="fa-solid fa-arrow-right"></i>
+                Próximo <i style="font-size: 16px;" class=" ml-4 fa-solid fa-arrow-right"></i>
             </button>
         </div>
 

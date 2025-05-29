@@ -10,7 +10,7 @@
             <h2>AIProperty</h2>
         </div>
         <div class="position-relative ml-8 c-p">
-            <i (click)="showOptions = true" class="fa-solid fa-user"></i>
+            <i style="font-size: 24px;" (click)="showOptions = true" class="fa-solid fa-circle-user"></i>
             <div *ngIf="showOptions">
                 <app-options [container]="options" (emitter)="triggerAction($event)"></app-options>
             </div>
