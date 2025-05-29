@@ -17,13 +17,13 @@
               <i class="fa-solid fa-exclamation"></i>
             </div>
           </div>
-          <div class="advertisements">
-            <div class="message-content" *ngIf="message.content as content">
+          <div class="advertisements" *ngIf="message.content as content">
+            <div class="message-content">
               <div class="content-images" *ngIf="content.images.length; else noImages">
 
                 <!-- Mostrar até 3 imagens -->
                 <div class="image-wrapper" *ngFor="let img of content.images | slice:0:3">
-                  <img [src]="img" alt=""  />
+                  <img [src]="img" alt="" />
                 </div>
               </div>
 
@@ -39,12 +39,12 @@
 
               <div class="content-title">
                 <h3>{{content.title}} </h3>
-                <button class="outline-btn" *ngIf="content.images.length > 3"
+                <!--   <button class="outline-btn" *ngIf="content.images.length > 3"
                     (click)="showAll(content.images)">
                     Mostrar todas
                     <span>+ {{content.images.length - 3}}</span>
-                </button>
-            </div>
+                </button> -->
+              </div>
 
               <p class="content-price">{{content.price | currency: 'EUR'}}</p>
 

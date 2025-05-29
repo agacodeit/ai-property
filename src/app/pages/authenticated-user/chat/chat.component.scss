@@ -98,7 +98,7 @@ main {
                     border-radius: 12px;
                     padding: 12px;
                     border: 1px solid #e5e5e5;
-                    background-color: var(--white);
+                    background-color: var(--bg-2);
 
                     .message-bubble {
                         background-color: var(--bg-3);
@@ -185,12 +185,12 @@ main {
                                 width: 100%;
                                 height: 100%;
                                 object-fit: cover;
-                                display: none;
+                                //display: none;
                                 border-radius: 4px;
 
-                                &.loaded {
+                                /* &.loaded {
                                     display: block;
-                                }
+                                } */
                             }
                         }
 
@@ -225,7 +225,7 @@ main {
                             height: 29px;
                             padding: 6px 12px;
                             position: relative;
-                            background-color: var(--white);
+                            background-color: var(--bg-2);
 
                             span {
                                 padding: 4px;
@@ -267,13 +267,14 @@ main {
                     .content-variaties {
                         display: flex;
                         align-items: center;
-                        gap: 8px;
+                        gap: 12px;
                         margin-top: 12px;
 
                         .item {
-                            padding: 4px 12px;
-                            border-radius: 4px;
-                            background-color: var(--bg-4);
+                            padding: 6px 16px;
+                            border-radius: 8px;
+                            background-color: var(--bg-5);
+                            color: var(--txt-1);
                         }
                     }
                 }

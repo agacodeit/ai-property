@@ -1,12 +1,12 @@
 @use '../../../../styles/abstracts/' as *;
 
-.title {
+nav.h4 {
     font-size: 14px;
     font-weight: 500;
-    margin-bottom: 16px;
+    color: var(--text-1);
 }
 nav.menu-items {
-    padding: 0;
+    padding: 20px;
     max-height: calc(100vh - 265px);
     overflow-y: scroll;
     scrollbar-width: thin;
@@ -32,6 +32,7 @@ nav.menu-items ul {
     padding: 0;
     margin: 0;
     padding-bottom: 20px;
+    margin-top: 16px;
 
     li {
 
