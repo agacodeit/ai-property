@@ -2,78 +2,60 @@
 
 .menu-container {
     background-color: var(--bg-4);
+    padding: $padding-sm;
     width: 100%;
-    max-width: 262px;
-    min-width: 262px;
+    max-width: 250px;
+    min-width: 250px;
     height: 100vh;
-    border-right: 1.5px solid var(--bord-2);
-    position: relative;
+
+    .hamburguer-container {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+
+        .hamburguer-position {
+            padding: 4px;
+            border-radius: 4px;
+
+            &:hover {
+                background-color: var(--txt-1);
+
+                i {
+                    color: var(--bg-4);
+                }
+            }
+
+            cursor: pointer;
+        }
+    }
 
     header {
-        padding: 20px 20px 0 20px;
+        margin-bottom: 24px;
+        border-bottom: 1px solid var(--bord-1);
 
         h2 {
             color: var(--txt-1);
         }
 
         button {
-            margin-top: 24px;
-            width: 100%;
+            margin: 24px 0;
         }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1.5px solid var(--bord-2);
-            padding-bottom: 20px;
-
-            .hamburguer-container {
-                display: flex;
-                justify-content: flex-end;
-                width: 100%;
-
-                .hamburguer-position {
-                    padding: 4px;
-                    border-radius: 4px;
-
-                    &:hover {
-                        background-color: var(--txt-1);
-
-                        i {
-                            color: var(--bg-4);
-                        }
-                    }
-
-                    cursor: pointer;
-                }
-            }
-        }
-
     }
 
     .my-advertisements {
         position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        bottom: 24px;
         display: flex;
         align-items: center;
-        background-color: var(--bg-4);
-        border-top: 1.5px solid var(--bord-2);
-        padding: 20px;
+        background-color: var(--bg-5);
+        border-radius: 12px;
+        padding: 16px;
+        width: 215px;
         cursor: pointer;
 
         i {
             margin-right: 16px;
             font-size: 16px;
-        }
-
-        span {
-            font-size: 10px;
-            font-weight: 300;
-            margin-top: 4px;
-            line-height: 120%;
         }
     }
 }

@@ -21,10 +21,6 @@ main {
 
     .create-advertisement {
         margin-bottom: 36px;
-
-        button {
-            min-width: 160px;
-        }
     }
 
     .advertisements {
@@ -39,9 +35,8 @@ main {
 
         .message-content {
             border-radius: 12px;
-            padding: 16px;
+            padding: 12px;
             border: 1px solid #e5e5e5;
-            background-color: var(--bg-7);
 
             .header {
                 display: flex;
@@ -51,20 +46,8 @@ main {
                 .status {
                     display: flex;
                     align-items: center;
-                    padding: 6px 16px;
+                    padding: 8px 20px;
                     border-radius: 6px;
-                    font-size: 14px;
-                    border-radius: 8px;
-
-                    &.created {
-                        background-color: #E6980526;
-                        border: 1px solid #E69805;
-
-                        i,
-                        p {
-                            color: #E69805;
-                        }
-                    }
 
                     &.paused {
                         background-color: #E6980526;
@@ -151,40 +134,10 @@ main {
                 justify-content: space-between;
 
                 h4 {
-                    font-weight: 500;
+                    font-weight: 600;
                     font-size: 16px;
-                    margin-right: 16px;
-                }
-
-                .content-btn {
-                    margin-bottom: 8px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: end;
-
-                    .outline-btn {
-                        height: 29px;
-                        padding: 6px 12px;
-                        position: relative;
-                        background-color: var(--bg-2);
-
-                        span {
-                            padding: 4px;
-                            background-color: var(--primary-1);
-                            border: 1px solid var(--bord-1);
-                            border-radius: 20px;
-                            position: absolute;
-                            top: -5px;
-                            right: -10px;
-                            font-size: 8px;
-                            cursor: pointer;
-                            color: var(--white);
-                        }
-                    }
                 }
             }
-
-
 
             .content-title {
                 margin-bottom: 8px;
@@ -193,29 +146,26 @@ main {
                 justify-content: space-between;
 
                 h3 {
-                    font-weight: 500;
-                    font-size: 18px;
+                    font-weight: 600;
+                    font-size: 20px;
                     margin: 0;
                 }
 
                 .outline-btn {
-                    height: 29px;
+                    height: 30px;
                     padding: 6px 12px;
                     position: relative;
-                    background-color: var(--bg-2);
-                    margin-top: 12px;
 
                     span {
-                        padding: 4px;
+                        padding: 2px 6px;
                         background-color: var(--primary-1);
                         border: 1px solid var(--bord-1);
-                        border-radius: 20px;
+                        border-radius: 4px;
                         position: absolute;
                         top: -5px;
                         right: -10px;
                         font-size: 8px;
                         cursor: pointer;
-                        color: var(--white);
                     }
                 }
             }
@@ -224,6 +174,7 @@ main {
                 font-size: 20px;
                 font-weight: bold;
                 color: var(--primary-1);
+                margin-bottom: 12px;
             }
 
             .content-location {
@@ -231,21 +182,19 @@ main {
             }
 
             .content-description {
-                color: var(--txt-2);
-                font-weight: 300;
+                color: #6e6e80;
             }
 
             .content-variaties {
                 display: flex;
                 align-items: center;
-                gap: 12px;
+                gap: 8px;
                 margin-top: 12px;
 
                 .item {
-                    padding: 6px 16px;
-                    border-radius: 8px;
-                    background-color: var(--bg-5);
-                    color: var(--txt-1);
+                    padding: 4px 12px;
+                    border-radius: 4px;
+                    background-color: var(--bg-4);
                 }
             }
         }

@@ -7,6 +7,7 @@
     align-items: center;
     padding: 16px;
     background-color: var(--bg-1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
 
     .action {
@@ -47,12 +48,6 @@
         cursor: pointer;
     }
 
-    .user-menu {
-        i {
-            font-size: 24px;
-        }
-    }
-
     h2 {
         font-family: $font-primary;
         font-weight: 600;
@@ -66,10 +61,9 @@
 
 /* Estilo do título */
 .header h2 {
-    font-size: 20px;
+    font-size: 18px;
     color: var(--txt-1);
     margin: 0;
-    font-weight: 400;
 }
 
 /* Estilo do Switch */

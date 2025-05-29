@@ -1,12 +1,7 @@
 @use '../../../../styles/abstracts/' as *;
 
-nav.h4 {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-1);
-}
 nav.menu-items {
-    padding: 20px;
+    padding: 0;
     max-height: calc(100vh - 265px);
     overflow-y: scroll;
     scrollbar-width: thin;
@@ -31,8 +26,6 @@ nav.menu-items ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    padding-bottom: 20px;
-    margin-top: 16px;
 
     li {
 
@@ -50,7 +43,7 @@ nav.menu-items ul {
 }
 
 .same-date {
-    margin-top: -20px;
+    margin-top: -24px;
 }
 
 /* Estilo dos itens do menu */

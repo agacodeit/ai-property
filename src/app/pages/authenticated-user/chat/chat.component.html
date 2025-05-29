@@ -4,11 +4,11 @@
     <div #messagesContainer class="messages" role="log" aria-live="polite" *ngIf="chat && chat.messages.length > 0">
       <article *ngFor="let message of chat.messages; index as i"
         [ngClass]="{'user-message': message.role === 'user', 'bot-message': message.role === 'bot'}">
-        <!--  <div class="avatar">
+        <div class="avatar">
           <i class="fas fa-user" *ngIf="message.role === 'user'"></i>
           <i class="fas fa-home" *ngIf="message.role === 'bot'"></i>
-        </div> -->
-        <div class="">
+        </div>
+        <div class="mt-4">
           <div class="d-flex align-items-end">
             <p class="message-bubble d-flex" [innerHTML]="message.text">
             </p>
@@ -17,58 +17,31 @@
               <i class="fa-solid fa-exclamation"></i>
             </div>
           </div>
-          <div class="advertisements" *ngIf="message.content as content">
-            <div class="message-content">
-              <div class="content-images" *ngIf="content.images.length; else noImages">
+          <div class="message-content" *ngIf="message.content as content">
+            <div class="content-images">
+              <img *ngFor="let img of content.images" width="200px" height="150px" [src]="img" alt="">
+            </div>
 
-                <!-- Mostrar até 3 imagens -->
-                <div class="image-wrapper" *ngFor="let img of content.images | slice:0:3">
-                  <img [src]="img" alt="" />
-                </div>
-              </div>
+            <h3 class="content-title">{{content.title}} </h3>
+            <p class="content-price">{{content.price | currency: 'EUR'}}</p>
 
-              <ng-template #noImages>
-                <div class="content-images">
-                  <div class="image-wrapper">
-                    <div class="image-loading">
-                      <i class="fa-solid fa-image fa-2x"></i>
-                    </div>
-                  </div>
-                </div>
-              </ng-template>
+            <p class="content-location">
+              <i class="fas fa-map-marker-alt"></i>
+              {{content.location}}
+              <i class="fas fa-bed"></i>
+              {{content.beds}}
+            </p>
 
-              <div class="content-title">
-                <h3>{{content.title}} </h3>
-                <!--   <button class="outline-btn" *ngIf="content.images.length > 3"
-                    (click)="showAll(content.images)">
-                    Mostrar todas
-                    <span>+ {{content.images.length - 3}}</span>
-                </button> -->
-              </div>
+            <p class="content-description">
+              {{content.description}}
+            </p>
 
-              <p class="content-price">{{content.price | currency: 'EUR'}}</p>
-
-              <p class="content-location">
-                <i class="fas fa-map-marker-alt"></i>
-                {{content.location}}
-                <i class="fas fa-bed"></i>
-                {{content.beds}}
-                <i class="fas fa-toilet ml-8"></i>
-                {{content.bathrooms}}
-              </p>
-
-              <p class="content-description text-truncate-2">
-                {{content.description}}
-              </p>
-
-              <div class="content-variaties">
-                <div class="item" *ngFor="let commodity of content.commodities">
-                  <p>{{commodity}}</p>
-                </div>
+            <div class="content-variaties">
+              <div class="item" *ngFor="let commodity of content.commodities">
+                <p>{{commodity}}</p>
               </div>
             </div>
           </div>
-
         </div>
       </article>
     </div>
@@ -101,7 +74,7 @@
       </div>
     </div> -->
 
-    <footer class="textarea-container">
+    <footer class="textarea-container box-shadow">
       <div class="form-group">
         <label for="chat-textarea" class="visually-hidden" *ngIf="!isRecording">Digite sua mensagem</label>
         <textarea (keydown)="handleKeyDown($event)" *ngIf="!isRecording" id="chat-textarea" type="text"
