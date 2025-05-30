@@ -1,0 +1,32 @@
+<div *ngIf="show && currentImage" class="overlay" role="dialog" aria-modal="true">
+    <header>
+        <button class="close-btn" (click)="close()" aria-label="Fechar visualização">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <button class="download-btn" (click)="download()" aria-label="Fechar visualização">
+            <i class="fa-solid fa-cloud-arrow-down"></i>
+        </button>
+    </header>
+    <div class="container">
+
+        <button class="nav-btn prev" (click)="prev()" aria-label="Imagem anterior">
+            <i class="fa-solid fa-backward-step"></i>
+        </button>
+
+        <figure>
+            <div class="image-loading" *ngIf="!currentImage?.loaded">
+                <i class="fa-solid fa-image fa-2x"></i>
+            </div>
+
+            <img (load)="currentImage!.loaded = true" [src]="currentImage!.url" [alt]="currentImage!.alt"
+                [class.loaded]="currentImage!.loaded" />
+                
+        </figure>
+
+
+        <button class="nav-btn next" (click)="next()" aria-label="Próxima imagem">
+            <i class="fa-solid fa-forward-step"></i>
+        </button>
+    </div>
+</div>

@@ -22,7 +22,8 @@
               <div class="content-images" *ngIf="content.images.length; else noImages">
 
                 <!-- Mostrar até 3 imagens -->
-                <div class="image-wrapper" *ngFor="let img of content.images | slice:0:3">
+                <div class="image-wrapper c-p" (click)="openImagePreview(content, i)"
+                  *ngFor="let img of content.images | slice:0:3; index as i">
                   <img [src]="img" alt="" />
                 </div>
               </div>

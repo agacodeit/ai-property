@@ -9,6 +9,7 @@ import { TypingComponent } from '../../../components/typing/typing.component';
 import { ToastService } from '../../../services/toast/toast.service';
 import { fadeAnimation } from '../../../shared/animations/fade-animation';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ImageGalleryService } from '../../../services/image-gallery/image-gallery.service';
 
 @Component({
   selector: 'app-chat',
@@ -54,7 +55,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   constructor(private cdr: ChangeDetectorRef,
     private chatService: ChatService,
     private toastService: ToastService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private imageGalleryService: ImageGalleryService
   ) { }
 
   ngOnInit(): void {
@@ -252,7 +254,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  showAll(images: string[]) {
+  openImagePreview(content: any, index: number) {
+    this.imageGalleryService.open(content.images.map((image: string) => {
+      return {
+        url: image,
+        alt: 'Imagem ' + index,
+        loaded: false
+      }
+    }), index);
   }
 
 }
