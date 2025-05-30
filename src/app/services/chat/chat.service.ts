@@ -53,7 +53,7 @@ export class ChatService {
           } catch (e) { }
         }
         return {
-          text: !isObject ? r.content : 'Encontrei os imóveis abaixo:',
+          text: !isObject ? r.content : null,
           role: r.role === 'assistant' ? 'bot' : 'user',
           content: parsedContent
         }
