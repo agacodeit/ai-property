@@ -5,9 +5,11 @@ nav.h4 {
     font-weight: 500;
     color: var(--text-1);
 }
+
 nav.menu-items {
     padding: 20px;
-    max-height: calc(100vh - 215px);
+    max-height: calc(100vh - 140px);
+    padding-bottom: 75px;
     overflow-y: scroll;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-1) transparent;
