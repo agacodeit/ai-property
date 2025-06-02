@@ -1,4 +1,4 @@
-<main class="menu-container">
+<main class="menu-container" #menuContainer>
     <header>
         <div class="header-container">
             <h2>AIProperty</h2>
@@ -20,4 +20,7 @@
         </div>
 
     </div>
+
+    <div class="resizer" (mousedown)="onResizeStart($event)"></div>
+
 </main>
