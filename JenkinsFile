@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
         AWS_REGION = 'us-east-1'
-        S3_BUCKET = 'nome-do-seu-bucket'
-        BUILD_FOLDER = 'dist'
+        AWS_DEFAULT_REGION = 'us-east-1'
+        AWS_ACCESS_KEY_ID = credentials('aiproperty-hml')
+        AWS_SECRET_ACCESS_KEY = credentials('aiproperty-hml')
+        S3_BUCKET = 'agacode-ai-property'
     }
 
     stages {
