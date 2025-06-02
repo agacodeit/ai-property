@@ -62,9 +62,7 @@ export class ChatComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private imageGalleryService: ImageGalleryService
   ) {
-    this.triggerScroll.subscribe(() => {
-      this.scrollToBottom();
-    })
+    this.triggerScroll.subscribe(() => this.scrollToBottom());
   }
 
   ngOnInit(): void {

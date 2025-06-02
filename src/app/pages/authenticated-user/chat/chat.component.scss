@@ -86,7 +86,7 @@ main {
             .advertisements {
                 width: 100%;
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(auto-fit, minmax(100px, 450px));
                 gap: 24px;
                 margin-top: 12px;
 
