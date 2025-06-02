@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { lastValueFrom, Observable } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Chat } from '../../shared/models/chat/chat';
 import { Message } from '../../shared/models/chat/message';
@@ -13,9 +13,18 @@ import { ApiResponse } from '../../shared/models/api/api';
 })
 export class ChatService {
 
-  thinking: boolean = false;
+  private thinking: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private scrollToBottom: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private chatData: Chat | null = null;
   private chatSessionsData: Array<Chat> = [];
+
+  get thinking$() {
+    return this.thinking;
+  }
+
+  get scrollToBottom$() {
+    return this.scrollToBottom;
+  }
 
   get token() {
     const token = sessionStorage.getItem('tkn_ai_prt');
@@ -68,7 +77,7 @@ export class ChatService {
   }
 
   setThinking(value: boolean) {
-    this.thinking = value;
+    this.thinking.next(value);
   }
 
   async sendMessage(message: Message) {
@@ -107,6 +116,8 @@ export class ChatService {
           chatMessage.content = response.content;
           this.chatData!.messages.push(chatMessage);
         }
+
+        this.scrollToBottom.next(!this.scrollToBottom.value);
 
       },
       error: () => {

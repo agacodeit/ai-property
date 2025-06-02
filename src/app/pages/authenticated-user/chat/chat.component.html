@@ -12,7 +12,7 @@
           <div class="d-flex align-items-end">
             <p [hidden]="!message.text" class="message-bubble d-flex" [innerHTML]="message.text">
             </p>
-            <typing *ngIf="thinking && message.role === 'bot' && chat.messages.length - 1 === i"></typing>
+            <typing *ngIf="thinking.value && message.role === 'bot' && chat.messages.length - 1 === i"></typing>
             <div *ngIf="message.error" class="message-error-icon">
               <i class="fa-solid fa-exclamation"></i>
             </div>
@@ -126,9 +126,9 @@
           <canvas #canvas></canvas>
         </div>
 
-        <button [disabled]="thinking" type="button" class="primary-btn" (click)="toggleSendMessage()"
+        <button [disabled]="thinking.value" type="button" class="primary-btn" (click)="toggleSendMessage()"
           aria-label="Enviar mensagem">
-          @if(thinking){
+          @if(thinking.value){
           <loader></loader>
           }@else {
           <i class="fa-solid fa-paper-plane"></i>
