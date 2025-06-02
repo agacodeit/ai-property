@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from '../../../components/header/header.component';
-import { Message } from '../../../shared/models/chat/message';
-import { ChatService } from '../../../services/chat/chat.service';
 import { LoaderComponent } from '../../../components/loader/loader.component';
 import { TypingComponent } from '../../../components/typing/typing.component';
+import { ChatService } from '../../../services/chat/chat.service';
 import { ToastService } from '../../../services/toast/toast.service';
 import { fadeAnimation } from '../../../shared/animations/fade-animation';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ImageGalleryService } from '../../../services/image-gallery/image-gallery.service';
+import { Message } from '../../../shared/models/chat/message';
 
 @Component({
   selector: 'app-chat',
@@ -24,7 +24,7 @@ import { ImageGalleryService } from '../../../services/image-gallery/image-galle
   styleUrl: './chat.component.scss',
   animations: [fadeAnimation]
 })
-export class ChatComponent implements OnInit, AfterViewChecked {
+export class ChatComponent implements OnInit {
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
   @ViewChild('canvas', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
@@ -49,7 +49,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   get thinking() {
-    return this.chatService.thinking;
+    return this.chatService.thinking$;
+  }
+
+  get triggerScroll() {
+    return this.chatService.scrollToBottom$;
   }
 
   constructor(private cdr: ChangeDetectorRef,
@@ -57,22 +61,25 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     private toastService: ToastService,
     private activatedRoute: ActivatedRoute,
     private imageGalleryService: ImageGalleryService
-  ) { }
+  ) {
+    this.triggerScroll.subscribe(() => {
+      this.scrollToBottom();
+    })
+  }
 
   ngOnInit(): void {
     let chatId = this.activatedRoute.snapshot.queryParams['id'];
-    this.activatedRoute.queryParams.subscribe((params) => {
+    this.activatedRoute.queryParams.subscribe(async (params) => {
       chatId = params['id'];
       if (chatId) {
-        this.chatService.setChat(chatId);
+        await this.chatService.setChat(chatId);
+        setTimeout(() => {
+          this.scrollToBottom();
+        }, 1);
       }
     });
 
     if (chatId) this.chatService.setChat(chatId);
-  }
-
-  ngAfterViewChecked(): void {
-    this.scrollToBottom();
   }
 
   triggerFileInput() {
@@ -84,7 +91,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     const file = input.files?.[0];
     if (file) {
       console.log('Arquivo selecionado:', file);
-      // aqui você pode enviar, mostrar preview, etc.
     }
   }
 
@@ -219,7 +225,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       return;
     };
 
-    if (this.thinking) return;
+    if (this.thinking.value) return;
 
     this.sendMessage();
   }
@@ -241,7 +247,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     newMessage.text = this.newMessage;
     newMessage.role = 'user';
 
-    this.chatService.sendMessage(newMessage);
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 100);
+
+    await this.chatService.sendMessage(newMessage);
 
     this.newMessage = '';
 
