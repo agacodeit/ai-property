@@ -6,6 +6,8 @@ import { MenuService } from '../../services/menu/menu.service';
 import { ThemeService } from '../../services/theme/theme.service';
 import { MenuComponent } from '../../components/menu/menu.component';
 import { menuAnimation } from '../../shared/animations/menu-animations';
+import { ImageGalleryPreviewComponent } from '../../components/image-gallery-preview/image-gallery-preview.component';
+import { ImageGalleryService } from '../../services/image-gallery/image-gallery.service';
 
 @Component({
   selector: 'app-authenticated-user',
@@ -14,7 +16,8 @@ import { menuAnimation } from '../../shared/animations/menu-animations';
     CommonModule,
     RouterOutlet,
     FormsModule,
-    MenuComponent
+    MenuComponent,
+    ImageGalleryPreviewComponent
   ],
   templateUrl: './authenticated-user.component.html',
   styleUrl: './authenticated-user.component.scss',
@@ -30,8 +33,21 @@ export class AuthenticatedUserComponent {
     return this.menuService.menu.state;
   }
 
+  get imageGalleryPreview() {
+    return this.imageGalleryService.images$;
+  }
+
+  get imagePreviewIndex() {
+    return this.imageGalleryService.currentIndex$;
+  }
+
+  get showImageGalleryPreview() {
+    return this.imageGalleryService.isOpen$;
+  }
+
   constructor(private menuService: MenuService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private imageGalleryService: ImageGalleryService
   ) { }
 
   openMenu() {

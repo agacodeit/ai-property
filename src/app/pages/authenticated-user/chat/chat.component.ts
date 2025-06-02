@@ -8,6 +8,7 @@ import { TypingComponent } from '../../../components/typing/typing.component';
 import { ChatService } from '../../../services/chat/chat.service';
 import { ToastService } from '../../../services/toast/toast.service';
 import { fadeAnimation } from '../../../shared/animations/fade-animation';
+import { ImageGalleryService } from '../../../services/image-gallery/image-gallery.service';
 import { Message } from '../../../shared/models/chat/message';
 
 @Component({
@@ -58,7 +59,8 @@ export class ChatComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef,
     private chatService: ChatService,
     private toastService: ToastService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private imageGalleryService: ImageGalleryService
   ) {
     this.triggerScroll.subscribe(() => {
       this.scrollToBottom();
@@ -262,7 +264,14 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  showAll(images: string[]) {
+  openImagePreview(content: any, index: number) {
+    this.imageGalleryService.open(content.images.map((image: string) => {
+      return {
+        url: image,
+        alt: 'Imagem ' + index,
+        loaded: false
+      }
+    }), index);
   }
 
 }
