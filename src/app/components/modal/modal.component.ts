@@ -37,7 +37,7 @@ export class ModalComponent implements OnDestroy {
   ) {
     this.escListener = this.renderer.listen('document', 'keydown', (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        if (this.content.backdrop !== undefined && this.content.backdrop === false) return;
+        if (this.content?.backdrop !== undefined && this.content?.backdrop === false) return;
         this.onClose();
       }
     });
