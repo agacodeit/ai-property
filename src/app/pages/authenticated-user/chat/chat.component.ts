@@ -56,6 +56,10 @@ export class ChatComponent implements OnInit {
     return this.chatService.scrollToBottom$;
   }
 
+  get clearNewMessage() {
+    return this.chatService.clearNewMessage$;
+  }
+
   constructor(private cdr: ChangeDetectorRef,
     private chatService: ChatService,
     private toastService: ToastService,
@@ -63,6 +67,7 @@ export class ChatComponent implements OnInit {
     private imageGalleryService: ImageGalleryService
   ) {
     this.triggerScroll.subscribe(() => this.scrollToBottom());
+    this.clearNewMessage.subscribe((value: boolean) => value ? this.newMessage = '' : null);
   }
 
   ngOnInit(): void {
