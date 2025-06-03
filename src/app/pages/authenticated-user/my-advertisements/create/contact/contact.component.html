@@ -7,7 +7,8 @@
     <form [formGroup]="mediatorForm" (ngSubmit)="publish()">
         <div formGroupName="mediator">
 
-            <p class="info" [innerHTML]="infoText"></p>
+            <p class="info" *ngIf="property.propertyStatusEnum && property.propertyStatusEnum !== 'PUBLISHED'"
+                [innerHTML]="infoText"></p>
 
             <div class="form-group mb-24">
                 <label for="contactType">Tipo de contato</label>
