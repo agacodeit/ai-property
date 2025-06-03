@@ -1,11 +1,24 @@
 <main>
     <header>
         <i class="fa-solid fa-user"></i>
-        <h5>Dados do mediador</h5>
+        <h5>Dados do contato</h5>
     </header>
 
     <form [formGroup]="mediatorForm" (ngSubmit)="publish()">
         <div formGroupName="mediator">
+
+            <p class="info" [innerHTML]="infoText"></p>
+
+            <div class="form-group mb-24">
+                <label for="contactType">Tipo de contato</label>
+                <select [ngClass]="{'invalid': isInvalid(mediatorForm.get('mediator')!.get('contactType'))}" type="text"
+                    id="contactType" formControlName="contactType" placeholder="Informe o nome do mediador">
+                    <option value="BROKER">Mediador</option>
+                    <option value="OWNER">Proprietátio</option>
+                    <option value="AGENCY">Imobiliária</option>
+                </select>
+            </div>
+
             <div class="form-group mb-24">
                 <label for="name">Nome</label>
                 <input [ngClass]="{'invalid': isInvalid(mediatorForm.get('mediator')!.get('name'))}" type="text"
@@ -24,7 +37,7 @@
                     id="phone" formControlName="phone" placeholder="Informe o telemóvel" />
             </div>
 
-            <div class="form-group mb-24">
+            <div class="form-group mb-24" *ngIf="mediatorForm.get('mediator')!.get('contactType')!.value === 'AGENCY'">
                 <label for="link">Link do site</label>
                 <input [ngClass]="{'invalid': isInvalid(mediatorForm.get('mediator')!.get('link'))}" type="text"
                     id="link" formControlName="link" placeholder="Informe o link do site" />
@@ -39,7 +52,8 @@
                 @if(publishing){
                 <loader></loader>
                 }@else {
-                {{property.id ? 'Editar' : 'Publicar'}} anúncio <i style="font-size: 16px;" class="ml-4 fa-solid fa-check"></i>
+                {{property.id ? 'Editar' : 'Publicar'}} anúncio <i style="font-size: 16px;"
+                    class="ml-4 fa-solid fa-check"></i>
                 }
             </button>
         </div>

@@ -16,8 +16,8 @@
             </div>
 
             <div *ngSwitchCase="2">
-                <app-mediator [property]="property" (previousEmitter)="updateForm($event)"
-                    (publishEmitter)="createProperty($event)"></app-mediator>
+                <app-contact [property]="property" (previousEmitter)="updateForm($event)"
+                    (publishEmitter)="createProperty($event)"></app-contact>
             </div>
         </ng-container>
     </div>

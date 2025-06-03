@@ -29,6 +29,17 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
   propertyStatus = PropertyStatus;
   propertyType = PropertyType;
   advertisementType = AdvertisementType;
+  infoText: string = `
+  <div class="info-box">
+      <i class="fa-solid fa-circle-info"></i>
+      <b>Atenção:</b>
+      <br/><br/>
+     <p>
+          Seu anúncio só será publicado após preencher <b>nome</b>, <b>telefone</b> e <b>e-mail</b> do responsável.
+Enquanto isso, ele ficará como rascunho e não aparecerá nas buscas.
+      </p>
+  </div>
+`;
 
   get propertyList() {
     return this.propertyService.propertyList;
@@ -82,7 +93,7 @@ export class MyAdvertisementsComponent implements OnInit, OnDestroy {
       data: {
         title: 'Editar anúncio',
         icon: 'fa-solid fa-arrow-trend-up',
-        content: { property, tab: toImages ? 1 : null, backdrop: false }
+        content: { property, tab: toImages ? 1 : null }
       }
     })?.subscribe((confirm: boolean) => {
       if (confirm) this.toastService.show('Anúncio editado com sucesso', 'success');

@@ -6,7 +6,7 @@ import { PropertyService } from '../../../../services/property/property.service'
 import { Property } from '../../../../shared/models/property/property';
 import { ImagesComponent } from "./images/images.component";
 import { InfoComponent } from "./info/info.component";
-import { MediatorComponent } from './mediator/mediator.component';
+import { ContactComponent } from './contact/contact.component';
 import { UserService } from '../../../../services/user/user.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { UserService } from '../../../../services/user/user.service';
     CommonModule,
     InfoComponent,
     ImagesComponent,
-    MediatorComponent
+    ContactComponent
   ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'

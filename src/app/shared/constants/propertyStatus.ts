@@ -10,7 +10,7 @@ export const PropertyStatus = {
         icon: 'fa-play'
     },
     'CREATED': {
-        description: 'Criado',
+        description: 'Rascunho',
         icon: 'fa-upload'
     },
     'PAUSED': {

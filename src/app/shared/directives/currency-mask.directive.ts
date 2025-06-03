@@ -77,8 +77,8 @@ export class CurrencyMaskDirective implements ControlValueAccessor {
         const integerPart = parts[0];
         const decimalPart = parts[1];
 
-        const withThousands = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        const withThousands = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
-        return `€ ${withThousands}.${decimalPart}`;
+        return `€ ${withThousands},${decimalPart}`;
     }
 }
