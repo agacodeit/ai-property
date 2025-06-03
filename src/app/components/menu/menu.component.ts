@@ -67,6 +67,7 @@ export class MenuComponent implements OnInit {
   }
 
   startNewChat() {
+    this.chatService.clearNewMessage$.next(true);
     this.chatService.startNewChat();
   }
 
