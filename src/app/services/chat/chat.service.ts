@@ -15,6 +15,7 @@ export class ChatService {
 
   private thinking: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private scrollToBottom: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private clearNewMessage: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private chatData: Chat | null = null;
   private chatSessionsData: Array<Chat> = [];
 
@@ -24,6 +25,10 @@ export class ChatService {
 
   get scrollToBottom$() {
     return this.scrollToBottom;
+  }
+
+  get clearNewMessage$() {
+    return this.clearNewMessage;
   }
 
   get token() {
@@ -90,20 +95,21 @@ export class ChatService {
       });
     };
 
-    this.chatData.messages.push(message);
-    message.chatId = this.chatData.id;
+
+    this.chatData!.messages.push(message);
+    message.chatId = this.chatData!.id;
 
     this.setThinking(true);
     let chatMessage = new Message();
     chatMessage.role = 'bot';
     this.chatData!.messages.push(chatMessage);
 
-    this.streamChat(this.chatData.id, message.text).subscribe({
+    this.streamChat(this.chatData!.id, message.text).subscribe({
       next: (response) => {
 
         let lastChat = this.chatData!.messages[this.chatData!.messages.length - 1];
 
-        if (!lastChat.id || lastChat?.id === response?.id) {
+        if ((!lastChat.id || lastChat?.id === response?.id) && lastChat.role === 'bot') {
           lastChat.id = response.id;
           lastChat.text = response.answer;
           lastChat.chatId = this.chatData!.id;
