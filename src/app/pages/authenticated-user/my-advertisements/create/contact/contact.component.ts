@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, DebugElement, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Property } from '../../../../../shared/models/property/property';
 import { ToastService } from '../../../../../services/toast/toast.service';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
@@ -8,16 +8,16 @@ import { LoaderComponent } from '../../../../../components/loader/loader.compone
 import { isInvalid, scrollToInvalidField } from '../../../../../shared/utils/validators';
 
 @Component({
-  selector: 'app-mediator',
+  selector: 'app-contact',
   imports: [
     CommonModule,
     ReactiveFormsModule,
     LoaderComponent
   ],
-  templateUrl: './mediator.component.html',
-  styleUrl: './mediator.component.scss'
+  templateUrl: './contact.component.html',
+  styleUrl: './contact.component.scss'
 })
-export class MediatorComponent implements OnChanges {
+export class ContactComponent implements OnChanges {
 
   @Input() property: Property = new Property();
   @Output() previousEmitter = new EventEmitter();
@@ -25,6 +25,17 @@ export class MediatorComponent implements OnChanges {
 
   publishing: boolean = false;
   formSubmitted: boolean = false;
+  infoText: string = `
+  <div class="info-box">
+      <i class="fa-solid fa-circle-info"></i>
+      <strong>Atenção:</strong>
+      <br/><br/>
+      <p>
+          Seu anúncio só será publicado após preencher <strong>nome</strong>, <strong>telefone</strong> e <strong>e-mail</strong> do responsável.
+Enquanto isso, ele ficará como rascunho e não aparecerá nas buscas.
+      </p>
+  </div>
+`;
 
   mediatorForm: FormGroup = new FormGroup({
     id: new FormControl(''),
@@ -48,10 +59,11 @@ export class MediatorComponent implements OnChanges {
       country: new FormControl('')
     }),
     mediator: new FormGroup({
-      name: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-      phone: new FormControl('', Validators.required),
-      link: new FormControl('', Validators.required)
+      contactType: new FormControl('BROKER', Validators.required),
+      name: new FormControl(''),
+      email: new FormControl(''),
+      phone: new FormControl(''),
+      link: new FormControl('')
     }),
     commodities: new FormArray([])
   });
@@ -75,6 +87,11 @@ export class MediatorComponent implements OnChanges {
   publish() {
     this.formSubmitted = true;
     this.mediatorForm.markAllAsTouched();
+
+    if (this.mediatorForm.get('mediator')!.get('contactType')!.value !== 'AGENCY') {
+      this.mediatorForm.get('mediator')!.get('link')!.disable();
+    } else this.mediatorForm.get('mediator')!.get('link')!.enable();
+
     if (this.mediatorForm.valid) {
       this.publishing = true;
       this.property = this.mediatorForm.value;

@@ -31,13 +31,17 @@ footer {
     border-radius: 99px;
     cursor: pointer;
     transition: 300ms;
-    
+
     i {
         margin-right: 8px;
     }
-    
+
     &:hover {
         scale: 1.04;
         background-color: var(--bg-4);
     }
+}
+
+.info {
+    color: var(--info);
 }

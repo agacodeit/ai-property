@@ -1,5 +1,5 @@
 <main>
-    <p>{{content.message}}</p>
+    <p [innerHTML]="content.message"></p>
 
     <div class="action" *ngIf="content.btns">
         <button class="{{btn.class}}" *ngFor="let btn of content.btns" (click)="close(btn.value)">

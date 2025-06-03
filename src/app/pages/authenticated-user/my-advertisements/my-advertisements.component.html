@@ -1,15 +1,18 @@
 <main class="regular-container">
     <div class="create-advertisement">
         <button class="primary-btn" (click)="createProperty()">
-            Criar anúncio <i
-                class="ml-4 fa-solid fa-up-right-from-square"></i> 
+            Criar anúncio <i class="ml-4 fa-solid fa-up-right-from-square"></i>
         </button>
     </div>
     <section *ngIf="propertyList" @fadeAnimation>
         <div class="advertisements">
             <div class="message-content" *ngFor="let property of propertyList">
+                <div class="info" *ngIf="property.propertyStatusEnum === 'CREATED'">
+                    <p class="info" [innerHTML]="infoText"></p>
+                </div>
                 <div class="header">
-                    <div class="status" [class.created]="property.propertyStatusEnum === 'CREATED'" [class.paused]="property.propertyStatusEnum === 'PAUSED'"
+                    <div class="status" [class.created]="property.propertyStatusEnum === 'CREATED'"
+                        [class.paused]="property.propertyStatusEnum === 'PAUSED'"
                         [class.published]="property.propertyStatusEnum === 'PUBLISHED'">
                         <i class="mr-8 fa-solid {{propertyStatus[property.propertyStatusEnum].icon}}"></i>
                         <p>{{propertyStatus[property.propertyStatusEnum].description}}</p>
@@ -40,8 +43,8 @@
                     </div>
                 </ng-template>
 
-               
-               
+
+
 
                 <div class="property-type">
                     <h4>{{propertyType[property.propertyTypeEnum].description}}</h4>
