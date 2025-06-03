@@ -3,10 +3,8 @@
         <i class="fa-solid fa-user"></i>
         <h5>Dados do contato</h5>
     </header>
-
     <form [formGroup]="mediatorForm" (ngSubmit)="publish()">
         <div formGroupName="mediator">
-
             <p class="info" *ngIf="property.propertyStatusEnum && property.propertyStatusEnum !== 'PUBLISHED'"
                 [innerHTML]="infoText"></p>
 

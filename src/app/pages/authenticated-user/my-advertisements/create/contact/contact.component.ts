@@ -48,6 +48,7 @@ Enquanto isso, ele ficará como rascunho e não aparecerá nas buscas.
     hasGourmetBalcony: new FormControl(false),
     imageUrls: new FormControl([]),
     propertyTypeEnum: new FormControl(''),
+    propertyStatusEnum: new FormControl(''),
     advertisementTypeEnum: new FormControl(''),
     propertyAddress: new FormGroup({
       street: new FormControl(''),

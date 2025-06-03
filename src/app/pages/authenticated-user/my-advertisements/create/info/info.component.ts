@@ -40,6 +40,7 @@ export class InfoComponent implements OnChanges {
     hasGourmetBalcony: new FormControl(false),
     imageUrls: new FormControl([]),
     propertyTypeEnum: new FormControl('', Validators.required),
+    propertyStatusEnum: new FormControl(''),
     advertisementTypeEnum: new FormControl('', Validators.required),
     propertyAddress: new FormGroup({
       street: new FormControl(''),
