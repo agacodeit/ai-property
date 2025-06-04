@@ -107,7 +107,7 @@ export class ChatService {
 
     this.streamChat(this.chatData!.id, message.text).subscribe({
       next: (response) => {
-        if (!response.ok || !response.body) {
+        if (!response) {
           throw new Error('Erro na conexão com o servidor');
         }
 
