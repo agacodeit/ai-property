@@ -10,6 +10,7 @@ import { ToastService } from '../../../services/toast/toast.service';
 import { fadeAnimation } from '../../../shared/animations/fade-animation';
 import { ImageGalleryService } from '../../../services/image-gallery/image-gallery.service';
 import { Message } from '../../../shared/models/chat/message';
+import { SHORCUTS } from '../../../shared/constants/shortcuts';
 
 @Component({
   selector: 'app-chat',
@@ -33,6 +34,12 @@ export class ChatComponent implements OnInit {
   isRecording = false;
   recordingTime = '00:00';
   audioUrl: string | undefined = undefined;
+
+  shortcuts: {
+    icon: string,
+    label: string,
+    text: string
+  }[] = SHORCUTS;
 
   private mediaRecorder: MediaRecorder | null = null;
   private recordedChunks: Blob[] = [];

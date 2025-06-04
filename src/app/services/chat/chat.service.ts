@@ -107,6 +107,9 @@ export class ChatService {
 
     this.streamChat(this.chatData!.id, message.text).subscribe({
       next: (response) => {
+        if (!response.ok || !response.body) {
+          throw new Error('Erro na conexão com o servidor');
+        }
 
         let lastChat = this.chatData!.messages[this.chatData!.messages.length - 1];
 
@@ -121,6 +124,7 @@ export class ChatService {
           chatMessage.text = response.answer;
           chatMessage.chatId = this.chatData!.id;
           chatMessage.content = response.content;
+          chatMessage.id = response.id;
           this.chatData!.messages.push(chatMessage);
         }
 
@@ -163,44 +167,59 @@ export class ChatService {
           'Authorization': `Bearer ${this.token}`
         },
         body: JSON.stringify({ id: chatId, message }),
-      }).then((response) => {
-        const reader = response.body?.getReader();
-        const decoder = new TextDecoder();
+      })
+        .then((response) => {
+          // 🔥 Tratativa de erro HTTP
+          if (!response.ok) {
+            throw new Error(`Erro na API: ${response.status} ${response.statusText}`);
+          }
 
-        const readChunk = () => {
-          reader?.read().then(({ done, value }) => {
-            if (done) {
-              this.zone.run(() => observer.complete());
-              return;
-            }
+          const reader = response.body?.getReader();
+          const decoder = new TextDecoder();
 
-            const chunk = decoder.decode(value, { stream: true });
-            try {
-              const mustSplit = chunk.indexOf('}{') >= 0;
-              if (mustSplit) {
-                const parts = chunk.split('}{');
-                parts.forEach(c => {
-                  const parsed = JSON.parse(`{${c.replace("{", "").replace("}", "")}}`);
-                  this.zone.run(() => observer.next(parsed));
-                });
-              } else {
-                const parsed = JSON.parse(chunk);
-                this.zone.run(() => observer.next(parsed));
+          const readChunk = () => {
+            reader?.read().then(({ done, value }) => {
+              if (done) {
+                this.zone.run(() => observer.complete());
+                return;
               }
-            } catch (e) {
-              console.warn('Erro ao parsear chunk:', chunk);
-            }
 
-            readChunk();
+              const chunk = decoder.decode(value, { stream: true });
+
+              try {
+                // 🔥 Tratativa para múltiplos JSON no mesmo chunk
+                const chunks = chunk.match(/({.*?})(?={|$)/g);
+                if (chunks) {
+                  chunks.forEach(part => {
+                    const parsed = JSON.parse(part);
+                    this.zone.run(() => observer.next(parsed));
+                  });
+                }
+              } catch (e) {
+                console.warn('Erro ao parsear chunk:', chunk, e);
+              }
+
+              readChunk();
+            }).catch(err => {
+              this.zone.run(() => {
+                observer.error(err);
+                this.setThinking(false);
+              });
+            });
+          };
+
+          readChunk();
+        })
+        .catch((error) => {
+          this.zone.run(() => {
+            console.error('Erro na conexão fetch:', error);
+            observer.error(error);
+            this.setThinking(false);
           });
-        };
-
-        readChunk();
-      }).catch((error) => {
-        this.zone.run(() => observer.error(error));
-      });
+        });
     });
   }
+
 
   setChatSessions(chats: Array<Chat>) {
     this.menuService.setChatSessions(chats);
