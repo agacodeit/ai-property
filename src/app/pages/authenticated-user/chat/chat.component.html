@@ -69,7 +69,7 @@
     </div>
 
     <div class="shortcuts" *ngIf="!chat?.id || chat?.messages?.length === 0">
-      <div class="chip" *ngFor="let shortcut of shortcuts" (click)="newMessage = shortcut.text; toggleSendMessage()">
+      <div class="chip" *ngFor="let shortcut of shortcuts" (click)="newMessage = shortcut.label; toggleSendMessage()">
         <i class="{{shortcut.icon}}"></i>
         <p>{{shortcut.label}}</p>
       </div>

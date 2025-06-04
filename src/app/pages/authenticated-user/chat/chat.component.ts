@@ -37,8 +37,7 @@ export class ChatComponent implements OnInit {
 
   shortcuts: {
     icon: string,
-    label: string,
-    text: string
+    label: string
   }[] = SHORCUTS;
 
   private mediaRecorder: MediaRecorder | null = null;
