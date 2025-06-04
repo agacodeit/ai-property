@@ -105,7 +105,7 @@ main {
                         padding: 12px 16px;
                         border-radius: 12px;
                         margin: 0;
-                        word-break: break-word;
+                        white-space: pre-line;
                     }
 
                     .header {
@@ -324,7 +324,7 @@ main {
         flex-direction: row;
         flex-wrap: wrap;
         gap: 8px 16px;
-        margin-bottom: 16px;
+        margin: 0 80px 16px 80px;
     }
 
     .textarea-container {
@@ -439,4 +439,8 @@ main {
         background-color: var(--bg-1);
         border-radius: 8px;
     }
+}
+
+.message-bubble {
+    white-space: pre-line;
 }

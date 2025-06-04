@@ -4,11 +4,7 @@
     <div #messagesContainer class="messages" role="log" aria-live="polite" *ngIf="chat && chat.messages.length > 0">
       <article *ngFor="let message of chat.messages; index as i"
         [ngClass]="{'user-message': message.role === 'user', 'bot-message': message.role === 'bot'}">
-        <!--  <div class="avatar">
-          <i class="fas fa-user" *ngIf="message.role === 'user'"></i>
-          <i class="fas fa-home" *ngIf="message.role === 'bot'"></i>
-        </div> -->
-        <div class="">
+        <div>
           <div class="d-flex align-items-end">
             <p [hidden]="!message.text" class="message-bubble d-flex" [innerHTML]="message.text">
             </p>
@@ -20,8 +16,6 @@
           <div class="advertisements" *ngIf="message.content as content">
             <div class="message-content">
               <div class="content-images" *ngIf="content.images.length; else noImages">
-
-                <!-- Mostrar até 3 imagens -->
                 <div class="image-wrapper c-p" (click)="openImagePreview(content, i)"
                   *ngFor="let img of content.images | slice:0:3; index as i">
                   <img [src]="img" alt="" />
@@ -40,11 +34,6 @@
 
               <div class="content-title">
                 <h3>{{content.title}} </h3>
-                <!--   <button class="outline-btn" *ngIf="content.images.length > 3"
-                    (click)="showAll(content.images)">
-                    Mostrar todas
-                    <span>+ {{content.images.length - 3}}</span>
-                </button> -->
               </div>
 
               <p class="content-price">{{content.price | currency: 'EUR'}}</p>
@@ -79,7 +68,7 @@
       <p>Seu assistente imobiliário inteligente. Pergunte sobre imóveis à venda ou para arrendamento.</p>
     </div>
 
-    <!--   <div class="shortcuts">
+      <div class="shortcuts">
       <div class="chip">
         <i class="fa-solid fa-key"></i>
         <p>Arrendamento</p>
@@ -89,6 +78,10 @@
         <p>Compra e Venda</p>
       </div>
       <div class="chip">
+        <i class="fa-solid fa-section"></i>
+        <p>Legislação</p>
+      </div>
+      <div class="chip">
         <i class="fa-solid fa-money-bill-wave"></i>
         <p>Financiamento</p>
       </div>
@@ -96,11 +89,7 @@
         <i class="fa-solid fa-house-crack"></i>
         <p>Seguros</p>
       </div>
-      <div class="chip">
-        <i class="fa-solid fa-section"></i>
-        <p>Legislação</p>
-      </div>
-    </div> -->
+    </div>
 
     <footer class="textarea-container">
       <div class="form-group">

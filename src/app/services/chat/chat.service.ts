@@ -66,6 +66,7 @@ export class ChatService {
             isObject = true;
           } catch (e) { }
         }
+
         return {
           text: !isObject ? r.content : null,
           role: r.role === 'assistant' ? 'bot' : 'user',
