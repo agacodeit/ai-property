@@ -13,9 +13,10 @@
               <i class="fa-solid fa-exclamation"></i>
             </div>
           </div>
+
           <div class="advertisements" *ngIf="message.content as content">
             <div class="message-content">
-              <div class="content-images" *ngIf="content.images.length; else noImages">
+              <div class="content-images" *ngIf="content.images; else noImages">
                 <div class="image-wrapper c-p" (click)="openImagePreview(content, i)"
                   *ngFor="let img of content.images | slice:0:3; index as i">
                   <img [src]="img" alt="" />

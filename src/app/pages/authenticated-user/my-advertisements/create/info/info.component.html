@@ -111,12 +111,12 @@
 
             <div class="grid-column-2 mb-24">
                 <div class="form-group">
-                    <label for="city">Freguesia</label>
+                    <label for="city">Cidade</label>
                     <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('city'))}" type="text"
                         id="city" formControlName="city" placeholder="Porto" />
                 </div>
                 <div class="form-group">
-                    <label for="parish">Concelho</label>
+                    <label for="parish">Freguesia</label>
                     <input [ngClass]="{'invalid': isInvalid(infoForm.get('propertyAddress')!.get('parish'))}"
                         type="text" id="parish" formControlName="parish" placeholder="123" />
                 </div>

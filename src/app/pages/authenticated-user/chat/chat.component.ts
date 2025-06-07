@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from '../../../components/header/header.component';
@@ -25,7 +25,7 @@ import { SHORCUTS } from '../../../shared/constants/shortcuts';
   styleUrl: './chat.component.scss',
   animations: [fadeAnimation]
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
   @ViewChild('canvas', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
@@ -72,8 +72,14 @@ export class ChatComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private imageGalleryService: ImageGalleryService
   ) {
-    this.triggerScroll.subscribe(() => this.scrollToBottom());
+    this.triggerScroll.subscribe(() => {
+      this.scrollToBottom();
+    });
     this.clearNewMessage.subscribe((value: boolean) => value ? this.newMessage = '' : null);
+  }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
   }
 
   ngOnInit(): void {

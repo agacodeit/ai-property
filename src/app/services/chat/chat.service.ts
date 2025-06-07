@@ -107,6 +107,7 @@ export class ChatService {
 
     this.streamChat(this.chatData!.id, message.text).subscribe({
       next: (response) => {
+        console.log(response);
         if (!response) {
           throw new Error('Erro na conexão com o servidor');
         }
@@ -166,60 +167,55 @@ export class ChatService {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${this.token}`
         },
-        body: JSON.stringify({ id: chatId, message }),
-      })
-        .then((response) => {
-          // 🔥 Tratativa de erro HTTP
-          if (!response.ok) {
-            throw new Error(`Erro na API: ${response.status} ${response.statusText}`);
-          }
+        body: JSON.stringify({ id: chatId, message, parcialSend: false }),
+      }).then((response) => {
+        // 🔥 Tratativa de erro HTTP
+        if (!response.ok) {
+          throw new Error(`Erro na API: ${response.status} ${response.statusText}`);
+        }
+        const reader = response.body?.getReader();
+        const decoder = new TextDecoder();
 
-          const reader = response.body?.getReader();
-          const decoder = new TextDecoder();
+        const readChunk = () => {
+          reader?.read().then(({ done, value }) => {
+            if (done) {
+              this.zone.run(() => observer.complete());
+              return;
+            }
 
-          const readChunk = () => {
-            reader?.read().then(({ done, value }) => {
-              if (done) {
-                this.zone.run(() => observer.complete());
-                return;
+            const chunk = decoder.decode(value, { stream: true });
+            try {
+
+              const mustSplit = chunk.indexOf('}{') >= 0;
+              if (mustSplit) {
+                const parts = this.parseConcatenatedJsonArray(chunk);
+
+                parts.forEach(c => {
+                  if (c.content) {
+                    c.content = c.content[0];
+                  }
+
+                  this.zone.run(() => observer.next(c));
+                });
+              } else {
+                const parsed = JSON.parse(chunk);
+
+                this.zone.run(() => observer.next(parsed));
               }
+            } catch (e) {
+              console.warn('Erro ao parsear chunk:', chunk);
+            }
 
-              const chunk = decoder.decode(value, { stream: true });
-
-              try {
-                // 🔥 Tratativa para múltiplos JSON no mesmo chunk
-                const chunks = chunk.match(/({.*?})(?={|$)/g);
-                if (chunks) {
-                  chunks.forEach(part => {
-                    const parsed = JSON.parse(part);
-                    this.zone.run(() => observer.next(parsed));
-                  });
-                }
-              } catch (e) {
-                console.warn('Erro ao parsear chunk:', chunk, e);
-              }
-
-              readChunk();
-            }).catch(err => {
-              this.zone.run(() => {
-                observer.error(err);
-                this.setThinking(false);
-              });
-            });
-          };
-
-          readChunk();
-        })
-        .catch((error) => {
-          this.zone.run(() => {
-            console.error('Erro na conexão fetch:', error);
-            observer.error(error);
-            this.setThinking(false);
+            readChunk();
           });
-        });
+        };
+
+        readChunk();
+      }).catch((error) => {
+        this.zone.run(() => observer.error(error));
+      });
     });
   }
-
 
   setChatSessions(chats: Array<Chat>) {
     this.menuService.setChatSessions(chats);
@@ -260,5 +256,21 @@ export class ChatService {
       }
     }
   }
+
+  parseConcatenatedJsonArray(input: string): any[] {
+    try {
+      // Adiciona um separador temporário entre os objetos colados
+      const separated = input.replace(/}\s*{/g, '}|||{');
+
+      // Divide usando o separador e parseia cada objeto
+      const objects = separated.split('|||').map(json => JSON.parse(json));
+
+      return objects;
+    } catch (e) {
+      console.error('Erro ao parsear JSON colado:', e);
+      return [];
+    }
+  }
+
 
 }
