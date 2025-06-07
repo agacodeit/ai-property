@@ -167,7 +167,7 @@ export class ChatService {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${this.token}`
         },
-        body: JSON.stringify({ id: chatId, message, parcialSend: false }),
+        body: JSON.stringify({ id: chatId, message, parcialSend: true }),
       }).then((response) => {
         // 🔥 Tratativa de erro HTTP
         if (!response.ok) {

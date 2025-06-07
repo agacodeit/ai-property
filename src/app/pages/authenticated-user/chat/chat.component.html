@@ -42,10 +42,14 @@
               <p class="content-location">
                 <i class="fas fa-map-marker-alt"></i>
                 {{content.location}}
-                <i class="fas fa-bed"></i>
-                {{content.beds}}
-                <i class="fas fa-toilet ml-8"></i>
-                {{content.bathrooms}}
+                <span *ngIf="content.beds">
+                  <i class="fas fa-bed"></i>
+                  {{content.beds}}
+                </span>
+                <span *ngIf="content.bathrooms">
+                  <i class="fas fa-toilet ml-8"></i>
+                  {{content.bathrooms}}
+                </span>
               </p>
 
               <p class="content-description text-truncate-2">
